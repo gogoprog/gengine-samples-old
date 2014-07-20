@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export GENGINE=`pwd`/gengine
+export PATH=${PATH}:`pwd`/gengine/bin
+
+echo "[gengine] Enabled with ${GENGINE}"
