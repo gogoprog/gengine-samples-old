@@ -9,9 +9,9 @@ Prepare gengine submodule
     git submodule init
     git submodule update
 
-Activate the environment
+Activate the gengine environment
 
-    source activate
+    source gengine/bin/activate
     
 Then go to a sample and run it
 
