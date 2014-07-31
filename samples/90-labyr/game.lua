@@ -22,10 +22,6 @@ setmetatable(Game,Game)
 stateMachine(Game)
 
 function Game:load()
-    entity.registerCustomComponent(ComponentTile)
-    entity.registerCustomComponent(ComponentPlacer)
-    entity.registerCustomComponent(ComponentPath)
-
     for i=0,2 do
         graphics.texture.create("data/tile" .. i .. ".png")
     end

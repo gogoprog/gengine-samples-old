@@ -32,8 +32,6 @@ function start()
 
     graphics.texture.create("logo.png")
 
-    entity.registerCustomComponent(ComponentCustom)
-
     for i=0,8 do
         local logoEntity = entity.create()
 

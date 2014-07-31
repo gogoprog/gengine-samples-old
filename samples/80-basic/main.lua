@@ -37,8 +37,6 @@ local e, cameraEntity
 function start()
     print("tests/basic start")
 
-    entity.registerCustomComponent(ComponentCustom)
-
     graphics.setClearColor(1,1,0.1,1)
 
     graphics.texture.create("bird.png")
