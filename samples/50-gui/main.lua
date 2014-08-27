@@ -1,6 +1,6 @@
 function init()
     application.setName("[gengine-tests] 50-gui")
-    application.setExtent(1024,800)
+    application.setExtent(800,600)
 end
 
 local logoEntity
@@ -23,7 +23,7 @@ function start()
 
     logoEntity:insert()
 
-    gui.loadFile("menu.html")
+    gui.loadFile("gui/menu.html")
 end
 
 local total = 0
@@ -32,7 +32,10 @@ local sens = 1
 function update(dt)
     total = total + dt * sens
     logoEntity.rotation = total
-    gui.executeScript("updateTotal('" .. total .. "');")
+
+    if input.mouse:isJustDown(1) then
+        gui.executeScript("updateTotal('" .. total .. "');")
+    end
 end
 
 function newGame()
@@ -43,4 +46,8 @@ end
 function options()
     print("options() called!")
     sens = -1
+end
+
+function exit()
+    print("exit() called!")
 end
