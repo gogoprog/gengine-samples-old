@@ -19,11 +19,11 @@ end
 
 setmetatable(Game,Game)
 
-stateMachine(Game)
+gengine.stateMachine(Game)
 
 function Game:load()
     for i=0,2 do
-        graphics.texture.create("data/tile" .. i .. ".png")
+        gengine.graphics.texture.create("data/tile" .. i .. ".png")
     end
 
     local w = self.grid.width -1
@@ -81,12 +81,12 @@ function Game:createTile(_t)
 
     local definition = Tiles[t]
 
-    e = entity.create()
+    e = gengine.entity.create()
 
     e:addComponent(
         ComponentSprite(),
         {
-            texture = graphics.texture.get(definition.file),
+            texture = gengine.graphics.texture.get(definition.file),
             extent = { x=self.tileSize, y=self.tileSize },
             layer = 0
         },
@@ -124,12 +124,12 @@ end
 
 function Game:createPlacer()
     local e
-    e = entity.create()
+    e = gengine.entity.create()
 
     e:addComponent(
         ComponentSprite(),
         {
-            texture = graphics.texture.get("tile0"),
+            texture = gengine.graphics.texture.get("tile0"),
             extent = { x=self.tileSize, y=self.tileSize },
             layer = 0
         },
@@ -167,7 +167,7 @@ function Game:createPlacer()
 end
 
 function Game:update(dt)
-    if input.mouse:isDown(3) then
+    if gengine.input.mouse:isDown(3) then
        self:moveTiles(0, nil, 1)
     end
 end

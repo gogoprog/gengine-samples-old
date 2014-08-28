@@ -1,21 +1,21 @@
 function init()
-    application.setName("[gengine-tests] 02-mouseable")
-    application.setExtent(640,480)
+    gengine.application.setName("[gengine-tests] 02-mouseable")
+    gengine.application.setExtent(640,480)
 end
 
 local logoEntity
 
 function start()
-    graphics.setClearColor(0,0.1,0.1,1)
+    gengine.graphics.setClearColor(0,0.1,0.1,1)
 
-    graphics.texture.create("logo.png")
+    gengine.graphics.texture.create("logo.png")
 
-    logoEntity = entity.create()
+    logoEntity = gengine.entity.create()
 
     logoEntity:addComponent(
         ComponentSprite(),
         {
-            texture = graphics.texture.get("logo"),
+            texture = gengine.graphics.texture.get("logo"),
             extent = { x=256, y=128 },
             layer = 0
         },
