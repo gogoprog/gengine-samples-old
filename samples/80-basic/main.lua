@@ -28,8 +28,8 @@ function ComponentCustom:onMouseJustDown()
 end
 
 function init()
-    application.setName("gengine-tests:basic")
-    application.setExtent(640,480)
+    gengine.application.setName("gengine-tests:basic")
+    gengine.application.setExtent(640,480)
 end
 
 local e, cameraEntity
@@ -37,21 +37,21 @@ local e, cameraEntity
 function start()
     print("tests/basic start")
 
-    graphics.setClearColor(1,1,0.1,1)
+    gengine.graphics.setClearColor(1,1,0.1,1)
 
-    graphics.texture.create("bird.png")
-    graphics.texture.create("logo.png")
+    gengine.graphics.texture.create("bird.png")
+    gengine.graphics.texture.create("logo.png")
 
-    e = entity.create()
+    e = gengine.entity.create()
     e.name = "Yeah"
 
-    e:addComponent(ComponentSprite(), { texture = graphics.texture.get("logo"), extent = { x=256, y=128 } }, "sprite")
+    e:addComponent(ComponentSprite(), { texture = gengine.graphics.texture.get("logo"), extent = { x=256, y=128 } }, "sprite")
     e:addComponent(ComponentMouseable(), { extent = { x=256, y=128} })
     e:addComponent(ComponentCustom(), {}, "custom")
 
     e:insert()
 
-    cameraEntity = entity.create()
+    cameraEntity = gengine.entity.create()
     cameraEntity:addComponent(ComponentCamera(), { extent = { x=640, y=480} }, "camera")
     cameraEntity:insert()
 end
@@ -63,17 +63,17 @@ local my_entities = {}
 function update(dt)
     total = total + dt
 
-    graphics.setClearColor(1,1,math.sin(total),1)
+    gengine.graphics.setClearColor(1,1,math.sin(total),1)
 
-    if input.mouse:isJustDown(1) then
-        local x,y = input.mouse:getPosition()
+    if gengine.input.mouse:isJustDown(1) then
+        local x,y = gengine.input.mouse:getPosition()
         local wx, wy = cameraEntity.camera:getWorldPosition(x,y)
 
         local et
-        et = entity.create()
+        et = gengine.entity.create()
         et:addComponent(ComponentSprite(),
             {
-                texture = graphics.texture.get("bird"),
+                texture = gengine.graphics.texture.get("bird"),
                 layer = layer,
                 extent = { x=64, y=64 },
                 color = { x=0.5, y=0.9, z=0.6, w=1.0 }

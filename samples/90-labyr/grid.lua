@@ -31,7 +31,7 @@ end
 
 function Grid:moveTiles(i, j, d, ntile)
     if self.movingTiles > 0 then
-        entity.destroy(ntile)
+        gengine.entity.destroy(ntile)
         return false
     end
 
@@ -82,7 +82,7 @@ function Grid:onTileArrived(tile, i, j)
         self:setTile(i, j, tile)
     else
         tile:remove()
-        entity.destroy(tile)
+        gengine.entity.destroy(tile)
     end
 
     self.movingTiles = self.movingTiles - 1
