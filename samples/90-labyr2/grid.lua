@@ -1,4 +1,6 @@
 dofile("component_placer.lua")
+dofile("component_tile.lua")
+dofile("tiles.lua")
 
 Grid = Grid or {
     tiles = {}
@@ -27,17 +29,34 @@ function Grid:fill()
     for i=0,self.width - 1 do
         for j=0,self.height - 1 do
             local e
+            local tile = Tiles[math.random(1,#Tiles)]
             e = gengine.entity.create()
 
             e:addComponent(
                 ComponentSprite(),
                 {
-                    texture = gengine.graphics.texture.get("tile0"),
+                    texture = gengine.graphics.texture.get(tile.file),
                     extent = { x=self.tileSize, y=self.tileSize },
                     layer = 0
                 },
                 "sprite"
                 )
+
+            e:addComponent(
+                ComponentMouseable(),
+                {
+                    extent = { x=self.tileSize, y=self.tileSize }
+                }
+                )
+
+            e:addComponent(
+                ComponentTile(),
+                {
+                },
+                "tile"
+                )
+
+            e.rotation = 3.141592/2 * tile.rotation
 
             self:setTile(i, j, e)
 

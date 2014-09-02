@@ -1,7 +1,7 @@
 
 ComponentTile = {}
 
-stateMachine(ComponentTile)
+gengine.stateMachine(ComponentTile)
 
 function ComponentTile:init()
     self.time = 0
@@ -14,15 +14,6 @@ function ComponentTile:insert()
 end
 
 function ComponentTile:remove()
-end
-
-function ComponentTile:setGridPosition(i,j)
-    local e = self.entity
-    local game = self.game
-    local origin = game.grid.origin
-
-    e.position.x = origin[1] + i * game.tileSize
-    e.position.y = origin[2] + j * game.tileSize
 end
 
 function ComponentTile:moveTo(i,j)
@@ -121,6 +112,4 @@ end
 
 function ComponentTile.onStateExit:rotating()
     self.entity.sprite.color = {x=1,y=1,z=1,w=1}
-
-    self.entity.path:findPath({self.entity}, self.entity)
 end
