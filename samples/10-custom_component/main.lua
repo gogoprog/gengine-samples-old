@@ -22,23 +22,23 @@ end
 -- App
 
 function init()
-    application.setName("[gengine-tests] 10-custom_component")
-    application.setExtent(320,600)
+    gengine.application.setName("[gengine-tests] 10-custom_component")
+    gengine.application.setExtent(320,600)
 end
 
 
 function start()
-    graphics.setClearColor(0,0.1,0.1,1)
+    gengine.graphics.setClearColor(0,0.1,0.1,1)
 
-    graphics.texture.create("logo.png")
+    gengine.graphics.texture.create("logo.png")
 
     for i=0,8 do
-        local logoEntity = entity.create()
+        local logoEntity = gengine.entity.create()
 
         logoEntity:addComponent(
             ComponentSprite(),
             {
-                texture = graphics.texture.get("logo"),
+                texture = gengine.graphics.texture.get("logo"),
                 extent = { x=256, y=128 },
                 layer = 0
             }

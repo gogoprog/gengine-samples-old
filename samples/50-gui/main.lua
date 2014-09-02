@@ -1,21 +1,21 @@
 function init()
-    application.setName("[gengine-tests] 50-gui")
-    application.setExtent(800,600)
+    gengine.application.setName("[gengine-tests] 50-gengine.gui")
+    gengine.application.setExtent(800,600)
 end
 
 local logoEntity
 
 function start()
-    graphics.setClearColor(0,0.1,0.1,1)
+    gengine.graphics.setClearColor(0,0.1,0.1,1)
 
-    graphics.texture.create("logo.png")
+    gengine.graphics.texture.create("logo.png")
 
-    logoEntity = entity.create()
+    logoEntity = gengine.entity.create()
 
     logoEntity:addComponent(
         ComponentSprite(),
         {
-            texture = graphics.texture.get("logo"),
+            texture = gengine.graphics.texture.get("logo"),
             extent = { x=2560, y=1280 },
             layer = 0
         }
@@ -23,7 +23,7 @@ function start()
 
     logoEntity:insert()
 
-    gui.loadFile("gui/menu.html")
+    gengine.gui.loadFile("gui/menu.html")
 end
 
 local total = 0
@@ -33,8 +33,8 @@ function update(dt)
     total = total + dt * sens
     logoEntity.rotation = total
 
-    if input.mouse:isJustDown(1) then
-        gui.executeScript("updateTotal('" .. total .. "');")
+    if gengine.input.mouse:isJustDown(1) then
+        gengine.gui.executeScript("updateTotal('" .. total .. "');")
     end
 end
 

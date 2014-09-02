@@ -1,7 +1,7 @@
 
 ComponentTile = {}
 
-stateMachine(ComponentTile)
+gengine.stateMachine(ComponentTile)
 
 function ComponentTile:init()
     self.time = 0
