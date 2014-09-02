@@ -1,12 +1,12 @@
 dofile("game.lua")
 
 function init()
-    application.setName("[gengine-tests] 90-labyr")
-    application.setExtent(640,480)
+    gengine.application.setName("[gengine-tests] 90-labyr")
+    gengine.application.setExtent(640,480)
 end
 
 function start()
-    graphics.setClearColor(0.6,0.6,0.6,1)
+    gengine.graphics.setClearColor(0.6,0.6,0.6,1)
 
     Game:load()
 

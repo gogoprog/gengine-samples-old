@@ -25,5 +25,5 @@ end
 function ComponentPlacer:onMouseJustDown()
     self.entity.sprite.color = {x=1,y=0,z=0,w=1}
 
-    Grid:moveTiles(self.col, self.row, self.sens)
+    --Grid:moveTiles(self.col, self.row, self.sens)
 end

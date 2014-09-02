@@ -27,12 +27,12 @@ function Grid:fill()
     for i=0,self.width - 1 do
         for j=0,self.height - 1 do
             local e
-            e = entity.create()
+            e = gengine.entity.create()
 
             e:addComponent(
                 ComponentSprite(),
                 {
-                    texture = graphics.texture.get("tile0"),
+                    texture = gengine.graphics.texture.get("tile0"),
                     extent = { x=self.tileSize, y=self.tileSize },
                     layer = 0
                 },
@@ -62,12 +62,12 @@ end
 
 function Grid:createPlacer(i, j)
     local e
-    e = entity.create()
+    e = gengine.entity.create()
 
     e:addComponent(
         ComponentSprite(),
         {
-            texture = graphics.texture.get("tile0"),
+            texture = gengine.graphics.texture.get("tile0"),
             extent = { x=self.tileSize, y=self.tileSize },
             layer = 0
         },

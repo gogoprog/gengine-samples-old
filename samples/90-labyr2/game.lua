@@ -4,7 +4,7 @@ Game = Game or {}
 
 function Game:load()
     for i=0,2 do
-        graphics.texture.create("data/tile" .. i .. ".png")
+        gengine.graphics.texture.create("data/tile" .. i .. ".png")
     end
 end
 
