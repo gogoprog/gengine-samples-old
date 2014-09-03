@@ -41,7 +41,7 @@ function Grid:fill()
                 },
                 "sprite"
                 )
-
+ 
             e:addComponent(
                 ComponentMouseable(),
                 {
@@ -52,11 +52,13 @@ function Grid:fill()
             e:addComponent(
                 ComponentTile(),
                 {
+                    rotation = tile.rotation,
+                    originalValidDirections = tile.validDirections,
                 },
                 "tile"
                 )
 
-            e.rotation = 3.141592/2 * tile.rotation
+            e.rotation = - 3.141592/2 * tile.rotation
 
             self:setTile(i, j, e)
 
@@ -76,8 +78,18 @@ function Grid:setTile(i, j, e)
 
     e.position.x = x
     e.position.y = y
+
+    e.tile.col = i
+    e.tile.row = j
 end
 
+function Grid:getTile(i, j)
+    if self.tiles[i] == nil then
+        return nil
+    end
+
+    return self.tiles[i][j]
+end
 
 function Grid:createPlacer(i, j)
     local e
@@ -147,5 +159,53 @@ function Grid:initPlacers()
         local e = self:createPlacer(i, j)
         e.placer.col = i
         e.placer.sens = -1
+    end
+end
+
+Grid.getTileFromDir = {}
+
+Grid.getTileFromDir[0] = function(self, e)
+    return self:getTile(e.col, e.row + 1)
+end
+
+Grid.getTileFromDir[1] = function(self, e)
+    return self:getTile(e.col + 1, e.row)
+end
+
+Grid.getTileFromDir[2] = function(self, e)
+    return self:getTile(e.col, e.row - 1)
+end
+
+Grid.getTileFromDir[3] = function(self, e)
+    return self:getTile(e.col - 1, e.row)
+end
+
+
+function Grid:testConnections(e, list)
+    local tile = e.tile
+    local c, r = tile.col, tile.row
+
+    for i = 0,3 do
+        if tile:canConnect(i) then
+            local j = (i+2) % 4
+            local other = self.getTileFromDir[i](Grid, tile)
+
+            if other and other.tile:canConnect(j) then
+                if #list >= 4 and other == list[1] then
+                    print("LOOP!")
+                    for _, v in ipairs(list) do
+                        v.sprite.color = {x=0,y=0,z=1,w=1}
+                    end
+                    return
+                elseif other ~= list[#list - 1] then
+                    local new_list = {}
+                    for _, v in ipairs(list) do
+                        table.insert(new_list, v)
+                    end
+                    table.insert(new_list, other)
+                    self:testConnections(other, new_list)
+                end
+            end
+        end
     end
 end

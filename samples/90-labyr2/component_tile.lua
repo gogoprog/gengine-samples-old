@@ -43,8 +43,15 @@ function ComponentTile:rotate()
     if self.state == "none" then
         self.fromRotation = self.entity.rotation
         self.time = 0
-        self.toRotation = self.fromRotation - 3.141592/2
         self:changeState("rotating")
+        self.rotation = self.rotation + 1
+        if self.rotation < 0 then
+            self.rotation = 3
+        end
+
+        self.rotation = self.rotation % 4
+
+        self.toRotation = self.fromRotation - 3.141592/2
     end
 end
 
@@ -57,8 +64,12 @@ function ComponentTile:onMouseExit()
     self.entity.sprite.color = {x=1,y=1,z=1,w=1}
 end
 
-function ComponentTile:onMouseJustDown()
-    self:rotate()
+function ComponentTile:onMouseJustDown(b)
+    if b == 1 then
+        self:rotate()
+    elseif b == 3 then
+        self:testConnections()
+    end
 end
 
 function ComponentTile:update(dt)
@@ -112,4 +123,16 @@ end
 
 function ComponentTile.onStateExit:rotating()
     self.entity.sprite.color = {x=1,y=1,z=1,w=1}
+end
+
+function ComponentTile:canConnect(dir)
+    local d = dir - self.rotation
+
+    if d < 0 then d = d + 4 end
+
+    return self.originalValidDirections[d + 1]
+end
+
+function ComponentTile:testConnections()
+    Grid:testConnections(self.entity, {self.entity})
 end
