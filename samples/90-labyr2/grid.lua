@@ -180,7 +180,6 @@ Grid.getTileFromDir[3] = function(self, e)
     return self:getTile(e.col - 1, e.row)
 end
 
-
 function Grid:testConnections(e, list)
     local tile = e.tile
     local c, r = tile.col, tile.row
@@ -208,4 +207,21 @@ function Grid:testConnections(e, list)
             end
         end
     end
+end
+
+function Grid:getInsideTiles(contour)
+    local contour_map = {}
+    for _, v in ipairs(contour) do
+        contour_map[v] = true
+    end
+
+    for j=0,self.height - 1 do
+        for i=0,self.width - 1 do
+            local tile = self:getTile(i, j)
+        end
+    end
+end
+
+function Grid:processContour(contour)
+
 end
