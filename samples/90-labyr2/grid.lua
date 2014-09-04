@@ -209,6 +209,7 @@ end
 function Grid:getSurroundedTiles(contour)
     local result = {}
     local contour_map = {}
+    local result_map = {}
 
     for _, v in ipairs(contour) do
         contour_map[v] = true
@@ -216,15 +217,44 @@ function Grid:getSurroundedTiles(contour)
 
     for j=0,self.height - 1 do
         local contour_found = 0
+        local last_was_contour = false
         for i=0,self.width - 1 do
             local tile = self:getTile(i, j)
 
             if contour_map[tile] then
-                contour_found = contour_found + 1
+                if not last_was_contour then
+                    contour_found = contour_found + 1
+                end
+
+                last_was_contour = true
             else
                 if contour_found % 2 == 1 then
-                    table.insert(result, tile)
+                    result_map[tile] = true
                 end
+                last_was_contour = false
+            end
+        end
+    end
+
+    for i=0,self.width - 1 do
+        local contour_found = 0
+        local last_was_contour = false
+        for j=0,self.height - 1 do
+            local tile = self:getTile(i, j)
+
+            if contour_map[tile] then
+                if not last_was_contour then
+                    contour_found = contour_found + 1
+                end
+
+                last_was_contour = true
+            else
+                if contour_found % 2 == 1 then
+                    if result_map[tile] then
+                        table.insert(result, tile)
+                    end
+                end
+                last_was_contour = false
             end
         end
     end
