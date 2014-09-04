@@ -191,10 +191,7 @@ function Grid:testConnections(e, list)
 
             if other and other.tile:canConnect(j) then
                 if #list >= 4 and other == list[1] then
-                    print("LOOP!")
-                    for _, v in ipairs(list) do
-                        v.sprite.color = {x=0,y=0,z=1,w=1}
-                    end
+                    self:processContour(list)
                     return
                 elseif other ~= list[#list - 1] then
                     local new_list = {}
@@ -209,19 +206,40 @@ function Grid:testConnections(e, list)
     end
 end
 
-function Grid:getInsideTiles(contour)
+function Grid:getSurroundedTiles(contour)
+    local result = {}
     local contour_map = {}
+
     for _, v in ipairs(contour) do
         contour_map[v] = true
     end
 
     for j=0,self.height - 1 do
+        local contour_found = 0
         for i=0,self.width - 1 do
             local tile = self:getTile(i, j)
+
+            if contour_map[tile] then
+                contour_found = contour_found + 1
+            else
+                if contour_found % 2 == 1 then
+                    table.insert(result, tile)
+                end
+            end
         end
     end
+
+    return result
 end
 
 function Grid:processContour(contour)
+    local surrounded_tiles = self:getSurroundedTiles(contour)
 
+    for _, v in ipairs(contour) do
+        v.sprite.color = {x=0,y=0,z=1,w=1}
+    end
+
+    for _, v in ipairs(surrounded_tiles) do
+        v.sprite.color = {x=0,y=1,z=0,w=1}
+    end
 end

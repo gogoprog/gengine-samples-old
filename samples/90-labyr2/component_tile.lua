@@ -67,8 +67,15 @@ end
 function ComponentTile:onMouseJustDown(b)
     if b == 1 then
         self:rotate()
-    elseif b == 3 then
-        self:testConnections()
+    end
+    
+    -- debug
+    if b == 2 then
+        local tile = Tiles[math.random(1,#Tiles)]
+        self.entity.sprite.texture = gengine.graphics.texture.get(tile.file)
+        self.rotation = tile.rotation
+        self.originalValidDirections = tile.validDirections
+        self.entity.rotation = - 3.141592/2 * tile.rotation
     end
 end
 
@@ -122,7 +129,7 @@ function ComponentTile.onStateUpdate:rotating(dt)
 end
 
 function ComponentTile.onStateExit:rotating()
-    self.entity.sprite.color = {x=1,y=1,z=1,w=1}
+    self:testConnections()
 end
 
 function ComponentTile:canConnect(dir)
