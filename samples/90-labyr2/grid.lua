@@ -30,6 +30,7 @@ function Grid:fill()
         for j=0,self.height - 1 do
             local e
             local tile = Tiles[math.random(1,#Tiles)]
+            local rotation_index = math.random(0, 3)
             e = gengine.entity.create()
 
             e:addComponent(
@@ -52,13 +53,13 @@ function Grid:fill()
             e:addComponent(
                 ComponentTile(),
                 {
-                    rotation = tile.rotation,
+                    rotation = rotation_index,
                     originalValidDirections = tile.validDirections,
                 },
                 "tile"
                 )
 
-            e.rotation = - 3.141592/2 * tile.rotation
+            e.rotation = - 3.141592/2 * rotation_index
 
             self:setTile(i, j, e)
 
@@ -230,29 +231,6 @@ function Grid:getSurroundedTiles(contour)
             else
                 if contour_found % 2 == 1 then
                     result_map[tile] = true
-                end
-                last_was_contour = false
-            end
-        end
-    end
-
-    for i=0,self.width - 1 do
-        local contour_found = 0
-        local last_was_contour = false
-        for j=0,self.height - 1 do
-            local tile = self:getTile(i, j)
-
-            if contour_map[tile] then
-                if not last_was_contour then
-                    contour_found = contour_found + 1
-                end
-
-                last_was_contour = true
-            else
-                if contour_found % 2 == 1 then
-                    if result_map[tile] then
-                        table.insert(result, tile)
-                    end
                 end
                 last_was_contour = false
             end
