@@ -6,7 +6,6 @@ gengine.stateMachine(ComponentTile)
 function ComponentTile:init()
     self.time = 0
     self.moveDuration = 0.2
-    self.moving = false
     self:changeState("none")
 end
 
@@ -18,12 +17,11 @@ end
 
 function ComponentTile:moveTo(i,j)
     if self.state == "none" then
-        local game = self.game
-        local origin = game.grid.origin
+        local tx, ty = Grid:getTilePosition(i ,j)
 
         self.targetPos = {
-            x = origin[1] + i * game.tileSize,
-            y = origin[2] + j * game.tileSize
+            x = tx,
+            y = ty
             }
 
         self.target = { i, j }
@@ -33,7 +31,6 @@ function ComponentTile:moveTo(i,j)
             y = self.entity.position.y
             }
 
-        self.moving = true
         self.time = 0
         self:changeState("moving")
     end
@@ -89,7 +86,7 @@ function ComponentTile.onStateUpdate:moving(dt)
     if self.time >= self.moveDuration then
         self.time = self.moveDuration
         local i,j = self.target[1], self.target[2]
-        self.game.grid:onTileArrived(self.entity, i, j)
+        Grid:onTileArrived(self.entity, i, j)
 
         self:changeState("none")
     end

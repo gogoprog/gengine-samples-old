@@ -16,6 +16,8 @@ function Grid:init(w, h, tileSize)
         tileSize * ( h - 1 ) * -0.5
         }
 
+    self.movingTiles = 0
+
     self:initPlacers()
 end
 
@@ -25,44 +27,48 @@ function Grid:getTilePosition(i, j)
     return origin[1] + i * self.tileSize, origin[2] + j * self.tileSize
 end
 
+function Grid:createTile(index, rot)
+    local e
+    local tile = Tiles[index]
+    local rotation_index = rot
+    e = gengine.entity.create()
+
+    e:addComponent(
+        ComponentSprite(),
+        {
+            texture = gengine.graphics.texture.get(tile.file),
+            extent = { x=self.tileSize, y=self.tileSize },
+            layer = 0
+        },
+        "sprite"
+        )
+
+    e:addComponent(
+        ComponentMouseable(),
+        {
+            extent = { x=self.tileSize, y=self.tileSize }
+        }
+        )
+
+    e:addComponent(
+        ComponentTile(),
+        {
+            rotation = rotation_index,
+            tile = tile
+        },
+        "tile"
+        )
+
+    e.rotation = - 3.141592/2 * rotation_index
+
+    return e
+end
+
 function Grid:fill()
     for i=0,self.width - 1 do
         for j=0,self.height - 1 do
-            local e
-            local tile = Tiles[math.random(1,#Tiles)]
-            local rotation_index = math.random(0, 3)
-            e = gengine.entity.create()
-
-            e:addComponent(
-                ComponentSprite(),
-                {
-                    texture = gengine.graphics.texture.get(tile.file),
-                    extent = { x=self.tileSize, y=self.tileSize },
-                    layer = 0
-                },
-                "sprite"
-                )
- 
-            e:addComponent(
-                ComponentMouseable(),
-                {
-                    extent = { x=self.tileSize, y=self.tileSize }
-                }
-                )
-
-            e:addComponent(
-                ComponentTile(),
-                {
-                    rotation = rotation_index,
-                    tile = tile
-                },
-                "tile"
-                )
-
-            e.rotation = - 3.141592/2 * rotation_index
-
+            local e = self:createTile(math.random(1,#Tiles), math.random(0, 3))
             self:setTile(i, j, e)
-
             e:insert()
         end
     end
@@ -161,6 +167,65 @@ function Grid:initPlacers()
         e.placer.col = i
         e.placer.sens = -1
     end
+end
+
+function Grid:moveTiles(i, j, d, ntile)
+    if self.movingTiles > 0 then
+        gengine.entity.destroy(ntile)
+        return false
+    end
+
+    local w = self.width -1
+    local h = self.height -1
+
+    if not i then
+        for i=0,w do
+            if self.tiles[i] and self.tiles[i][j] then
+                self.tiles[i][j].tile:moveTo(i+d,j)
+                self.movingTiles = self.movingTiles + 1
+            end
+        end
+        if d > 0 then
+            self:setTile(-1,j,ntile)
+            ntile.tile:moveTo(0,j)
+        else
+            self:setTile(w + 1,j,ntile)
+            ntile.tile:moveTo(w,j)
+        end
+        ntile:insert()
+        self.movingTiles = self.movingTiles + 1
+    elseif not j then
+        for j=0,h do
+            if self.tiles[i] and self.tiles[i][j] then
+                self.tiles[i][j].tile:moveTo(i,j+d)
+                self.movingTiles = self.movingTiles + 1
+            end
+        end
+        if d > 0 then
+            self:setTile(i,-1,ntile)
+            ntile.tile:moveTo(i,0)
+        else
+            self:setTile(i,h+1,ntile)
+            ntile.tile:moveTo(i,h)
+        end
+        ntile:insert()
+        self.movingTiles = self.movingTiles + 1
+    end
+
+    return true
+end
+
+function Grid:onTileArrived(tile, i, j)
+    local width = self.width
+    local height = self.height
+    if i >= 0 and i < width and j >= 0 and j < height then
+        self:setTile(i, j, tile)
+    else
+        tile:remove()
+        gengine.entity.destroy(tile)
+    end
+
+    self.movingTiles = self.movingTiles - 1
 end
 
 Grid.getTileFromDir = {}
