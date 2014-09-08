@@ -74,7 +74,7 @@ function ComponentTile:onMouseJustDown(b)
         local tile = Tiles[math.random(1,#Tiles)]
         self.entity.sprite.texture = gengine.graphics.texture.get(tile.file)
         self.rotation = tile.rotation
-        self.originalValidDirections = tile.validDirections
+        self.tile = tile
         self.entity.rotation = - 3.141592/2 * tile.rotation
     end
 end
@@ -137,9 +137,17 @@ function ComponentTile:canConnect(dir)
 
     if d < 0 then d = d + 4 end
 
-    return self.originalValidDirections[d + 1]
+    return self.tile.validDirections[d + 1]
 end
 
 function ComponentTile:testConnections()
     Grid:testConnections(self.entity, {self.entity})
+end
+
+function ComponentTile:isCorner()
+    return self.tile.corner
+end
+
+function ComponentTile:isVertical()
+    return self:canConnect(0) and self:canConnect(2)
 end

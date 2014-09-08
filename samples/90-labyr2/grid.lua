@@ -54,7 +54,7 @@ function Grid:fill()
                 ComponentTile(),
                 {
                     rotation = rotation_index,
-                    originalValidDirections = tile.validDirections,
+                    tile = tile
                 },
                 "tile"
                 )
@@ -210,7 +210,6 @@ end
 function Grid:getSurroundedTiles(contour)
     local result = {}
     local contour_map = {}
-    local result_map = {}
 
     for _, v in ipairs(contour) do
         contour_map[v] = true
@@ -218,21 +217,34 @@ function Grid:getSurroundedTiles(contour)
 
     for j=0,self.height - 1 do
         local contour_found = 0
-        local last_was_contour = false
+        local corner_found = false
+        local first_corner_dir = nil
         for i=0,self.width - 1 do
             local tile = self:getTile(i, j)
 
             if contour_map[tile] then
-                if not last_was_contour then
+                if tile.tile:isCorner() then
+                    if not corner_found then
+                        if tile.tile:canConnect(0) then
+                            first_corner_dir = 0
+                        else
+                            first_corner_dir = 2
+                        end
+                        corner_found = true
+                    else
+                        if not tile.tile:canConnect(first_corner_dir) then
+                            contour_found = contour_found + 1
+                        end
+
+                        corner_found = false
+                    end
+                elseif tile.tile:isVertical() then
                     contour_found = contour_found + 1
                 end
-
-                last_was_contour = true
             else
                 if contour_found % 2 == 1 then
-                    result_map[tile] = true
+                    table.insert(result, tile)
                 end
-                last_was_contour = false
             end
         end
     end
