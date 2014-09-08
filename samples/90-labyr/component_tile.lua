@@ -85,9 +85,6 @@ function ComponentTile.onStateUpdate:moving(dt)
 
     if self.time >= self.moveDuration then
         self.time = self.moveDuration
-        local i,j = self.target[1], self.target[2]
-        Grid:onTileArrived(self.entity, i, j)
-
         self:changeState("none")
     end
 
@@ -102,6 +99,11 @@ end
 
 function ComponentTile.onStateEnter:rotating()
     self.entity.sprite.color = {x=0,y=1,z=0,w=1}
+end
+
+function ComponentTile.onStateExit:moving()
+    local i,j = self.target[1], self.target[2]
+    Grid:onTileArrived(self.entity, i, j)
 end
 
 function ComponentTile.onStateUpdate:rotating(dt)

@@ -226,6 +226,14 @@ function Grid:onTileArrived(tile, i, j)
     end
 
     self.movingTiles = self.movingTiles - 1
+
+    if self.movingTiles == 0 then
+        for j=0,self.height - 1 do
+            for i=0,self.width - 1 do
+                self.tiles[i][j].tile:testConnections()
+            end
+        end
+    end
 end
 
 Grid.getTileFromDir = {}
