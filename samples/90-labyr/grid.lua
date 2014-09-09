@@ -75,11 +75,13 @@ function Grid:fill()
 end
 
 function Grid:setTile(i, j, e)
-    if self.tiles[i] == nil then
-        self.tiles[i] = {}
-    end
+    if i >= 0 and i < self.width and j >= 0 and j < self.height then
+        if self.tiles[i] == nil then
+            self.tiles[i] = {}
+        end
 
-    self.tiles[i][j] = e
+        self.tiles[i][j] = e
+    end
 
     local x, y = self:getTilePosition(i, j)
 
@@ -262,7 +264,6 @@ function Grid:testConnections(e, list)
         if tile:canConnect(i) then
             local j = (i+2) % 4
             local other = self.getTileFromDir[i](Grid, tile)
-
             if other and other.tile:canConnect(j) then
                 if #list >= 4 and other == list[1] then
                     self:processContour(list)
