@@ -18,5 +18,5 @@ end
 
 function onStartClick()
     Game:start(10,10,32)
-    gengine.gui.loadFile("about:blank")
+    gengine.gui.loadFile("gui/hud.html")
 end

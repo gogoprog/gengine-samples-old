@@ -1,0 +1,48 @@
+<html>
+<body>
+<style>
+body {
+    width:100%;
+    height:100%;
+    font-family: Impact;
+    font-weight: normal;
+    margin:auto;
+    padding:0;
+    overflow:hidden;
+}
+
+.title {
+    position:absolute;
+    width:120px;
+    top: 0;
+    left: 0;
+    font-size:20px;
+}
+
+.score {
+    font-size:20px;
+    position:absolute;
+    width:200px;
+    bottom:0;
+    right:0;
+    text-align: right;
+}
+</style>
+
+<script>
+function pad(num, size) {
+    var s = "000000000" + num;
+    return s.substr(s.length-size);
+}
+
+function updateScore(score) {
+    document.getElementById("score").innerHTML = pad(score, 6);
+}
+</script>
+
+<span class="title">Level 1</span>
+
+<div class="score">Score: <span id="score">000000</span></div>
+
+</body>
+</html>
