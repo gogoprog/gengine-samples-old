@@ -6,13 +6,17 @@ function init()
 end
 
 function start()
-    gengine.graphics.setClearColor(0.6,0.6,0.6,1)
+    gengine.graphics.setClearColor(1,1,1,1)
+    gengine.gui.loadFile("gui/main.html")
 
     Game:load()
-
-    Game:start(10,10,32)
 end
 
 function update(dt)
     Game:update(dt)
+end
+
+function onStartClick()
+    Game:start(10,10,32)
+    gengine.gui.loadFile("about:blank")
 end
