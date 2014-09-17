@@ -103,7 +103,7 @@ function ComponentTile.onStateExit:moving()
 end
 
 function ComponentTile.onStateEnter:rotating()
-    self.entity.sprite.color = {x=0,y=1,z=0,w=1}
+    Grid.rotatingTiles = Grid.rotatingTiles + 1
 end
 
 function ComponentTile.onStateUpdate:rotating(dt)
@@ -128,6 +128,7 @@ function ComponentTile.onStateUpdate:rotating(dt)
 end
 
 function ComponentTile.onStateExit:rotating()
+    Grid.rotatingTiles = Grid.rotatingTiles - 1
     Grid:addTileToTest(self.entity)
 end
 

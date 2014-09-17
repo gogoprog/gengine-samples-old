@@ -7,6 +7,8 @@ Grid = Grid or {
     tilesToTest = {}
 }
 
+gengine.stateMachine(Grid)
+
 function Grid:init(w, h, tileSize)
     self.width = w
     self.height = h
@@ -18,6 +20,7 @@ function Grid:init(w, h, tileSize)
         }
 
     self.movingTiles = 0
+    self.rotatingTiles = 0
 
     self:initPlacers()
 end
@@ -345,7 +348,15 @@ function Grid:addTileToTest(e)
     table.insert(self.tilesToTest, e)
 end
 
-function Grid:update()
+function Grid:update(dt)
+    self:updateState(dt)
+end
+
+function Grid.onStateUpdate:idling(dt)
+    if self.rotatingTiles > 0 or self.movingTiles > 0 then
+        return
+    end
+
     for k, v in ipairs(self.tilesToTest) do
         self:testConnections(v, {v})
     end

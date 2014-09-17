@@ -13,6 +13,7 @@ function Game:start(w, h, ts)
     self.score = 0
     Grid:init(w, h, ts)
     Grid:fill()
+    Grid:changeState("idling")
 
     self:pickNextPiece()
 end
