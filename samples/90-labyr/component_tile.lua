@@ -143,6 +143,8 @@ end
 
 function ComponentTile.onStateUpdate:shaking(dt)
     self.time = self.time + dt
+    self.totalTime = self.totalTime + dt
+
     if self.time > 0.1 then
         local e = self.entity
         local p = e.position
@@ -151,11 +153,25 @@ function ComponentTile.onStateUpdate:shaking(dt)
         p.x = init_pos[1] + math.random(-2,2)
         p.y = init_pos[2] + math.random(-2,2)
         self.time = 0
-        self.totalTime = self.totalTime + dt
+
+        if self.totalTime >= 1 then
+            local tile = Tiles[1]
+            self.entity.sprite.texture = gengine.graphics.texture.get(tile.file)
+            self.rotation = tile.rotation
+            self.tile = tile
+            self.entity.rotation = - 3.141592/2 * tile.rotation
+            self:changeState("none")
+        end
     end
 end
 
 function ComponentTile.onStateExit:shaking()
+    local e = self.entity
+    local p = e.position
+    local init_pos = self.initialPosition
+    self.entity.rotation = self.initialRotation
+    p.x = init_pos[1]
+    p.y = init_pos[2]
 end
 
 function ComponentTile:canConnect(dir)
