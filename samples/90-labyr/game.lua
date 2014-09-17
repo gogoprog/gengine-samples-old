@@ -18,7 +18,7 @@ function Game:start(w, h, ts)
 end
 
 function Game:update(dt)
-
+    Grid:update(dt)
 end
 
 function Game:moveTiles(i, j, d)

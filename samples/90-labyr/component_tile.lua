@@ -97,13 +97,13 @@ function ComponentTile.onStateUpdate:moving(dt)
     p.y = from.y + (target.y - from.y) * f
 end
 
-function ComponentTile.onStateEnter:rotating()
-    self.entity.sprite.color = {x=0,y=1,z=0,w=1}
-end
-
 function ComponentTile.onStateExit:moving()
     local i,j = self.target[1], self.target[2]
     Grid:onTileArrived(self.entity, i, j)
+end
+
+function ComponentTile.onStateEnter:rotating()
+    self.entity.sprite.color = {x=0,y=1,z=0,w=1}
 end
 
 function ComponentTile.onStateUpdate:rotating(dt)
@@ -128,7 +128,33 @@ function ComponentTile.onStateUpdate:rotating(dt)
 end
 
 function ComponentTile.onStateExit:rotating()
-    self:testConnections()
+    Grid:addTileToTest(self.entity)
+end
+
+function ComponentTile.onStateEnter:shaking()
+    self.time = 0
+    self.totalTime = 0
+    local e = self.entity
+    local p = e.position
+    self.initialRotation = e.rotation
+    self.initialPosition = {p.x, p.y}
+end
+
+function ComponentTile.onStateUpdate:shaking(dt)
+    self.time = self.time + dt
+    if self.time > 0.1 then
+        local e = self.entity
+        local p = e.position
+        local init_pos = self.initialPosition
+        self.entity.rotation = math.random() * 0.1 + self.initialRotation - 0.05
+        p.x = init_pos[1] + math.random(-2,2)
+        p.y = init_pos[2] + math.random(-2,2)
+        self.time = 0
+        self.totalTime = self.totalTime + dt
+    end
+end
+
+function ComponentTile.onStateExit:shaking()
 end
 
 function ComponentTile:canConnect(dir)
@@ -137,10 +163,6 @@ function ComponentTile:canConnect(dir)
     if d < 0 then d = d + 4 end
 
     return self.tile.validDirections[d + 1]
-end
-
-function ComponentTile:testConnections()
-    Grid:testConnections(self.entity, {self.entity})
 end
 
 function ComponentTile:isCorner()

@@ -3,7 +3,8 @@ dofile("component_tile.lua")
 dofile("tiles.lua")
 
 Grid = Grid or {
-    tiles = {}
+    tiles = {},
+    tilesToTest = {}
 }
 
 function Grid:init(w, h, tileSize)
@@ -232,7 +233,7 @@ function Grid:onTileArrived(tile, i, j)
     if self.movingTiles == 0 then
         for j=0,self.height - 1 do
             for i=0,self.width - 1 do
-                self.tiles[i][j].tile:testConnections()
+                table.insert(self.tilesToTest, self.tiles[i][j])
             end
         end
     end
@@ -331,9 +332,22 @@ function Grid:processContour(contour)
 
     for _, v in ipairs(contour) do
         v.sprite.color = {x=0,y=0,z=1,w=1}
+        v.tile:changeState("shaking")
     end
 
     for _, v in ipairs(surrounded_tiles) do
         v.sprite.color = {x=0,y=1,z=0,w=1}
+        v.tile:changeState("shaking")
     end
+end
+
+function Grid:addTileToTest(e)
+    table.insert(self.tilesToTest, e)
+end
+
+function Grid:update()
+    for k, v in ipairs(self.tilesToTest) do
+        self:testConnections(v, {v})
+    end
+    self.tilesToTest = {}
 end
