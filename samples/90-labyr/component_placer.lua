@@ -18,6 +18,8 @@ function ComponentPlacer:onMouseEnter()
     local tile = Tiles[Game.nextPiece]
     sprite.texture = gengine.graphics.texture.get(tile.file)
     self.entity.rotation = - 3.141592/2 * Game.nextRotation
+
+    self.itIsHighlighted = true
 end
 
 function ComponentPlacer:onMouseExit()
@@ -25,6 +27,8 @@ function ComponentPlacer:onMouseExit()
     sprite.color = {x=1,y=1,z=1,w=1}
     local tile = Tiles[1]
     sprite.texture = gengine.graphics.texture.get(tile.file)
+
+    self.itIsHighlighted = false
 end
 
 function ComponentPlacer:onMouseJustDown()

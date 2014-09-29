@@ -5,7 +5,8 @@ dofile("tiles.lua")
 
 Grid = Grid or {
     tiles = {},
-    tilesToTest = {}
+    tilesToTest = {},
+    placers = {}
 }
 
 gengine.stateMachine(Grid)
@@ -175,6 +176,8 @@ function Grid:createPlacer(i, j)
     e.position.x = x
     e.position.y = y
 
+    table.insert(self.placers, e)
+
     return e
 end
 
@@ -208,6 +211,14 @@ function Grid:initPlacers()
         local e = self:createPlacer(i, j)
         e.placer.col = i
         e.placer.sens = -1
+    end
+end
+
+function Grid:updatePlacers()
+    for k, v in ipairs(self.placers) do
+        if v.placer.itIsHighlighted then
+            v.placer:onMouseEnter()
+        end
     end
 end
 

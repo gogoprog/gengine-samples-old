@@ -33,6 +33,7 @@ end
 function Game:pickNextPiece()
     self.nextPiece = math.random(2,#Tiles)
     self.nextRotation = math.random(0, 3)
+    Grid:updatePlacers()
 end
 
 function Game:increaseScore(value)
