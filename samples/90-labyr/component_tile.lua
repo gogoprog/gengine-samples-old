@@ -149,18 +149,25 @@ function ComponentTile.onStateUpdate:shaking(dt)
         local e = self.entity
         local p = e.position
         local init_pos = self.initialPosition
-        self.entity.rotation = math.random() * 0.1 + self.initialRotation - 0.05
+        e.rotation = math.random() * 0.1 + self.initialRotation - 0.05
         p.x = init_pos[1] + math.random(-2,2)
         p.y = init_pos[2] + math.random(-2,2)
         self.time = 0
 
         if self.totalTime >= 1 then
             local tile = Tiles[1]
-            self.entity.sprite.texture = gengine.graphics.texture.get(tile.file)
+            e.sprite.texture = gengine.graphics.texture.get(tile.file)
             self.rotation = tile.rotation
             self.tile = tile
             self.entity.rotation = - 3.141592/2 * tile.rotation
             self:changeState("none")
+
+            if self.entity.key then
+                e.key:remove()
+                e.keysprite:remove()
+                e:removeComponent("key")
+                e:removeComponent("keysprite")
+            end
         end
     end
 end

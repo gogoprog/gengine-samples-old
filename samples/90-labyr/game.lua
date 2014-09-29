@@ -6,13 +6,14 @@ function Game:load()
     for i=0,2 do
         gengine.graphics.texture.create("data/tile" .. i .. ".png")
     end
-    
+    gengine.graphics.texture.create("data/key.png")
 end
 
-function Game:start(w, h, ts)
+function Game:start(w, h, ts, keys)
     self.score = 0
+    self.keyLeft = 0
     Grid:init(w, h, ts)
-    Grid:fill()
+    Grid:fill(keys)
     Grid:changeState("idling")
 
     self:pickNextPiece()
@@ -37,4 +38,10 @@ end
 function Game:increaseScore(value)
     self.score = self.score + value
     gengine.gui.executeScript("updateScore(" .. self.score .. ");")
+end
+
+function Game:onKeyFound()
+    if self.keyLeft == 0 then
+        print("Game completed!")
+    end
 end

@@ -1,5 +1,6 @@
 dofile("component_placer.lua")
 dofile("component_tile.lua")
+dofile("component_key.lua")
 dofile("tiles.lua")
 
 Grid = Grid or {
@@ -68,12 +69,47 @@ function Grid:createTile(index, rot)
     return e
 end
 
-function Grid:fill()
+function Grid:fill(keys)
     for i=0,self.width - 1 do
         for j=0,self.height - 1 do
             local e = self:createTile(math.random(1,#Tiles), math.random(0, 3))
             self:setTile(i, j, e)
-            e:insert()
+        end
+    end
+
+    local tiles = self.tiles
+    local i, j
+
+    while keys > 0 do
+        i = math.random(0, self.width - 1)
+        j = math.random(0, self.height - 1)
+
+        if not tiles[i][j].key then
+            local e = tiles[i][j]
+            e:addComponent(
+                ComponentSprite(),
+                {
+                    texture = gengine.graphics.texture.get("key"),
+                    extent = { x=self.tileSize, y=self.tileSize },
+                    layer = 1
+                },
+                "keysprite"
+                )
+
+            e:addComponent(
+                ComponentKey(),
+                {
+                },
+                "key"
+                )
+
+            keys = keys - 1
+        end
+    end
+
+    for i=0,self.width - 1 do
+        for j=0,self.height - 1 do
+            tiles[i][j]:insert()
         end
     end
 end

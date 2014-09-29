@@ -1,4 +1,3 @@
-
 ComponentPlacer = {}
 
 function ComponentPlacer:init()

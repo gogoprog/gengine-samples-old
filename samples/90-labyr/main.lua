@@ -17,6 +17,6 @@ function update(dt)
 end
 
 function onStartClick()
-    Game:start(10,10,32)
+    Game:start(10, 10, 32, 1)
     gengine.gui.loadFile("gui/hud.html")
 end
