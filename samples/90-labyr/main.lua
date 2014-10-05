@@ -17,6 +17,9 @@ function update(dt)
 end
 
 function onStartClick()
-    Game:start(10, 10, 32, 1)
-    gengine.gui.loadFile("gui/hud.html")
+    Game:playLevel(1)
+end
+
+function onContinueClick()
+    Game:playNextLevel()
 end

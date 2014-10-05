@@ -12,6 +12,27 @@ Grid = Grid or {
 gengine.stateMachine(Grid)
 
 function Grid:init(w, h, tileSize)
+
+    self.tilesToTest = {}
+
+    for _, v in ipairs(self.tiles) do
+        for k, t in ipairs(v) do
+            if t then
+                t:remove()
+                gengine.entity.destroy(t)
+            end
+        end
+    end
+
+    self.tiles = {}
+
+    for k, v in ipairs(self.placers) do
+        v:remove()
+        gengine.entity.destroy(v)
+    end
+
+    self.placers = {}
+
     self.width = w
     self.height = h
     self.tileSize = tileSize

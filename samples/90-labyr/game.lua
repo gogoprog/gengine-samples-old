@@ -2,11 +2,30 @@ dofile("grid.lua")
 
 Game = Game or {}
 
+gengine.stateMachine(Game)
+
 function Game:load()
     for i=0,2 do
         gengine.graphics.texture.create("data/tile" .. i .. ".png")
     end
     gengine.graphics.texture.create("data/key.png")
+
+    self:changeState("idling")
+
+    self:reset()
+end
+
+function Game:reset()
+    self.score = 0
+end
+
+function Game:playLevel(lvl)
+    self:start(lvl+3, lvl+3, 32, lvl)
+    self.currentLevel = lvl
+end
+
+function Game:playNextLevel()
+    self:playLevel(self.currentLevel + 1)
 end
 
 function Game:start(w, h, ts, keys)
@@ -16,14 +35,18 @@ function Game:start(w, h, ts, keys)
     Grid:fill(keys)
     Grid:changeState("idling")
 
+    self:changeState("playing")
     self:pickNextPiece()
 end
 
 function Game:update(dt)
-    Grid:update(dt)
+    self:updateState(dt)
 end
 
 function Game:moveTiles(i, j, d)
+    if self.state ~= "playing" then
+      return
+    end
     self:increaseScore(1)
     if Grid:moveTiles(i, j, d, Grid:createTile(self.nextPiece, self.nextRotation)) then
         self:pickNextPiece()
@@ -43,6 +66,26 @@ end
 
 function Game:onKeyFound()
     if self.keyLeft == 0 then
-        print("Game completed!")
+        self:changeState("levelCompleted")
     end
+end
+
+function Game.onStateUpdate:idling()
+
+end
+
+function Game.onStateEnter:playing()
+    gengine.gui.loadFile("gui/hud.html")
+end
+
+function Game.onStateUpdate:playing()
+    Grid:update(dt)
+end
+
+function Game.onStateEnter:levelCompleted()
+    gengine.gui.loadFile("gui/level_completed.html")
+end
+
+function Game.onStateUpdate:levelCompleted()
+
 end
