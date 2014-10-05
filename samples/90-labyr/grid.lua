@@ -247,44 +247,51 @@ function Grid:updatePlacers()
 end
 
 function Grid:moveTiles(i, j, d, ntile)
-    if self.movingTiles > 0 then
-        gengine.entity.destroy(ntile)
-        return false
-    end
-
     local w = self.width -1
     local h = self.height -1
 
     if not i then
-        for i=0,w do
-            if self.tiles[i] and self.tiles[i][j] then
-                self.tiles[i][j].tile:moveTo(i+d,j)
-                self.movingTiles = self.movingTiles + 1
-            end
-        end
         if d > 0 then
+            if self.tiles[w][j].key then
+                return false
+            end
             self:setTile(-1,j,ntile)
             ntile.tile:moveTo(0,j)
         else
+            if self.tiles[0][j].key then
+                return false
+            end
             self:setTile(w + 1,j,ntile)
             ntile.tile:moveTo(w,j)
         end
+
+        for i=0,w do
+            self.tiles[i][j].tile:moveTo(i+d,j)
+            self.movingTiles = self.movingTiles + 1
+        end
+
         ntile:insert()
         self.movingTiles = self.movingTiles + 1
     elseif not j then
-        for j=0,h do
-            if self.tiles[i] and self.tiles[i][j] then
-                self.tiles[i][j].tile:moveTo(i,j+d)
-                self.movingTiles = self.movingTiles + 1
-            end
-        end
         if d > 0 then
+            if self.tiles[i][h].key then
+                return false
+            end
             self:setTile(i,-1,ntile)
             ntile.tile:moveTo(i,0)
         else
+            if self.tiles[i][0].key then
+                return false
+            end
             self:setTile(i,h+1,ntile)
             ntile.tile:moveTo(i,h)
         end
+
+        for j=0,h do
+            self.tiles[i][j].tile:moveTo(i,j+d)
+            self.movingTiles = self.movingTiles + 1
+        end
+
         ntile:insert()
         self.movingTiles = self.movingTiles + 1
     end

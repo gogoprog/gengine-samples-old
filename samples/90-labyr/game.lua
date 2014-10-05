@@ -44,12 +44,17 @@ function Game:update(dt)
 end
 
 function Game:moveTiles(i, j, d)
-    if self.state ~= "playing" then
+    if self.state ~= "playing" or Grid.movingTiles ~= 0 then
       return
     end
     self:increaseScore(1)
-    if Grid:moveTiles(i, j, d, Grid:createTile(self.nextPiece, self.nextRotation)) then
+
+    local ntile = Grid:createTile(self.nextPiece, self.nextRotation)
+
+    if Grid:moveTiles(i, j, d, ntile) then
         self:pickNextPiece()
+    else
+        gengine.entity.destroy(ntile)
     end
 end
 
