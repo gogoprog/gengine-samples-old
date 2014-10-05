@@ -8,7 +8,10 @@ function Game:load()
     for i=0,2 do
         gengine.graphics.texture.create("data/tile" .. i .. ".png")
     end
-    gengine.graphics.texture.create("data/key.png")
+
+    for i=0,4 do
+        gengine.graphics.texture.create("data/key" .. i .. ".png")
+    end
 
     self:changeState("idling")
 

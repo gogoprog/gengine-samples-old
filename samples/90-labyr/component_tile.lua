@@ -54,7 +54,7 @@ end
 
 function ComponentTile:onMouseEnter()
     local sprite = self.entity.sprite
-    sprite.color = {x=0,y=1,z=0,w=1}
+    sprite.color = {x=0.8,y=0.8,z=0.8,w=1}
 end
 
 function ComponentTile:onMouseExit()
@@ -145,6 +145,8 @@ function ComponentTile.onStateUpdate:shaking(dt)
     self.time = self.time + dt
     self.totalTime = self.totalTime + dt
 
+    self.entity.sprite.color = {x=1.0,y=1.0,z=1.0,w=1-(self.totalTime/1)}
+
     if self.time > 0.1 then
         local e = self.entity
         local p = e.position
@@ -179,6 +181,7 @@ function ComponentTile.onStateExit:shaking()
     self.entity.rotation = self.initialRotation
     p.x = init_pos[1]
     p.y = init_pos[2]
+    self.entity.sprite.color = {x=1.0,y=1.0,z=1.0,w=1}
 end
 
 function ComponentTile:canConnect(dir)

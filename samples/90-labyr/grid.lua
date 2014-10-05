@@ -5,7 +5,6 @@ dofile("tiles.lua")
 
 Grid = Grid or {
     tiles = {},
-    tilesToTest = {},
     placers = {}
 }
 
@@ -104,6 +103,7 @@ function Grid:fill(keys)
 
     local tiles = self.tiles
     local i, j
+    local n = 0
 
     while keys > 0 do
         i = math.random(0, self.width - 1)
@@ -114,7 +114,7 @@ function Grid:fill(keys)
             e:addComponent(
                 ComponentSprite(),
                 {
-                    texture = gengine.graphics.texture.get("key"),
+                    texture = gengine.graphics.texture.get("key" ..(n%5) ),
                     extent = { x=self.tileSize, y=self.tileSize },
                     layer = 1
                 },
@@ -129,6 +129,7 @@ function Grid:fill(keys)
                 )
 
             keys = keys - 1
+            n = n + 1
         end
     end
 
@@ -412,12 +413,10 @@ function Grid:processContour(contour)
     local surrounded_tiles = self:getSurroundedTiles(contour)
 
     for _, v in ipairs(contour) do
-        v.sprite.color = {x=0,y=0,z=1,w=1}
         v.tile:changeState("shaking")
     end
 
     for _, v in ipairs(surrounded_tiles) do
-        v.sprite.color = {x=0,y=1,z=0,w=1}
         v.tile:changeState("shaking")
     end
 end
