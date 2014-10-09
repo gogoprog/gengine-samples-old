@@ -30,39 +30,19 @@ div.buttons {
 }
 
 .css_button {
-    font-size: 30px;
+    display:inline-block;
+    font-size: 40px;
     font-family: Impact;
     font-weight: normal;
     text-decoration: inherit;
-    -webkit-border-radius: 8px 8px 8px 8px;
-    -moz-border-radius: 8px 8px 8px 8px;
-    border-radius: 8px 8px 8px 8px;
-    border: 2px solid #fff;
-    padding: 9px 18px;
-    text-shadow: 1px 1px 0px #5E5E5E;
-    -webkit-box-shadow: inset 1px 1px 0px 0px #BEE2F9;
-    -moz-box-shadow: inset 1px 1px 0px 0px #BEE2F9;
-    box-shadow: inset 1px 1px 0px 0px #BEE2F9;
-    cursor: pointer;
-    color: #FFFFFF;
-    display: inline-block;
-    background: -webkit-linear-gradient(90deg, #468ccf 5%, #63b8ee 100%);
-    background: -moz-linear-gradient(90deg, #468ccf 5%, #63b8ee 100%);
-    background: -ms-linear-gradient(90deg, #468ccf 5%, #63b8ee 100%);
-    background: linear-gradient(180deg, #63b8ee 5%, #468ccf 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#63b8ee",endColorstr="#468ccf");
-    user-select: none;
-    width:200px;
+    background-image: url("parchemin.png");
+    background-size:100% 100%;
+    width:256px;
+    height:64px;
 }
 
 .css_button:hover {
-    background: -webkit-linear-gradient(90deg, #63b8ee 5%, #468ccf 100%);
-    background: -moz-linear-gradient(90deg, #63b8ee 5%, #468ccf 100%);
-    background: -ms-linear-gradient(90deg, #63b8ee 5%, #468ccf 100%);
-    background: linear-gradient(180deg, #468ccf 5%, #63b8ee 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#468ccf",endColorstr="#63b8ee");
-    border: 2px solid #032156;
-    color:red;
+
 }
 
 .css_button:active {
@@ -73,10 +53,10 @@ div.buttons {
 <span class="title">+ Labyr +</span>
 
 <div class="buttons">
-    <button class="css_button" onclick="gengine_execute('onStartClick()');">Start</button><p/>
-    <button class="css_button">Highscores</button><p/>
-    <button class="css_button">About</button><p/>
-    <button class="css_button" onclick="gengine_execute('gengine.application.quit()');">Quit</button>
+    <div class="css_button" onclick="gengine_execute('onStartClick()');">Start</div><p/>
+    <div class="css_button">Highscores</div><p/>
+    <div class="css_button">About</div><p/>
+    <div class="css_button" onclick="gengine_execute('gengine.application.quit()');">Quit</div>
 </div>
 
 </body>
