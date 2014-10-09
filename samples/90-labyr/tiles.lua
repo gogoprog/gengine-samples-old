@@ -6,12 +6,12 @@ Tiles = {
     },
     {
         file = "tile1",
-        validDirections = { true, false, true, false },
+        validDirections = { false, true, false, true },
         rotation = 0
     },
     {
         file = "tile2",
-        validDirections = { false, true, true, false },
+        validDirections = { true, false, false, true },
         rotation = 0,
         corner = true
     }
