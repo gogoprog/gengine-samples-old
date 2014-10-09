@@ -28,7 +28,7 @@ function Game:load()
         ComponentSprite(),
         {
             texture = gengine.graphics.texture.get("pyramid"),
-            extent = { x=312, y=312 },
+            extent = { x=512, y=512 },
             layer = -2
         }
         )
