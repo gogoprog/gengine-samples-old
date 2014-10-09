@@ -2,7 +2,7 @@ dofile("game.lua")
 
 function init()
     gengine.application.setName("[gengine-tests] 90-labyr")
-    gengine.application.setExtent(640, 480)
+    gengine.application.setExtent(640, 640)
 end
 
 function start()
