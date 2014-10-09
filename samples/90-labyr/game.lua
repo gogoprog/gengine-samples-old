@@ -9,7 +9,7 @@ function Game:load()
         gengine.graphics.texture.create("data/tile" .. i .. ".png")
     end
 
-    for i=0,4 do
+    for i=0,7 do
         gengine.graphics.texture.create("data/key" .. i .. ".png")
     end
 

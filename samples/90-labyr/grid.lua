@@ -114,7 +114,7 @@ function Grid:fill(keys)
             e:addComponent(
                 ComponentSprite(),
                 {
-                    texture = gengine.graphics.texture.get("key" ..(n%5) ),
+                    texture = gengine.graphics.texture.get("key" ..(n%8) ),
                     extent = { x=self.tileSize, y=self.tileSize },
                     layer = 1
                 },
