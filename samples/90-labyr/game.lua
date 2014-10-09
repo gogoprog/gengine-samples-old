@@ -13,9 +13,41 @@ function Game:load()
         gengine.graphics.texture.create("data/key" .. i .. ".png")
     end
 
+    gengine.graphics.texture.create("data/pyramid.png")
+    gengine.graphics.texture.create("data/ground.png")
+
+
     self:changeState("idling")
 
     self:reset()
+
+    local e
+    e = gengine.entity.create()
+
+    e:addComponent(
+        ComponentSprite(),
+        {
+            texture = gengine.graphics.texture.get("pyramid"),
+            extent = { x=312, y=312 },
+            layer = -2
+        }
+        )
+
+    self.pyramid = e
+
+    e = gengine.entity.create()
+
+    e:addComponent(
+        ComponentSprite(),
+        {
+            texture = gengine.graphics.texture.get("ground"),
+            extent = { x=10, y=10 },
+            layer = -1
+        },
+        "sprite"
+        )
+
+    self.ground = e
 end
 
 function Game:reset()
@@ -37,6 +69,9 @@ function Game:start(w, h, ts, keys)
     Grid:init(w, h, ts)
     Grid:fill(keys)
     Grid:changeState("idling")
+
+    local s = w * ts
+    self.ground.sprite.extent = { x=s, y=s }
 
     self:changeState("playing")
     self:pickNextPiece()
@@ -79,15 +114,22 @@ function Game:onKeyFound()
 end
 
 function Game.onStateUpdate:idling()
-
 end
 
 function Game.onStateEnter:playing()
     gengine.gui.loadFile("gui/hud.html")
+    self.pyramid:insert()
+    self.ground:insert()
+
 end
 
 function Game.onStateUpdate:playing()
     Grid:update(dt)
+end
+
+function Game.onStateExit:playing()
+    self.pyramid:remove()
+    self.ground:remove()
 end
 
 function Game.onStateEnter:levelCompleted()
