@@ -1,12 +1,11 @@
-
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <style type="text/css">
 
-body {
+#body {
+    display:block;
     width:640px;
     height:640px;
     text-align:center;
@@ -82,15 +81,15 @@ div.buttons {
 </head>
 
 <body>
+<div id="body">
+    <span class="title">+ Labyr +</span>
 
-<span class="title">+ Labyr +</span>
-
-<div class="buttons">
-    <div class="css_button" onclick="gengine_execute('onStartClick()');">Start</div><p/>
-    <div class="css_button">Highscores</div><p/>
-    <div class="css_button">About</div><p/>
-    <div class="css_button" onclick="gengine_execute('gengine.application.quit()');">Quit</div>
+    <div class="buttons">
+        <div class="css_button" onclick="gengine_execute('onStartClick()');">Start</div><p/>
+        <div class="css_button">Highscores</div><p/>
+        <div class="css_button">About</div><p/>
+        <div class="css_button" onclick="gengine_execute('gengine.application.quit()');">Quit</div>
+    </div>
 </div>
-
 </body>
 </html>
