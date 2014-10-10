@@ -4,5 +4,6 @@
 *.html
 !**/gui/*.html
 !**/gui/*.js
+*.mem
 
 
