@@ -1,79 +1,15 @@
 <html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
 <body>
-<style>
-body {
-    width:100%;
-    height:100%;
-    text-align:center;
-    font-family: Impact;
-    font-weight: normal;
-    margin:auto;
-    padding:0;
-    overflow:hidden;
-}
+<div id="body">
+    <span class="title">+ Level Completed +</span>
 
-.title {
-    color: #000000;
-    font-size: 72px;
-    text-shadow: 3px 3px 3px rgba(161, 161, 161, 0.8);
-}
-
-div.buttons {
-    position:absolute;
-    width:400px;
-    height:auto;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    top:120;
-}
-
-.css_button {
-    font-size: 30px;
-    font-family: Impact;
-    font-weight: normal;
-    text-decoration: inherit;
-    -webkit-border-radius: 8px 8px 8px 8px;
-    -moz-border-radius: 8px 8px 8px 8px;
-    border-radius: 8px 8px 8px 8px;
-    border: 2px solid #fff;
-    padding: 9px 18px;
-    text-shadow: 1px 1px 0px #5E5E5E;
-    -webkit-box-shadow: inset 1px 1px 0px 0px #BEE2F9;
-    -moz-box-shadow: inset 1px 1px 0px 0px #BEE2F9;
-    box-shadow: inset 1px 1px 0px 0px #BEE2F9;
-    cursor: pointer;
-    color: #FFFFFF;
-    display: inline-block;
-    background: -webkit-linear-gradient(90deg, #468ccf 5%, #63b8ee 100%);
-    background: -moz-linear-gradient(90deg, #468ccf 5%, #63b8ee 100%);
-    background: -ms-linear-gradient(90deg, #468ccf 5%, #63b8ee 100%);
-    background: linear-gradient(180deg, #63b8ee 5%, #468ccf 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#63b8ee",endColorstr="#468ccf");
-    user-select: none;
-    width:200px;
-}
-
-.css_button:hover {
-    background: -webkit-linear-gradient(90deg, #63b8ee 5%, #468ccf 100%);
-    background: -moz-linear-gradient(90deg, #63b8ee 5%, #468ccf 100%);
-    background: -ms-linear-gradient(90deg, #63b8ee 5%, #468ccf 100%);
-    background: linear-gradient(180deg, #468ccf 5%, #63b8ee 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#468ccf",endColorstr="#63b8ee");
-    border: 2px solid #032156;
-    color:red;
-}
-
-.css_button:active {
-    color:grey;
-}
-</style>
-
-<span class="title">+ Level Completed +</span>
-
-<div class="buttons">
-    <button class="css_button" onclick="gengine_execute('onContinueClick()');">Continue</button><p/>
+    <div class="buttons">
+        <div class="css_button" onclick="gengine_execute('onContinueClick()');">Continue</div>
+    </div>
 </div>
 
 </body>
