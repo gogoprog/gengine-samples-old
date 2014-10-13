@@ -187,7 +187,7 @@ function Grid:createPlacer(i, j, rot)
         ComponentPlacer(),
         {
             initialRotation = rot,
-            appearingDuration = 1 + math.random() * 3
+            appearingDuration = 1 + math.random() * 1
         },
         "placer"
         )
