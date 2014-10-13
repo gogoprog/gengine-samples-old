@@ -167,14 +167,14 @@ function Grid:getTile(i, j)
     return self.tiles[i][j]
 end
 
-function Grid:createPlacer(i, j)
+function Grid:createPlacer(i, j, rot)
     local e
     e = gengine.entity.create()
 
     e:addComponent(
         ComponentSprite(),
         {
-            texture = gengine.graphics.texture.get("tile0"),
+            texture = gengine.graphics.texture.get("outarrow"),
             extent = { x=self.tileSize, y=self.tileSize },
             layer = 0
         },
@@ -184,6 +184,7 @@ function Grid:createPlacer(i, j)
     e:addComponent(
         ComponentPlacer(),
         {
+            initialRotation = rot
         },
         "placer"
         )
@@ -193,6 +194,33 @@ function Grid:createPlacer(i, j)
         {
             extent = { x=self.tileSize, y=self.tileSize }
         }
+        )
+
+    e:insert()
+
+    local x, y = self:getTilePosition(i, j)
+
+    e.position.x = x
+    e.position.y = y
+    e.rotation = - 3.141592/2 * rot
+
+    table.insert(self.placers, e)
+
+    return e
+end
+
+function Grid:createCorner(i, j)
+    local e
+    e = gengine.entity.create()
+
+    e:addComponent(
+        ComponentSprite(),
+        {
+            texture = gengine.graphics.texture.get("outtile"),
+            extent = { x=self.tileSize, y=self.tileSize },
+            layer = 0
+        },
+        "sprite"
         )
 
     e:insert()
@@ -213,36 +241,41 @@ function Grid:initPlacers()
 
     local i = -1
     for j=0,h do
-        local e = self:createPlacer(i, j)
+        local e = self:createPlacer(i, j, 0)
         e.placer.row = j
         e.placer.sens = 1
     end
 
     i = w + 1
     for j=0,h do
-        local e = self:createPlacer(i, j)
+        local e = self:createPlacer(i, j, 2)
         e.placer.row = j
         e.placer.sens = -1
     end
 
     local j = -1
     for i=0,w do
-        local e = self:createPlacer(i, j)
+        local e = self:createPlacer(i, j, 3)
         e.placer.col = i
         e.placer.sens = 1
     end
 
     j = h + 1
     for i=0,w do
-        local e = self:createPlacer(i, j)
+        local e = self:createPlacer(i, j, 1)
         e.placer.col = i
         e.placer.sens = -1
     end
+
+    self:createCorner(-1,-1)
+    self:createCorner(-1, self.height)
+    self:createCorner(self.width, self.height)
+    self:createCorner(self.width, -1)
 end
 
 function Grid:updatePlacers()
     for k, v in ipairs(self.placers) do
-        if v.placer.itIsHighlighted then
+        if v.placer and v.placer.itIsHighlighted then
             v.placer:onMouseEnter()
         end
     end

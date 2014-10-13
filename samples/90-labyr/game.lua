@@ -15,7 +15,8 @@ function Game:load()
 
     gengine.graphics.texture.create("data/pyramid.png")
     gengine.graphics.texture.create("data/ground.png")
-
+    gengine.graphics.texture.create("data/outtile.png")
+    gengine.graphics.texture.create("data/outarrow.png")
 
     self:changeState("idling")
 
@@ -70,7 +71,7 @@ function Game:start(w, h, ts, keys)
     Grid:fill(keys)
     Grid:changeState("idling")
 
-    local s = w * ts
+    local s = (w+2) * ts
     self.ground.sprite.extent = { x=s, y=s }
 
     self:changeState("playing")

@@ -26,7 +26,10 @@ function ComponentPlacer:onMouseExit()
     local sprite = self.entity.sprite
     sprite.color = {x=1,y=1,z=1,w=1}
     local tile = Tiles[1]
-    sprite.texture = gengine.graphics.texture.get(tile.file)
+
+    sprite.texture = gengine.graphics.texture.get("outarrow")
+
+    self.entity.rotation = - 3.141592/2 * self.initialRotation
 
     self.itIsHighlighted = false
 end
