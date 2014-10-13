@@ -83,7 +83,8 @@ function Grid:createTile(index, rot)
         ComponentTile(),
         {
             rotation = rotation_index,
-            tile = tile
+            tile = tile,
+            tileIndex = index
         },
         "tile"
         )
@@ -307,6 +308,7 @@ function Grid:onTileArrived(tile, i, j)
         self:setTile(i, j, tile)
     else
         tile:remove()
+        Game:setNextPiece(tile)
         gengine.entity.destroy(tile)
     end
 

@@ -74,7 +74,7 @@ function Game:start(w, h, ts, keys)
     self.ground.sprite.extent = { x=s, y=s }
 
     self:changeState("playing")
-    self:pickNextPiece()
+    self:pickRandomPiece()
 end
 
 function Game:update(dt)
@@ -90,15 +90,20 @@ function Game:moveTiles(i, j, d)
     local ntile = Grid:createTile(self.nextPiece, self.nextRotation)
 
     if Grid:moveTiles(i, j, d, ntile) then
-        self:pickNextPiece()
+
     else
         gengine.entity.destroy(ntile)
     end
 end
 
-function Game:pickNextPiece()
+function Game:pickRandomPiece()
     self.nextPiece = math.random(2,#Tiles)
     self.nextRotation = math.random(0, 3)
+end
+
+function Game:setNextPiece(tile)
+    self.nextPiece = tile.tile.tileIndex
+    self.nextRotation = tile.tile.rotation
     Grid:updatePlacers()
 end
 
