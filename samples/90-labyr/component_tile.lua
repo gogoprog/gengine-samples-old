@@ -184,6 +184,29 @@ function ComponentTile.onStateExit:shaking()
     self.entity.sprite.color = {x=1.0,y=1.0,z=1.0,w=1}
 end
 
+function ComponentTile.onStateEnter:appearing()
+    local sprite = self.entity.sprite
+    sprite.alpha = 0
+    self.appearingTime = 0
+end
+
+function ComponentTile.onStateUpdate:appearing(dt)
+    local sprite = self.entity.sprite
+
+    self.appearingTime = self.appearingTime + dt
+
+    sprite.alpha = self.appearingTime / self.appearingDuration
+
+    if self.appearingTime >= self.appearingDuration then
+        self:changeState("none")
+    end
+end
+
+function ComponentTile.onStateExit:appearing()
+    local sprite = self.entity.sprite
+    sprite.alpha = 1
+end
+
 function ComponentTile:canConnect(dir)
     local d = dir - self.rotation
 

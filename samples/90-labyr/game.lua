@@ -1,4 +1,5 @@
 dofile("grid.lua")
+dofile("component_ground.lua")
 
 Game = Game or {}
 
@@ -47,6 +48,10 @@ function Game:load()
         },
         "sprite"
         )
+
+    e:addComponent(ComponentGround(), {
+            appearingDuration = 1
+        })
 
     self.ground = e
 end
@@ -126,7 +131,6 @@ function Game.onStateEnter:playing()
     gengine.gui.loadFile("gui/hud.html")
     self.pyramid:insert()
     self.ground:insert()
-
 end
 
 function Game.onStateUpdate:playing()

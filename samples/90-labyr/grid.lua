@@ -84,7 +84,8 @@ function Grid:createTile(index, rot)
         {
             rotation = rotation_index,
             tile = tile,
-            tileIndex = index
+            tileIndex = index,
+            appearingDuration = 1 + math.random()
         },
         "tile"
         )
@@ -99,6 +100,7 @@ function Grid:fill(keys)
         for j=0,self.height - 1 do
             local e = self:createTile(math.random(1,#Tiles), math.random(0, 3))
             self:setTile(i, j, e)
+            e.tile:changeState("appearing")
         end
     end
 
@@ -184,7 +186,8 @@ function Grid:createPlacer(i, j, rot)
     e:addComponent(
         ComponentPlacer(),
         {
-            initialRotation = rot
+            initialRotation = rot,
+            appearingDuration = 1 + math.random() * 3
         },
         "placer"
         )
