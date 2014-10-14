@@ -1,6 +1,7 @@
 dofile("component_placer.lua")
 dofile("component_tile.lua")
 dofile("component_key.lua")
+dofile("component_fader.lua")
 dofile("tiles.lua")
 
 Grid = Grid or {
@@ -85,10 +86,19 @@ function Grid:createTile(index, rot)
             rotation = rotation_index,
             tile = tile,
             tileIndex = index,
-            appearingDuration = 1 + math.random()
         },
         "tile"
         )
+
+    e:addComponent(
+        ComponentFader(),
+        {
+            duration = 1,
+            delay = 2
+        },
+        "fader"
+        )
+
 
     e.rotation = - 3.141592/2 * rotation_index
 
@@ -100,7 +110,7 @@ function Grid:fill(keys)
         for j=0,self.height - 1 do
             local e = self:createTile(math.random(1,#Tiles), math.random(0, 3))
             self:setTile(i, j, e)
-            e.tile:changeState("appearing")
+            e.fader:start()
         end
     end
 
@@ -199,6 +209,15 @@ function Grid:createPlacer(i, j, rot)
         }
         )
 
+     e:addComponent(
+        ComponentFader(),
+        {
+            duration = 1,
+            delay = 2
+        },
+        "fader"
+        )
+
     e:insert()
 
     local x, y = self:getTilePosition(i, j)
@@ -206,6 +225,8 @@ function Grid:createPlacer(i, j, rot)
     e.position.x = x
     e.position.y = y
     e.rotation = - 3.141592/2 * rot
+
+    e.fader:start()
 
     table.insert(self.placers, e)
 

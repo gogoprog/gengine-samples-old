@@ -20,7 +20,6 @@ function ComponentKey:remove()
     Game:onKeyFound()
 end
 
-
 function ComponentKey.onStateEnter:appearing()
     local sprite = self.entity.keysprite
     sprite.alpha = 0

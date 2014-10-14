@@ -1,16 +1,12 @@
 ComponentPlacer = {}
 
-gengine.stateMachine(ComponentPlacer)
-
 function ComponentPlacer:init()
 end
 
 function ComponentPlacer:insert()
-    self:changeState("appearing")
 end
 
 function ComponentPlacer:update(dt)
-    self:updateState(dt)
 end
 
 function ComponentPlacer:remove()
@@ -40,33 +36,4 @@ end
 
 function ComponentPlacer:onMouseJustDown()
     Game:moveTiles(self.col, self.row, self.sens)
-end
-
-
-function ComponentPlacer.onStateEnter:appearing()
-    local sprite = self.entity.sprite
-    sprite.alpha = 0
-    self.appearingTime = 0
-end
-
-function ComponentPlacer.onStateUpdate:appearing(dt)
-    local sprite = self.entity.sprite
-
-    self.appearingTime = self.appearingTime + dt
-
-    sprite.alpha = self.appearingTime / self.appearingDuration
-
-    if self.appearingTime >= self.appearingDuration then
-        self:changeState("idle")
-    end
-end
-
-function ComponentPlacer.onStateExit:appearing()
-    local sprite = self.entity.sprite
-    sprite.alpha = 1
-end
-
-
-function ComponentPlacer.onStateUpdate:idle(dt)
-
 end

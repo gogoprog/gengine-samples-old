@@ -1,5 +1,5 @@
 dofile("grid.lua")
-dofile("component_ground.lua")
+dofile("component_fader.lua")
 
 Game = Game or {}
 
@@ -49,8 +49,10 @@ function Game:load()
         "sprite"
         )
 
-    e:addComponent(ComponentGround(), {
-            appearingDuration = 1
+    e:addComponent(ComponentFader(), {
+            delay = 2,
+            duration = 1,
+            autoStart = true
         })
 
     self.ground = e
