@@ -15,23 +15,32 @@ body {
     padding:0;
     overflow:hidden;
     position:relative;
+    font-family: mainFont;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: mainFont;
+    src: url("ALFABET_.ttf");
 }
 
 .title {
     position:absolute;
     width:120px;
-    top: 0;
-    left: 0;
-    font-size:20px;
+    top: 40px;
+    left: 55px;
+    font-size:35px;
+    color:yellow;
 }
 
 .score {
-    font-size:20px;
+    font-size:30px;
     position:absolute;
-    width:200px;
-    bottom:0;
-    right:0;
+    display:inline-block;
     text-align: right;
+    color:white;
+    left:80px;
+    top:410px;
 }
 
 .decor {
@@ -59,11 +68,12 @@ function updateScore(score) {
 </script>
 
 <div id="body">
-    <span class="title">Level 1</span>
 
     <div class="decor">
+        <span class="title">Level 1</span>
+
+        <div class="score"><span id="score">000000</span></div>
     </div>
-    <div class="score">Score: <span id="score">000000</span></div>
 </div>
 </body>
 </html>
