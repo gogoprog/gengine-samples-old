@@ -1,61 +1,10 @@
 <html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="/gui/hud.css">
+</head>
+
 <body>
-<style>
-
-body {
-    padding:0;
-    margin:0;
-}
-
-#body {
-    display:block;
-    width:768px;
-    height:640px;
-    margin:auto;
-    padding:0;
-    overflow:hidden;
-    position:relative;
-    font-family: mainFont;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: mainFont;
-    src: url("ALFABET_.ttf");
-}
-
-.title {
-    position:absolute;
-    width:120px;
-    top: 40px;
-    left: 55px;
-    font-size:35px;
-    color:yellow;
-}
-
-.score {
-    font-size:30px;
-    position:absolute;
-    display:inline-block;
-    text-align: right;
-    color:white;
-    left:80px;
-    top:410px;
-}
-
-.decor {
-    display:block;
-    position:absolute;
-    margin:0;
-    width:237px;
-    height:640px;
-    top:0;
-    left:0;
-    background-image: url("/gui/hud.png");
-
-}
-</style>
-
 <script>
 function pad(num, size) {
     var s = "000000000" + num;
@@ -69,7 +18,7 @@ function updateScore(score) {
 
 <div id="body">
 
-    <div class="decor">
+    <div class="decor slideRight">
         <span class="title">Level 1</span>
 
         <div class="score"><span id="score">000000</span></div>

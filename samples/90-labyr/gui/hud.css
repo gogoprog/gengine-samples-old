@@ -1,0 +1,106 @@
+body {
+    padding:0;
+    margin:0;
+}
+
+#body {
+    display:block;
+    width:768px;
+    height:640px;
+    margin:auto;
+    padding:0;
+    overflow:hidden;
+    position:relative;
+    font-family: mainFont;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: mainFont;
+    src: url("ALFABET_.ttf");
+}
+
+.title {
+    position:absolute;
+    width:120px;
+    top: 40px;
+    left: 55px;
+    font-size:35px;
+    color:yellow;
+}
+
+.score {
+    font-size:30px;
+    position:absolute;
+    display:inline-block;
+    text-align: right;
+    color:white;
+    left:80px;
+    top:410px;
+}
+
+.decor {
+    display:block;
+    position:absolute;
+    margin:0;
+    width:237px;
+    height:640px;
+    top:0;
+    left:0;
+    background-image: url("/gui/hud.png");
+
+}
+.slideRight{
+    animation-name: slideRight;
+    -webkit-animation-name: slideRight; 
+
+    animation-duration: 1s; 
+    -webkit-animation-duration: 1s;
+
+    animation-timing-function: ease-in-out; 
+    -webkit-animation-timing-function: ease-in-out;     
+
+    visibility: visible !important; 
+}
+
+@keyframes slideRight {
+    0% {
+        transform: translateX(-150%);
+    }
+    50%{
+        transform: translateX(8%);
+    }
+    65%{
+        transform: translateX(-4%);
+    }
+    80%{
+        transform: translateX(4%);
+    }
+    95%{
+        transform: translateX(-2%);
+    }           
+    100% {
+        transform: translateX(0%);
+    }   
+}
+
+@-webkit-keyframes slideRight {
+    0% {
+        -webkit-transform: translateX(-150%);
+    }
+    50%{
+        -webkit-transform: translateX(8%);
+    }
+    65%{
+        -webkit-transform: translateX(-4%);
+    }
+    80%{
+        -webkit-transform: translateX(4%);
+    }
+    95%{
+        -webkit-transform: translateX(-2%);
+    }           
+    100% {
+        -webkit-transform: translateX(0%);
+    }
+}
