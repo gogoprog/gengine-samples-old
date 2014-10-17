@@ -33,16 +33,16 @@ function Grid:reset()
     self.placers = {}
 end
 
-function Grid:init(w, h, tileSize)
+function Grid:init(w, h, tileSize, _x)
     self:reset()
-
+    self.offset = { x=_x, y=0 }
     self.width = w
     self.height = h
     self.tileSize = tileSize
 
     self.origin = {
-        tileSize * ( w - 1 ) * -0.5,
-        tileSize * ( h - 1 ) * -0.5
+        tileSize * ( w - 1 ) * -0.5 + self.offset.x,
+        tileSize * ( h - 1 ) * -0.5 + self.offset.y
         }
 
     self.movingTiles = 0

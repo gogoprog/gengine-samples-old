@@ -5,6 +5,8 @@ Game = Game or {}
 
 gengine.stateMachine(Game)
 
+local x_offset = 120
+
 function Game:load()
     for i=0,2 do
         gengine.graphics.texture.create("data/tile" .. i .. ".png")
@@ -36,6 +38,7 @@ function Game:load()
         )
 
     self.pyramid = e
+    self.pyramid.position.x = x_offset
 
     e = gengine.entity.create()
 
@@ -56,6 +59,7 @@ function Game:load()
         })
 
     self.ground = e
+    self.ground.position.x = x_offset
 end
 
 function Game:reset()
@@ -74,7 +78,7 @@ end
 function Game:start(w, h, ts, keys)
     self.score = 0
     self.keyLeft = 0
-    Grid:init(w, h, ts)
+    Grid:init(w, h, ts, x_offset)
     Grid:fill(keys)
     Grid:changeState("idling")
 

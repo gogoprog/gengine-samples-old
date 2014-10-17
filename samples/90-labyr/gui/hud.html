@@ -1,14 +1,20 @@
 <html>
 <body>
 <style>
+
 body {
-    width:640px;
-    height:480px;
-    font-family: Impact;
-    font-weight: normal;
+    padding:0;
+    margin:0;
+}
+
+#body {
+    display:block;
+    width:768px;
+    height:640px;
     margin:auto;
     padding:0;
     overflow:hidden;
+    position:relative;
 }
 
 .title {
@@ -27,6 +33,18 @@ body {
     right:0;
     text-align: right;
 }
+
+.decor {
+    display:block;
+    position:absolute;
+    margin:0;
+    width:237px;
+    height:640px;
+    top:0;
+    left:0;
+    background-image: url("/gui/hud.png");
+
+}
 </style>
 
 <script>
@@ -40,9 +58,12 @@ function updateScore(score) {
 }
 </script>
 
-<span class="title">Level 1</span>
+<div id="body">
+    <span class="title">Level 1</span>
 
-<div class="score">Score: <span id="score">000000</span></div>
-
+    <div class="decor">
+    </div>
+    <div class="score">Score: <span id="score">000000</span></div>
+</div>
 </body>
 </html>
