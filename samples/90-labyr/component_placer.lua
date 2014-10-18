@@ -39,5 +39,7 @@ function ComponentPlacer:onMouseExit()
 end
 
 function ComponentPlacer:onMouseJustDown()
-    Game:moveTiles(self.col, self.row, self.sens)
+    if self.entity.fader.state == "idle" then
+        Game:moveTiles(self.col, self.row, self.sens)
+    end
 end

@@ -65,17 +65,19 @@ function ComponentTile:onMouseExit()
 end
 
 function ComponentTile:onMouseJustDown(b)
-    if b == 1 then
-        self:rotate()
-    end
-    
-    -- debug
-    if b == 2 then
-        local tile = Tiles[math.random(1,#Tiles)]
-        self.entity.sprite.texture = gengine.graphics.texture.get(tile.file)
-        self.rotation = tile.rotation
-        self.tile = tile
-        self.entity.rotation = - 3.141592/2 * tile.rotation
+    if self.entity.fader.state == "idle" then
+        if b == 1 then
+            self:rotate()
+        end
+        
+        -- debug
+        if b == 2 then
+            local tile = Tiles[math.random(1,#Tiles)]
+            self.entity.sprite.texture = gengine.graphics.texture.get(tile.file)
+            self.rotation = tile.rotation
+            self.tile = tile
+            self.entity.rotation = - 3.141592/2 * tile.rotation
+        end
     end
 end
 
