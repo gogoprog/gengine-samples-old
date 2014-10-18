@@ -52,12 +52,16 @@ function ComponentTile:rotate()
 end
 
 function ComponentTile:onMouseEnter()
-    local sprite = self.entity.sprite
-    sprite.color = {x=0.8,y=0.8,z=0.8,w=1}
+    if self.entity.fader.state == "idle" then
+        local sprite = self.entity.sprite
+        sprite.color = {x=0.8,y=0.8,z=0.8,w=1}
+    end
 end
 
 function ComponentTile:onMouseExit()
-    self.entity.sprite.color = {x=1,y=1,z=1,w=1}
+    if self.entity.fader.state == "idle" then
+        self.entity.sprite.color = {x=1,y=1,z=1,w=1}
+    end
 end
 
 function ComponentTile:onMouseJustDown(b)
