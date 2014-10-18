@@ -87,6 +87,10 @@ function Game:start(w, h, ts, keys)
 
     self:changeState("playing")
     self:pickRandomPiece()
+
+    gengine.gui.loadFile("gui/hud.html")
+    self.pyramid:insert()
+    self.ground:insert()
 end
 
 function Game:update(dt)
@@ -99,24 +103,28 @@ function Game:moveTiles(i, j, d)
     end
     self:increaseScore(1)
 
-    local ntile = Grid:createTile(self.nextPiece, self.nextRotation)
+    --local ntile = Grid:createTile(self.nextPiece, self.nextRotation)
 
-    if Grid:moveTiles(i, j, d, ntile) then
+    if Grid:moveTiles(i, j, d, self.nextTile) then
 
     else
-        gengine.entity.destroy(ntile)
+        --gengine.entity.destroy(ntile)
     end
 end
 
 function Game:pickRandomPiece()
     self.nextPiece = math.random(2,#Tiles)
     self.nextRotation = math.random(0, 3)
+
+    self.nextTile = Grid:createTile(self.nextPiece, self.nextRotation)
 end
 
-function Game:setNextPiece(tile)
+function Game:setNextTile(tile)
     self.nextPiece = tile.tile.tileIndex
     self.nextRotation = tile.tile.rotation
+    self.nextTile = tile
     Grid:updatePlacers()
+    self:changeState("collecting")
 end
 
 function Game:increaseScore(value)
@@ -134,9 +142,6 @@ function Game.onStateUpdate:idling()
 end
 
 function Game.onStateEnter:playing()
-    gengine.gui.loadFile("gui/hud.html")
-    self.pyramid:insert()
-    self.ground:insert()
 end
 
 function Game.onStateUpdate:playing()
@@ -144,14 +149,27 @@ function Game.onStateUpdate:playing()
 end
 
 function Game.onStateExit:playing()
-    self.pyramid:remove()
-    self.ground:remove()
+
 end
 
 function Game.onStateEnter:levelCompleted()
+    self.pyramid:remove()
+    self.ground:remove()
     gengine.gui.loadFile("gui/level_completed.html")
 end
 
 function Game.onStateUpdate:levelCompleted()
 
+end
+
+function Game.onStateEnter:collecting()
+end
+
+function Game.onStateUpdate:collecting()
+    if self.nextTile.state ~= "collecting" then
+        self:changeState("playing")
+    end
+end
+
+function Game.onStateExit:collecting()
 end

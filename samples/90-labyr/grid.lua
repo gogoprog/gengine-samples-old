@@ -13,6 +13,7 @@ gengine.stateMachine(Grid)
 
 function Grid:reset()
     self.tilesToTest = {}
+    self.tilesToCollect = {}
 
     for _, v in pairs(self.tiles) do
         for k, t in pairs(v) do
@@ -364,9 +365,7 @@ function Grid:onTileArrived(tile, i, j)
     if i >= 0 and i < width and j >= 0 and j < height then
         self:setTile(i, j, tile)
     else
-        tile:remove()
-        Game:setNextPiece(tile)
-        gengine.entity.destroy(tile)
+        table.insert(self.tilesToCollect, tile)
     end
 
     self.movingTiles = self.movingTiles - 1
@@ -497,4 +496,10 @@ function Grid.onStateUpdate:idling(dt)
         self:testConnections(v, {v})
     end
     self.tilesToTest = {}
+
+    for k, v in ipairs(self.tilesToCollect) do
+        v.tile:changeState("collecting")
+        Game:setNextTile(v)
+    end
+    self.tilesToCollect = {}
 end

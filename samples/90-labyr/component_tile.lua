@@ -189,6 +189,41 @@ function ComponentTile.onStateExit:shaking()
     self.entity.sprite.color = {x=1.0,y=1.0,z=1.0,w=1}
 end
 
+function ComponentTile.onStateEnter:collecting()
+    self.time = 0
+    local e = self.entity
+    local p = e.position
+    self.initialPosition = {p.x, p.y}
+    self.targetPostition = {-264, 165}
+    self.moveDuration = 0.2
+    self.entity.sprite.layer = 100
+end
+
+local function easeIneaseOut(p)
+    return ( ( 1.0 - math.cos( ( p ) * math.pi ) ) * 0.5 )
+end
+
+function ComponentTile.onStateUpdate:collecting(dt)
+    self.time = self.time + dt
+
+    if self.time >= self.moveDuration then
+        self.time = self.moveDuration
+        self:changeState("none")
+    end
+
+    local p = self.entity.position
+    local from = self.initialPosition
+    local target = self.targetPostition
+    local f = self.time / self.moveDuration
+
+    p.x = from[1] + (target[1] - from[1]) * easeIneaseOut(f)
+    p.y = from[2] + (target[2] - from[2]) * easeIneaseOut(f)
+end
+
+function ComponentTile.onStateExit:collecting()
+
+end
+
 function ComponentTile:canConnect(dir)
     local d = dir - self.rotation
 
