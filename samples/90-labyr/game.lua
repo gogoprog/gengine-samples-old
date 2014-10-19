@@ -5,7 +5,7 @@ Game = Game or {}
 
 gengine.stateMachine(Game)
 
-local x_offset = 120
+local x_offset = 88
 
 function Game:load()
     for i=0,2 do

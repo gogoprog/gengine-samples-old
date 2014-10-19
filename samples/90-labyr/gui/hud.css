@@ -22,28 +22,28 @@ body {
 .title {
     position:absolute;
     width:120px;
-    top: 40px;
-    left: 55px;
+    top: 30px;
+    left: 35px;
     font-size:35px;
     color:yellow;
 }
 
 .score {
-    font-size:30px;
+    font-size:25px;
     position:absolute;
     display:inline-block;
     text-align: right;
     color:white;
-    left:80px;
-    top:410px;
+    left:70px;
+    top:330px;
 }
 
 .decor {
     display:block;
     position:absolute;
     margin:0;
-    width:237px;
-    height:640px;
+    width:181px;
+    height:512px;
     top:0;
     left:0;
     background-image: url("/gui/hud.png");

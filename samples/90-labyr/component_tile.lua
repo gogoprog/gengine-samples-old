@@ -194,7 +194,7 @@ function ComponentTile.onStateEnter:collecting()
     local e = self.entity
     local p = e.position
     self.initialPosition = {p.x, p.y}
-    self.targetPostition = {-264, 165}
+    self.targetPostition = {-294, 135}
     self.moveDuration = 0.2
     self.entity.sprite.layer = 100
 end
