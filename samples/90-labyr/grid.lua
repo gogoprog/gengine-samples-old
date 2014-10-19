@@ -364,11 +364,10 @@ function Grid:onTileArrived(tile, i, j)
     local height = self.height
     if i >= 0 and i < width and j >= 0 and j < height then
         self:setTile(i, j, tile)
+        self.movingTiles = self.movingTiles - 1
     else
         table.insert(self.tilesToCollect, tile)
     end
-
-    self.movingTiles = self.movingTiles - 1
 
     if self.movingTiles == 0 then
         for j=0,self.height - 1 do
@@ -488,6 +487,12 @@ function Grid:update(dt)
 end
 
 function Grid.onStateUpdate:idling(dt)
+    for k, v in ipairs(self.tilesToCollect) do
+        v.tile:changeState("collecting")
+        Game:setNextTile(v)
+    end
+    self.tilesToCollect = {}
+
     if self.rotatingTiles > 0 or self.movingTiles > 0 then
         return
     end
@@ -496,10 +501,4 @@ function Grid.onStateUpdate:idling(dt)
         self:testConnections(v, {v})
     end
     self.tilesToTest = {}
-
-    for k, v in ipairs(self.tilesToCollect) do
-        v.tile:changeState("collecting")
-        Game:setNextTile(v)
-    end
-    self.tilesToCollect = {}
 end

@@ -221,7 +221,7 @@ function ComponentTile.onStateUpdate:collecting(dt)
 end
 
 function ComponentTile.onStateExit:collecting()
-
+    Grid.movingTiles = Grid.movingTiles - 1
 end
 
 function ComponentTile:canConnect(dir)

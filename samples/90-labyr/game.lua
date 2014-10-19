@@ -99,17 +99,12 @@ end
 
 function Game:moveTiles(i, j, d)
     if self.state ~= "playing" or Grid.movingTiles ~= 0 then
-      return
+        return
     end
+
     self:increaseScore(1)
 
-    --local ntile = Grid:createTile(self.nextPiece, self.nextRotation)
-
-    if Grid:moveTiles(i, j, d, self.nextTile) then
-
-    else
-        --gengine.entity.destroy(ntile)
-    end
+    Grid:moveTiles(i, j, d, self.nextTile)
 end
 
 function Game:pickRandomPiece()
