@@ -195,7 +195,7 @@ function ComponentTile.onStateEnter:collecting()
     local p = e.position
     self.initialPosition = {p.x, p.y}
     self.targetPostition = {-294, 135}
-    self.moveDuration = 0.2
+    self.moveDuration = 0.3
     self.entity.sprite.layer = 100
 end
 
@@ -218,6 +218,16 @@ function ComponentTile.onStateUpdate:collecting(dt)
 
     p.x = from[1] + (target[1] - from[1]) * easeIneaseOut(f)
     p.y = from[2] + (target[2] - from[2]) * easeIneaseOut(f)
+
+    if self.lastI == -1 then
+        p.x = p.x - math.sin(f * math.pi) * 100
+    elseif self.lastI == Grid.width then
+        p.y = p.y + math.sin(f * math.pi) * 100
+    elseif self.lastJ == -1 then
+        p.y = p.y - math.sin(f * math.pi) * 100
+    elseif self.lastJ == Grid.height then
+        p.y = p.y + math.sin(f * math.pi) * 100
+    end
 end
 
 function ComponentTile.onStateExit:collecting()

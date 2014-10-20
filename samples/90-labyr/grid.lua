@@ -366,6 +366,8 @@ function Grid:onTileArrived(tile, i, j)
         self:setTile(i, j, tile)
         self.movingTiles = self.movingTiles - 1
     else
+        tile.tile.lastI = i
+        tile.tile.lastJ = j
         table.insert(self.tilesToCollect, tile)
     end
 
