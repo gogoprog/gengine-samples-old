@@ -28,4 +28,7 @@ function start()
 end
 
 function update(dt)
+    if gengine.input.mouse.isJustDown(1) then
+        
+    end
 end

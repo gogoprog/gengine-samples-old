@@ -1,22 +1,31 @@
 dofile("game.lua")
 
+local cameraEntity
+
 function init()
-    --debug = require("debug")
-    --require("mobdebug").start()
     gengine.application.setName("[gengine-tests] 90-labyr")
-    gengine.application.setExtent(640,480)
+    gengine.application.setExtent(768, 512)
 end
 
-local logoEntity
-
-local game = Game()
-
 function start()
-    gengine.graphics.setClearColor(0.6,0.6,1,1)
+    gengine.graphics.setClearColor(1,1,1,1)
+    gengine.gui.loadFile("gui/main.html")
 
-    game:load()
+    cameraEntity = gengine.entity.create()
+    cameraEntity:addComponent(ComponentCamera(), { extent = { x=768, y=512} }, "camera")
+    cameraEntity:insert()
+
+    Game:load()
 end
 
 function update(dt)
-    game:update(dt)
+    Game:update(dt)
+end
+
+function onStartClick()
+    Game:playLevel(1)
+end
+
+function onContinueClick()
+    Game:playNextLevel()
 end

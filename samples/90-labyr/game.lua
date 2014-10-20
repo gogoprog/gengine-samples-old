@@ -1,180 +1,170 @@
-dofile('component_tile.lua')
-dofile('component_placer.lua')
-dofile('component_path.lua')
-dofile('grid.lua')
-dofile('tiles.lua')
+dofile("grid.lua")
+dofile("component_fader.lua")
 
-Game = {}
-
-Game.__call = function()
-    local o = {}
-    setmetatable(o, o)
-    o.__index = Game
-    o.placers = {}
-    o.tileSize = 32
-    o.grid = Grid(9, 9, o.tileSize)
-    o.grid.game = o
-    return o
-end
-
-setmetatable(Game,Game)
+Game = Game or {}
 
 gengine.stateMachine(Game)
+
+local x_offset = 88
 
 function Game:load()
     for i=0,2 do
         gengine.graphics.texture.create("data/tile" .. i .. ".png")
     end
 
-    local w = self.grid.width -1
-    local h = self.grid.height -1
-
-    for j=0,h do
-        for i=0,w do
-            local e = self:createTile()
-
-            self.grid:setTile(i,j,e)
-
-            e:insert()
-        end
+    for i=0,7 do
+        gengine.graphics.texture.create("data/key" .. i .. ".png")
     end
 
-    local i = -1
-    for j=0,h do
-        local e = self:createPlacer()
-        e.tile:setGridPosition(i,j)
-        e.placer.row = j
-        e.placer.sens = 1
-        e.placer.game = self
-    end
+    gengine.graphics.texture.create("data/pyramid.png")
+    gengine.graphics.texture.create("data/ground.png")
+    gengine.graphics.texture.create("data/outtile.png")
+    gengine.graphics.texture.create("data/outarrow.png")
 
-    i = w + 1
-    for j=0,h do
-        local e = self:createPlacer()
-        e.tile:setGridPosition(i,j)
-        e.placer.row = j
-        e.placer.sens = -1
-    end
+    self:changeState("idling")
 
-    local j = -1
-    for i=0,w do
-        local e = self:createPlacer()
-        e.tile:setGridPosition(i,j)
-        e.placer.col = i
-        e.placer.sens = 1
-    end
+    self:reset()
 
-    j = h + 1
-    for i=0,w do
-        local e = self:createPlacer()
-        e.tile:setGridPosition(i,j)
-        e.placer.col = i
-        e.placer.sens = -1
-    end
-
-    self.nextPiece = math.random(1,#Tiles)
-end
-
-function Game:createTile(_t)
-    local e
-    local t = _t == nil and math.random(1, #Tiles) or _t
-
-    local definition = Tiles[t]
-
-    e = gengine.entity.create()
-
-    e:addComponent(
-        ComponentSprite(),
-        {
-            texture = gengine.graphics.texture.get(definition.file),
-            extent = { x=self.tileSize, y=self.tileSize },
-            layer = 0
-        },
-        "sprite"
-        )
-
-    e:addComponent(
-        ComponentTile(),
-        {
-            game = self
-        },
-        "tile"
-        )
-
-    e:addComponent(
-        ComponentPath(),
-        {
-            game = self
-        },
-        "path"
-        )
-
-    e:addComponent(
-        ComponentMouseable(),
-        {
-            extent = { x=self.tileSize, y=self.tileSize }
-        }
-        )
-
-    e.path:setOriginalDirections(definition.validDirections)
-    e.rotation = definition.rotation or 0
-
-    return e
-end
-
-function Game:createPlacer()
     local e
     e = gengine.entity.create()
 
     e:addComponent(
         ComponentSprite(),
         {
-            texture = gengine.graphics.texture.get("tile0"),
-            extent = { x=self.tileSize, y=self.tileSize },
-            layer = 0
+            texture = gengine.graphics.texture.get("pyramid"),
+            extent = { x=512, y=512 },
+            layer = -2
+        }
+        )
+
+    self.pyramid = e
+    self.pyramid.position.x = x_offset
+
+    e = gengine.entity.create()
+
+    e:addComponent(
+        ComponentSprite(),
+        {
+            texture = gengine.graphics.texture.get("ground"),
+            extent = { x=10, y=10 },
+            layer = -1
         },
         "sprite"
         )
 
-    e:addComponent(
-        ComponentMouseable(),
-        {
-            extent = { x=self.tileSize, y=self.tileSize }
-        }
-        )
+    e:addComponent(ComponentFader(), {
+            delay = 2,
+            duration = 1,
+            autoStart = true
+        })
 
-    e:addComponent(
-        ComponentPlacer(),
-        {
-            game = self
-        },
-        "placer"
-        )
+    self.ground = e
+    self.ground.position.x = x_offset
+end
 
-    e:addComponent(
-        ComponentTile(),
-        {
-            game = self
-        },
-        "tile"
-        )
+function Game:reset()
+    self.score = 0
+end
 
-    e:insert()
+function Game:playLevel(lvl)
+    self:start(lvl+3, lvl+3, 32, lvl)
+    self.currentLevel = lvl
+end
 
-    table.insert(self.placers, e)
+function Game:playNextLevel()
+    self:playLevel(self.currentLevel + 1)
+end
 
-    return e
+function Game:start(w, h, ts, keys)
+    self.score = 0
+    self.keyLeft = 0
+    Grid:init(w, h, ts, x_offset)
+    Grid:fill(keys)
+    Grid:changeState("idling")
+
+    local s = (w+2) * ts
+    self.ground.sprite.extent = { x=s, y=s }
+
+    self:changeState("playing")
+    self:pickRandomPiece()
+
+    gengine.gui.loadFile("gui/hud.html")
+    self.pyramid:insert()
+    self.ground:insert()
 end
 
 function Game:update(dt)
-    if gengine.input.mouse:isDown(3) then
-       self:moveTiles(0, nil, 1)
+    self:updateState(dt)
+end
+
+function Game:moveTiles(i, j, d)
+    if self.state ~= "playing" or Grid.movingTiles ~= 0 then
+        return
+    end
+
+    self:increaseScore(1)
+
+    Grid:moveTiles(i, j, d, self.nextTile)
+end
+
+function Game:pickRandomPiece()
+    self.nextPiece = math.random(2,#Tiles)
+    self.nextRotation = math.random(0, 3)
+
+    self.nextTile = Grid:createTile(self.nextPiece, self.nextRotation)
+end
+
+function Game:setNextTile(tile)
+    self.nextPiece = tile.tile.tileIndex
+    self.nextRotation = tile.tile.rotation
+    self.nextTile = tile
+    Grid:updatePlacers()
+    self:changeState("collecting")
+end
+
+function Game:increaseScore(value)
+    self.score = self.score + value
+    gengine.gui.executeScript("updateScore(" .. self.score .. ");")
+end
+
+function Game:onKeyFound()
+    if self.keyLeft == 0 then
+        self:changeState("levelCompleted")
     end
 end
 
+function Game.onStateUpdate:idling()
+end
 
-function Game:moveTiles(i, j, d)
-    if self.grid:moveTiles(i, j, d, self:createTile(self.nextPiece)) then
-        self.nextPiece = math.random(1,#Tiles)
+function Game.onStateEnter:playing()
+end
+
+function Game.onStateUpdate:playing()
+    Grid:update(dt)
+end
+
+function Game.onStateExit:playing()
+
+end
+
+function Game.onStateEnter:levelCompleted()
+    self.pyramid:remove()
+    self.ground:remove()
+    gengine.gui.loadFile("gui/level_completed.html")
+end
+
+function Game.onStateUpdate:levelCompleted()
+
+end
+
+function Game.onStateEnter:collecting()
+end
+
+function Game.onStateUpdate:collecting()
+    if self.nextTile.state ~= "collecting" then
+        self:changeState("playing")
     end
+end
+
+function Game.onStateExit:collecting()
 end

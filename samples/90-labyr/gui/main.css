@@ -1,0 +1,77 @@
+body {
+    padding:0;
+    margin:0;
+}
+
+@font-face {
+    font-family: mainFont;
+    src: url("ALFABET_.ttf");
+}
+
+#body {
+    display:block;
+    text-align:center;
+    font-family: mainFont;
+    font-weight: normal;
+    height:100%;
+    margin:auto;
+    padding:0;
+    overflow:hidden;
+    background-image: url("/gui/background.png");
+    background-size: 100% 100%;
+}
+
+.title {
+    color: #000000;
+    font-size: 72px;
+    text-shadow: 3px 3px 3px rgba(161, 161, 161, 0.8);
+    width:150px;
+}
+
+div.buttons {
+    position:absolute;
+    width:400px;
+    height:auto;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top:280;
+}
+
+.css_button {
+    display:inline-block;
+    font-size: 30px;
+    font-weight: normal;
+    text-decoration: inherit;
+    background-image: url("/gui/parchemin.png");
+    background-size:100% 100%;
+    width:256px;
+    height:50px;
+    padding-top:10px;
+}
+
+.css_button:hover {
+    -webkit-animation: cssAnimation 0.5s infinite ease-in-out alternate;
+    -moz-animation: cssAnimation 0.5s infinite ease-in-out alternate;
+    -o-animation: cssAnimation 0.5s infinite ease-in-out alternate;
+}
+
+.css_button:active {
+    color:grey;
+}
+
+@-webkit-keyframes cssAnimation {
+    from { -webkit-transform:  rotate(0deg) scale(1) skew(1deg) translate(0px); }
+    to { -webkit-transform:  rotate(0deg) scale(1.084) skew(1deg) translate(0px); }
+}
+
+@-moz-keyframes cssAnimation {
+    from { -moz-transform:  rotate(0deg) scale(1) skew(1deg) translate(0px); }
+    to { -moz-transform:  rotate(0deg) scale(1.084) skew(1deg) translate(0px); }
+}
+
+@-o-keyframes cssAnimation {
+    from { -o-transform:  rotate(0deg) scale(1) skew(1deg) translate(0px); }
+    to { -o-transform:  rotate(0deg) scale(1.084) skew(1deg) translate(0px); }
+}
