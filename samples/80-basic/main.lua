@@ -3,7 +3,7 @@ print("tests/basic")
 ComponentCustom = {}
 
 function ComponentCustom:init()
-    self.entity.sprite.color = {x=0.3,y=0.3,z=0.3,w=1}
+    self.entity.sprite.color = vector4(0.3,0.3,0.3,1)
 end
 
 function ComponentCustom:insert()
@@ -16,15 +16,15 @@ function ComponentCustom:remove()
 end
 
 function ComponentCustom:onMouseEnter()
-    self.entity.sprite.color = {x=1,y=1,z=1,w=1}
+    self.entity.sprite.color = vector4(1,1,1,1)
 end
 
 function ComponentCustom:onMouseExit()
-    self.entity.sprite.color = {x=0.3,y=0.3,z=0.3,w=1}
+    self.entity.sprite.color = vector4(0.3,0.3,0.3,1)
 end
 
 function ComponentCustom:onMouseJustDown()
-    self.entity.sprite.color = {x=1,y=0,z=0,w=1}
+    self.entity.sprite.color = vector4(1,0,0,1)
 end
 
 function init()
@@ -76,7 +76,7 @@ function update(dt)
                 texture = gengine.graphics.texture.get("bird"),
                 layer = layer,
                 extent = vector2(64, 64),
-                color = { x=0.5, y=0.9, z=0.6, w=1.0 }
+                color = vector4(0.5,0.9,0.6,1)
             })
 
         et:insert()

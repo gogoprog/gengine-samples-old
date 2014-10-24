@@ -41,7 +41,7 @@ function start()
         local extent = vector2(256, 128)
         e.sprite.extent = extent
         e.mouseable.extent = extent
-        e.sprite.color = {x=1,y=1,z=1,w=1}
+        e.sprite.color = vector4(1,1,1,1)
     end
 
     logoEntity.onMouseJustDown = function(e)
