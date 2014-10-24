@@ -10,4 +10,11 @@ function start()
 end
 
 function update(dt)
+    if gengine.input.keyboard:isJustUp(27) then
+        gengine.application.quit()
+    end
+end
+
+function stop()
+
 end

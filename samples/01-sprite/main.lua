@@ -25,7 +25,16 @@ function start()
 end
 
 local total = 0
+
 function update(dt)
     total = total + dt
     logoEntity.position.x = math.sin(total * 2) * 50
+
+    if gengine.input.keyboard:isJustUp(27) then
+        gengine.application.quit()
+    end
+end
+
+function stop()
+
 end

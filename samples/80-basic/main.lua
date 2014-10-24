@@ -91,6 +91,10 @@ function update(dt)
     for k,v in ipairs(my_entities) do
         v.rotation = v.rotation + dt
     end
+
+    if gengine.input.keyboard:isJustUp(27) then
+        gengine.application.quit()
+    end
 end
 
 function stop()

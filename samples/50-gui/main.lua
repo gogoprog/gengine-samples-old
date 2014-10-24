@@ -36,6 +36,14 @@ function update(dt)
     if gengine.input.mouse:isJustDown(1) then
         gengine.gui.executeScript("updateTotal('" .. total .. "');")
     end
+
+    if gengine.input.keyboard:isJustUp(27) then
+        gengine.application.quit()
+    end
+end
+
+function stop()
+
 end
 
 function newGame()
@@ -49,5 +57,5 @@ function options()
 end
 
 function exit()
-    print("exit() called!")
+    gengine.application.quit()
 end
