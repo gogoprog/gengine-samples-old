@@ -16,7 +16,7 @@ function start()
         ComponentSprite(),
         {
             texture = gengine.graphics.texture.get("logo"),
-            extent = { x=256, y=128 },
+            extent = vector2(256, 128),
             layer = 0
         },
         "sprite"
@@ -25,20 +25,20 @@ function start()
     logoEntity:addComponent(
         ComponentMouseable(),
         {
-            extent = { x=256, y=128 }
+            extent = vector2(256, 128),
         },
         "mouseable"
         )
 
     logoEntity.onMouseEnter = function(e)
-        local extent = { x=300, y=140 }
+        local extent = vector2(300, 140)
         e.sprite.extent = extent
         e.mouseable.extent = extent
         e.sprite.color = {x=1,y=0,z=0,w=1}
     end
 
     logoEntity.onMouseExit = function(e)
-        local extent = { x=256, y=128 }
+        local extent = vector2(256, 128)
         e.sprite.extent = extent
         e.mouseable.extent = extent
         e.sprite.color = {x=1,y=1,z=1,w=1}

@@ -16,7 +16,7 @@ function start()
         ComponentSprite(),
         {
             texture = gengine.graphics.texture.get("logo"),
-            extent = { x=2560, y=1280 },
+            extent = vector2(2560, 1280),
             layer = 0
         }
         )

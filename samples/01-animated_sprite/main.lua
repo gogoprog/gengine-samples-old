@@ -26,7 +26,7 @@ function start()
         ComponentAnimatedSprite(),
         {
             animation = animation,
-            extent = { x=128, y=128 },
+            extent =vector2(128, 128),
             layer = 0
         }
         )

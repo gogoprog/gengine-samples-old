@@ -19,7 +19,7 @@ function start()
         {
             atlas = gengine.graphics.atlas.get("test"),
             atlasItem = 4,
-            extent = { x=256, y=128 },
+            extent = vector2(256, 128),
             layer = 0
         }
         )
@@ -28,7 +28,5 @@ function start()
 end
 
 function update(dt)
-    if gengine.input.mouse.isJustDown(1) then
-        
-    end
+
 end

@@ -45,14 +45,14 @@ function start()
     e = gengine.entity.create()
     e.name = "Yeah"
 
-    e:addComponent(ComponentSprite(), { texture = gengine.graphics.texture.get("logo"), extent = { x=256, y=128 } }, "sprite")
-    e:addComponent(ComponentMouseable(), { extent = { x=256, y=128} })
+    e:addComponent(ComponentSprite(), { texture = gengine.graphics.texture.get("logo"), extent = vector2(256, 128) }, "sprite")
+    e:addComponent(ComponentMouseable(), { extent = vector2(256, 128) })
     e:addComponent(ComponentCustom(), {}, "custom")
 
     e:insert()
 
     cameraEntity = gengine.entity.create()
-    cameraEntity:addComponent(ComponentCamera(), { extent = { x=640, y=480} }, "camera")
+    cameraEntity:addComponent(ComponentCamera(), { extent = vector2(640, 480) }, "camera")
     cameraEntity:insert()
 end
 
@@ -75,7 +75,7 @@ function update(dt)
             {
                 texture = gengine.graphics.texture.get("bird"),
                 layer = layer,
-                extent = { x=64, y=64 },
+                extent = vector2(64, 64),
                 color = { x=0.5, y=0.9, z=0.6, w=1.0 }
             })
 
