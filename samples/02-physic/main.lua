@@ -9,6 +9,8 @@ function start()
     gengine.graphics.setClearColor(0,0.1,0.1,1)
 
     gengine.graphics.texture.create("tile.png")
+    gengine.graphics.texture.create("ball.png")
+
 
     cameraEntity = gengine.entity.create()
     cameraEntity:addComponent(ComponentCamera(), { extent = vector2(640, 480) }, "camera")
@@ -46,7 +48,11 @@ function update(dt)
         local x,y = gengine.input.mouse:getPosition()
         local wx, wy = cameraEntity.camera:getWorldPosition(x,y)
 
-        createBloc(wx, wy)
+        if math.random() > 0.5 then
+            createBloc(wx, wy)
+        else
+            createBall(wx, wy)
+        end
     end
 
     if gengine.input.keyboard:isJustUp(27) then
@@ -74,6 +80,34 @@ function createBloc(x, y)
         ComponentPhysic(),
         {
             extent = vector2(16, 16),
+            type = "dynamic",
+            density = 1,
+            friction = 1.3
+        }
+        )
+
+    e.position:set(x, y)
+    e:insert()
+
+    return e
+end
+
+function createBall(x, y)
+    local e = gengine.entity.create()
+
+    e:addComponent(
+        ComponentSprite(),
+        {
+            texture = gengine.graphics.texture.get("ball"),
+            extent = vector2(32, 32),
+            layer = 0
+        }
+        )
+
+    e:addComponent(
+        ComponentPhysic(),
+        {
+            radius = 10,
             type = "dynamic",
             density = 1,
             friction = 1.3
