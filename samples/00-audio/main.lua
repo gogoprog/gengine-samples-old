@@ -15,7 +15,7 @@ function update(dt)
     if gengine.input.mouse:isJustDown(1) then
         gengine.audio.playSound(gengine.audio.sound.get("sound")) -- Play a previously loaded sound.
     end
-    if gengine.input.keyboard:isJustUp(27) then
+    if gengine.input.keyboard:isJustUp(41) then
         gengine.application.quit()
     end
 end

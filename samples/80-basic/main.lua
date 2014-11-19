@@ -92,7 +92,7 @@ function update(dt)
         v.rotation = v.rotation + dt
     end
 
-    if gengine.input.keyboard:isJustUp(27) then
+    if gengine.input.keyboard:isJustUp(41) then
         gengine.application.quit()
     end
 end

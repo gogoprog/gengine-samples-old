@@ -53,7 +53,7 @@ function start()
 end
 
 function update(dt)
-    if gengine.input.keyboard:isJustUp(27) then
+    if gengine.input.keyboard:isJustUp(41) then
         gengine.application.quit()
     end
 end
