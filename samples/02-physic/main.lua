@@ -11,6 +11,8 @@ function start()
     gengine.graphics.texture.create("tile.png")
     gengine.graphics.texture.create("ball.png")
 
+    gengine.physics.createWorlds(1)
+    gengine.physics.worlds[1]:setGravity(vector2(0,-100))
 
     cameraEntity = gengine.entity.create()
     cameraEntity:addComponent(ComponentCamera(), { extent = vector2(640, 480) }, "camera")
@@ -53,6 +55,17 @@ function update(dt)
         else
             createBall(wx, wy)
         end
+    end
+
+    if gengine.input.mouse:isDown(3) then
+        gengine.physics.worlds[1]:rayCast(
+            vector2(-1000, 0),
+            vector2(1000, 0),
+            function(e)
+                e:remove()
+                gengine.entity.destroy(e)
+            end
+            )
     end
 
     if gengine.input.keyboard:isJustUp(41) then
