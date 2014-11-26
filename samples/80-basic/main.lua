@@ -39,8 +39,7 @@ function start()
 
     gengine.graphics.setClearColor(1,1,0.1,1)
 
-    gengine.graphics.texture.create("bird.png")
-    gengine.graphics.texture.create("logo.png")
+    gengine.graphics.texture.createFromDirectory(".")
 
     e = gengine.entity.create()
     e.name = "Yeah"
