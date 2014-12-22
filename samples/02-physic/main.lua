@@ -12,7 +12,7 @@ function start()
     gengine.graphics.texture.create("ball.png")
 
     gengine.physics.createWorlds(1)
-    gengine.physics.worlds[1]:setGravity(vector2(0,-100))
+    gengine.physics:getWorld(1):setGravity(vector2(0,-100))
 
     cameraEntity = gengine.entity.create()
     cameraEntity:addComponent(ComponentCamera(), { extent = vector2(640, 480) }, "camera")
