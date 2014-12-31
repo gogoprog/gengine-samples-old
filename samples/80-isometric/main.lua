@@ -25,7 +25,7 @@ function IsometricMap:init()
         ComponentSpriteBatch(),
         {
             atlas = gengine.graphics.atlas.get("tile_set"),
-            size = 512,
+            size = 102400,
             layer = 0
         },
         "Batch"
@@ -36,8 +36,8 @@ function IsometricMap:init()
     batch:lock()
 
     -- Fill the screen with grass
-    for j=-240,240,self.cellSize do
-        for i=-320,320,self.cellSize do
+    for j=-240, 2400, self.cellSize do
+        for i=-320, 3200, self.cellSize do
             batch:addItem(math.random(0, 4), self:getIsoFromCar(i, j))
         end
     end
@@ -59,7 +59,7 @@ local cameraEntity, lastMouseX, lastMouseY
 
 function init()
     gengine.application.setName("[gengine-tests] 80-isometric")
-    gengine.application.setExtent(640,480)
+    gengine.application.setExtent(1024,640)
 end
 
 function start()
@@ -71,7 +71,7 @@ function start()
     cameraEntity:addComponent(
         ComponentCamera(),
         { 
-            extent = vector2(640, 480)
+            extent = vector2(1024, 640)
         },
         "camera"
         )
@@ -86,7 +86,7 @@ function update(dt)
 
     local mx, my = gengine.input.mouse:getPosition()
 
-    if gengine.input.mouse:isDown(3) then
+    if gengine.input.mouse:isDown(1) then
         local dx, dy = lastMouseX - mx, lastMouseY - my
 
         cameraEntity.position.x = cameraEntity.position.x + dx
