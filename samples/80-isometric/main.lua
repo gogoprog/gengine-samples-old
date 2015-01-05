@@ -1,10 +1,8 @@
 
 IsometricMap = {
     cellSize = 32,
-    mapSize = 100,
+    mapSize = 50,
     heights = {},
-    miniheights = {},
-    minifactor = 1,
     heightTiles = {}
 }
 
@@ -78,17 +76,61 @@ function IsometricMap:getHeight(i, j)
     return self.heights[j*self.mapSize + i]
 end
 
+function IsometricMap:setHeight(i, j, h)
+    if self:isValidCoord(i, j) then
+        self.heights[j*self.mapSize + i] = h
+        return h
+    end
+
+    return nil
+end
+
+function IsometricMap:isValidCoord(i, j)
+    return i > 0 and i < self.mapSize and j > 0 and j < self.mapSize
+end
+
+function IsometricMap:incrementHeight(i, j)
+    if self:isValidCoord(i, j) then
+        return self:setHeight(i, j, self:getHeight(i, j) + 1)
+    end
+
+    return nil
+end
+
+function IsometricMap:compareAndGrow(i, j, di, dj)
+    if self:isValidCoord(i, j) and self:isValidCoord(i + di, j + dj) then
+        local h = self:getHeight(i, j)
+        if h and h - self:getHeight(i + di, j + dj) > 1 then
+            self:grow(i + di, j + dj)
+        end
+    end
+end
+
+function IsometricMap:grow(i, j)
+    self:incrementHeight(i, j)
+    self:compareAndGrow(i, j, 1, 0)
+    self:compareAndGrow(i, j, -1, 0)
+    self:compareAndGrow(i, j, 0, 1)
+    self:compareAndGrow(i, j, 0, -1)
+    self:compareAndGrow(i, j, 1, -1)
+    self:compareAndGrow(i, j, -1, -1)
+    self:compareAndGrow(i, j, 1, 1)
+    self:compareAndGrow(i, j, -1, 1)
+end
+
 function IsometricMap:generateGrounds()
-    local minifactor = self.minifactor
-    for j=0, self.mapSize / minifactor - 1  do
-        for i=0, self.mapSize / minifactor - 1 do
-            self.miniheights[j*(self.mapSize / minifactor) + i] = math.random(-1, 0)
+    for j=0, self.mapSize - 1  do
+        for i=0, self.mapSize - 1 do
+            self.heights[j*self.mapSize + i] = 0
         end
     end
 
-    for j=0, self.mapSize - 1  do
-        for i=0, self.mapSize - 1 do
-            self.heights[j*self.mapSize + i] = self.miniheights[math.floor(j/minifactor)*(self.mapSize/minifactor) + math.floor(i/minifactor)]
+    for n=1, 100 do
+        local c = math.random(1, 4)
+        local i = math.random(1, self.mapSize - 1)
+        local j = math.random(1, self.mapSize - 1)
+        for _=1,c do
+            self:grow(i, j)
         end
     end
 
@@ -100,6 +142,7 @@ function IsometricMap:generateGrounds()
         for i=self.mapSize - 1, 1, -1 do
             local height = self:getHeight(i, j)
             local tileIndex = 13
+
             local deltas = {}
 
             deltas[1] = height
@@ -107,15 +150,24 @@ function IsometricMap:generateGrounds()
             deltas[3] = self:getHeight(i-1, j-1)
             deltas[4] = self:getHeight(i-1, j)
 
+            local max = math.max(math.max(math.max(deltas[1], deltas[2]), deltas[3]), deltas[4])
+
+            deltas[1] = deltas[1] - max
+            deltas[2] = deltas[2] - max
+            deltas[3] = deltas[3] - max
+            deltas[4] = deltas[4] - max
+
             for k, v in pairs(self.heightTiles) do
                 if k[1] == deltas[1] and k[2] == deltas[2] and k[3] == deltas[3] and k[4] == deltas[4] then
                     tileIndex = v
                 end
             end
 
-            local h = 0
+            for h=0, max - 1 do
+                batch:addItem(4, self:getIsoFromCar(i, j) * self.cellSize + vector2(0, h * self.cellSize))
+            end
 
-            batch:addItem(tileIndex, self:getIsoFromCar(i, j) * self.cellSize + vector2(0, h * self.cellSize))
+            batch:addItem(tileIndex, self:getIsoFromCar(i, j) * self.cellSize + vector2(0, (max) * self.cellSize))
         end
     end
 
@@ -143,6 +195,7 @@ function start()
         "camera"
         )
     cameraEntity:insert()
+    cameraEntity.position.y = 300
 end
 
 
