@@ -61,6 +61,12 @@ function IsometricMap:init()
 
     self.groundEntity:insert()
 
+    for j=0, self.mapSize - 1  do
+        for i=0, self.mapSize - 1 do
+            self.heights[j*self.mapSize + i] = 0
+        end
+    end
+
     self:generateGrounds()
 end
 
@@ -118,7 +124,7 @@ function IsometricMap:grow(i, j)
     self:compareAndGrow(i, j, -1, 1)
 end
 
-function IsometricMap:generateGrounds()
+function IsometricMap:randomizeHeights()
     for j=0, self.mapSize - 1  do
         for i=0, self.mapSize - 1 do
             self.heights[j*self.mapSize + i] = 0
@@ -126,14 +132,16 @@ function IsometricMap:generateGrounds()
     end
 
     for n=1, 100 do
-        local c = math.random(1, 4)
+        local c = math.random(1, 2)
         local i = math.random(1, self.mapSize - 1)
         local j = math.random(1, self.mapSize - 1)
         for _=1,c do
             self:grow(i, j)
         end
     end
+end
 
+function IsometricMap:generateGrounds()
     local batch = self.groundEntity.Batch
 
     batch:lock()
@@ -206,11 +214,24 @@ function update(dt)
 
     local mx, my = gengine.input.mouse:getPosition()
 
-    if gengine.input.mouse:isDown(1) then
+    if gengine.input.mouse:isDown(3) then
         local dx, dy = lastMouseX - mx, lastMouseY - my
 
         cameraEntity.position.x = cameraEntity.position.x + dx
         cameraEntity.position.y = cameraEntity.position.y - dy
+    end
+
+    if gengine.input.mouse:isJustDown(1) then
+        local wx, wy = cameraEntity.camera:getWorldPosition(mx, my)
+        local worldPosition = IsometricMap:getCarFromIso(wx, wy)
+        IsometricMap:grow(math.floor(worldPosition.x / IsometricMap.cellSize), math.floor(worldPosition.y / IsometricMap.cellSize))
+
+        IsometricMap:generateGrounds()
+    end
+
+    if gengine.input.keyboard:isDown(44) then
+        IsometricMap:randomizeHeights()
+        IsometricMap:generateGrounds()
     end
 
     lastMouseX = mx
