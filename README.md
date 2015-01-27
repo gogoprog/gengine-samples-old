@@ -6,8 +6,7 @@ Various samples for gengine
 #### How to run samples?
 Prepare gengine submodule
 
-    git submodule init
-    git submodule update
+    git submodule update --recursive --init
 
 Activate the gengine environment
 
