@@ -15,7 +15,8 @@ function start()
     logoEntity:addComponent(
         ComponentParticleSystem(),
         {
-            texture = gengine.graphics.texture.get("logo")
+            texture = gengine.graphics.texture.get("logo"),
+            size = 100
         }
         )
 
