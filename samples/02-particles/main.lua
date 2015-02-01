@@ -1,34 +1,30 @@
 function init()
-    gengine.application.setName("[gengine-tests] 01-sprite")
-    gengine.application.setExtent(320,200)
+    gengine.application.setName("[gengine-samples] 02-particles")
+    gengine.application.setExtent(512, 512)
 end
 
-local logoEntity
+local entity
 
 function start()
     gengine.graphics.setClearColor(0,0.1,0.1,1)
 
-    gengine.graphics.texture.create("logo.png")
+    gengine.graphics.texture.create("particle.png")
 
-    logoEntity = gengine.entity.create()
+    entity = gengine.entity.create()
 
-    logoEntity:addComponent(
+    entity:addComponent(
         ComponentParticleSystem(),
         {
-            texture = gengine.graphics.texture.get("logo"),
-            size = 100
+            texture = gengine.graphics.texture.get("particle"),
+            size = 100,
+            rate = 30
         }
         )
 
-    logoEntity:insert()
+    entity:insert()
 end
 
-local total = 0
-
 function update(dt)
-    total = total + dt
-    logoEntity.position.x = math.sin(total * 2) * 50
-
     if gengine.input.keyboard:isJustUp(41) then
         gengine.application.quit()
     end
