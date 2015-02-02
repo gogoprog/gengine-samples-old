@@ -17,7 +17,12 @@ function start()
         {
             texture = gengine.graphics.texture.get("particle"),
             size = 100,
-            rate = 30
+            rate = 10,
+            emitterLifeTime = 10,
+            extentRange = {vector2(64,64), vector2(128,128)},
+            lifeTimeRange = {1, 2},
+            scales = {vector2(1, 1)},
+            colors = {vector4(1,1,1,1), vector4(1,1,1,0)}
         }
         )
 
