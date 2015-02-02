@@ -16,11 +16,13 @@ function start()
         ComponentParticleSystem(),
         {
             texture = gengine.graphics.texture.get("particle"),
-            size = 100,
-            rate = 10,
-            emitterLifeTime = 10,
+            size = 1000,
+            rate = 100,
+            emitterLifeTime = 1000,
             extentRange = {vector2(64,64), vector2(128,128)},
             lifeTimeRange = {1, 2},
+            directionRange = {0, 2*3.14},
+            speedRange = {100, 500},
             scales = {vector2(1, 1)},
             colors = {vector4(1,1,1,1), vector4(1,1,1,0)}
         }
