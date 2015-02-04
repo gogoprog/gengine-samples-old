@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.2/themes/dot-luv/jquery-ui.css">
+    <style>
+        body {
+            padding:0;
+            margin:0;
+            width:100%;
+        }
+
+        #body {
+            display:block;
+            height:760px;
+            width:333px;
+            left:0;
+            color:white;
+            padding:0;
+            margin:0;
+            font-size:10px;
+        }
+
+    </style>
+    <script>
+        $(function() {
+            $( "#accordion" ).accordion(
+                {
+                    heightStyle: "fill"
+                }
+                );
+        });
+    </script>
+</head>
+
+<body>
+<div id="body">
+    <div id="accordion">
+      <h3>Emitter</h3>
+      <div>
+        <p>
+        Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+        ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+        amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+        odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+        </p>
+      </div>
+      <h3>Start ranges</h3>
+      <div>
+        <p>
+        Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
+        purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
+        velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
+        suscipit faucibus urna.
+        </p>
+      </div>
+      <h3>Modifiers</h3>
+      <div>
+        <p>
+        Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
+        Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
+        ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
+        lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
+        </p>
+        <ul>
+          <li>List item one</li>
+          <li>List item two</li>
+          <li>List item three</li>
+        </ul>
+      </div>
+      <h3>Lua table</h3>
+      <div>
+          <textarea rows="24" cols="40">
+{
+    texture = gengine.graphics.texture.get("particle"),
+    size = 10000,
+    rate = 1000,
+    emitterLifeTime = 1000,
+    extentRange = {vector2(32,32), vector2(34,34)},
+    lifeTimeRange = {0.5, 1},
+    directionRange = {0, 2*3.14},
+    speedRange = {100, 500},
+    rotationRange = {0, 0},
+    spinRange = {-10, 10},
+    scales = {vector2(1, 1)},
+    colors = {vector4(0.8,0.8,0.9,1), vector4(0.3,0.3,0.9,1), vector4(0,0,0,0)}
+}
+        </textarea>
+      </div>
+    </div>
+</div>
+</body>
+</html>
