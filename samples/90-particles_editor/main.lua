@@ -3,6 +3,8 @@ function init()
     gengine.application.setExtent(1024, 768)
 end
 
+local e, ps
+
 function start()
     gengine.graphics.setClearColor(0,0,0,1)
 
@@ -10,7 +12,7 @@ function start()
 
     gengine.gui.loadFile("gui/main.html")
 
-    local e = gengine.entity.create()
+    e = gengine.entity.create()
 
     e:addComponent(
         ComponentParticleSystem(),
@@ -27,10 +29,14 @@ function start()
             spinRange = {-10, 10},
             scales = {vector2(1, 1)},
             colors = {vector4(0.8,0.8,0.9,1), vector4(0.3,0.3,0.9,1), vector4(0,0,0,0)}
-        }
+        },
+        "ps"
         )
 
+    e.position.x = 200
     e:insert()
+
+    ps = e.ps
 end
 
 function update(dt)
@@ -41,4 +47,8 @@ end
 
 function stop()
 
+end
+
+function updateEmitterRate(value)
+    ps.rate = value
 end
