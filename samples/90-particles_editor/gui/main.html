@@ -25,6 +25,35 @@
 
     </style>
     <script>
+        function createValue(name, min, max, step, v)
+        {
+            $( "#"+name ).slider({
+                min:min,
+                max:max,
+                step: step,
+                value: v,
+                slide: function(event, ui) {
+                    $('#' + name + 'Value').html(ui.value);
+                    gengine_execute("updateValue('" + name + "', " + ui.value + ")");
+                }
+            });
+        }
+
+        function createRange(name, min, max, step, v1, v2)
+        {
+            $( "#"+name ).slider({
+                min:min,
+                max:max,
+                range: true,
+                step: step,
+                values: [v1, v2],
+                slide: function(event, ui) {
+                    $('#' + name + 'Values').html(ui.values[0] + " - " + ui.values[1]);
+                    gengine_execute("updateRange('" + name + "', " + ui.values[0] + "," + ui.values[1] + ")");
+                }
+            });
+        }
+
         $(function() {
             $( "#accordion" ).accordion(
                 {
@@ -32,14 +61,15 @@
                 }
                 );
 
-            $( "#emitterRate" ).slider({
-                min:1,
-                max:1000,
-                slide: function(event, ui) {
-                    $('#emitterRateValue').html(ui.value);
-                    gengine_execute("updateEmitterRate(" + ui.value + ")");
-                }
-            });
+            var pi2 = 3.1415 * 2;
+
+            createValue("emitterRate", 1, 2000, 1, 100);
+
+            createRange("directionRange", -pi2, pi2, 0.05, 0, 0.1);
+            createRange("speedRange", 0, 2000, 1, 10, 100);
+            createRange("lifeTimeRange", 0.1, 10, 0.1, 1, 2);
+            createRange("rotationRange", -pi2, pi2, 0.05, 0, 0);
+            createRange("spinRange", -10, 10, 0.05, 0, 0);
         });
     </script>
 </head>
@@ -52,14 +82,22 @@
          Rate: <span id="emitterRateValue">1</span>
         <div id="emitterRate"></div>
       </div>
-      <h3>Start ranges</h3>
+      <h3>Ranges</h3>
       <div>
-        <p>
-        Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-        purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-        velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
-        suscipit faucibus urna.
-        </p>
+         Direction: <span id="directionRangeValues">1</span>
+        <div id="directionRange"></div>
+        <p/>
+         Speed: <span id="speedRangeValues">1</span>
+        <div id="speedRange"></div>
+        <p/>
+         Lifetime: <span id="lifeTimeRangeValues">1</span>
+        <div id="lifeTimeRange"></div>
+        <p/>
+         Rotation: <span id="rotationRangeValues">1</span>
+        <div id="rotationRange"></div>
+        <p/>
+         Spin: <span id="spinRangeValues">1</span>
+        <div id="spinRange"></div>
       </div>
       <h3>Modifiers</h3>
       <div>

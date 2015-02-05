@@ -4,6 +4,7 @@ function init()
 end
 
 local e, ps
+local parameters = {}
 
 function start()
     gengine.graphics.setClearColor(0,0,0,1)
@@ -19,7 +20,7 @@ function start()
         {
             texture = gengine.graphics.texture.get("particle"),
             size = 10000,
-            rate = 1000,
+            emitterRate = 1000,
             emitterLifeTime = 1000,
             extentRange = {vector2(32,32), vector2(34,34)},
             lifeTimeRange = {0.5, 1},
@@ -49,6 +50,12 @@ function stop()
 
 end
 
-function updateEmitterRate(value)
-    ps.rate = value
+function updateValue(name, v)
+    ps[name] = v
+    parameters[name] = v
+end
+
+function updateRange(name, a, b)
+    ps[name] = {a, b}
+    parameters[name] = {a, b}
 end
