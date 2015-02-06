@@ -25,8 +25,24 @@
 
     </style>
     <script>
+        var ranges = {};
+
+        function updateVec2Range(name)
+        {
+            var a = ranges[name][0][0];
+            var b = ranges[name][1][0];
+            var c = ranges[name][0][1];
+            var d = ranges[name][1][1];
+
+            gengine_execute("updateRange('" + name + "', vector2(" + a + ", "+ b + "), vector2("+c+","+d+") )");
+        }
+
         function createValue(name, min, max, step, v)
         {
+            var code = name + ': <span id="' + name + 'Value">1</span><div id="' + name + '"></div><p/>';
+
+            $('#emitter').append(code);
+
             $( "#"+name ).slider({
                 min:min,
                 max:max,
@@ -41,6 +57,10 @@
 
         function createRange(name, min, max, step, v1, v2)
         {
+            var code = name + ': <span id="' + name + 'Values">1</span><div id="' + name + '"></div><p/>';
+
+            $('#ranges').append(code);
+
             $( "#"+name ).slider({
                 min:min,
                 max:max,
@@ -50,6 +70,43 @@
                 slide: function(event, ui) {
                     $('#' + name + 'Values').html(ui.values[0] + " - " + ui.values[1]);
                     gengine_execute("updateRange('" + name + "', " + ui.values[0] + "," + ui.values[1] + ")");
+                }
+            });
+        }
+
+        function createVector2Range(name, min, max, step, v1, v2)
+        {
+            var code = name + ':<br/>';
+            code += 'x : <span id="' + name + 'Values1">1</span> <div id="' + name + '1"></div>';
+            code += 'y : <span id="' + name + 'Values2">1</span><div id="' + name + '2"></div><p/>';
+
+            ranges[name] = [[0,0],[32,32]];
+
+            $('#ranges').append(code);
+
+            $( "#"+name + '1' ).slider({
+                min:min,
+                max:max,
+                range: true,
+                step: step,
+                values: [v1, v2],
+                slide: function(event, ui) {
+                    $('#' + name + 'Values1').html(ui.values[0] + " - " + ui.values[1]);
+                    ranges[name][0] = [ui.values[0], ui.values[1]];
+                    updateVec2Range(name);
+                }
+            });
+
+            $( "#"+name + '2' ).slider({
+                min:min,
+                max:max,
+                range: true,
+                step: step,
+                values: [v1, v2],
+                slide: function(event, ui) {
+                    $('#' + name + 'Values2').html(ui.values[0] + " - " + ui.values[1]);
+                    ranges[name][1] = [ui.values[0], ui.values[1]];
+                    updateVec2Range(name);
                 }
             });
         }
@@ -70,6 +127,7 @@
             createRange("lifeTimeRange", 0.1, 10, 0.1, 1, 2);
             createRange("rotationRange", -pi2, pi2, 0.05, 0, 0);
             createRange("spinRange", -10, 10, 0.05, 0, 0);
+            createVector2Range("extentRange",0, 256, 1, 10, 100);
         });
     </script>
 </head>
@@ -78,26 +136,12 @@
 <div id="body">
     <div id="accordion">
       <h3>Emitter</h3>
-      <div>
-         Rate: <span id="emitterRateValue">1</span>
-        <div id="emitterRate"></div>
+      <div id="emitter">
+
       </div>
       <h3>Ranges</h3>
-      <div>
-         Direction: <span id="directionRangeValues">1</span>
-        <div id="directionRange"></div>
-        <p/>
-         Speed: <span id="speedRangeValues">1</span>
-        <div id="speedRange"></div>
-        <p/>
-         Lifetime: <span id="lifeTimeRangeValues">1</span>
-        <div id="lifeTimeRange"></div>
-        <p/>
-         Rotation: <span id="rotationRangeValues">1</span>
-        <div id="rotationRange"></div>
-        <p/>
-         Spin: <span id="spinRangeValues">1</span>
-        <div id="spinRange"></div>
+      <div id="ranges">
+
       </div>
       <h3>Modifiers</h3>
       <div>
