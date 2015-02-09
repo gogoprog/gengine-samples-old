@@ -26,6 +26,7 @@
     </style>
     <script>
         var ranges = {};
+        var modifiers = {};
 
         function updateVec2Range(name)
         {
@@ -111,6 +112,52 @@
             });
         }
 
+        function createModifier(name)
+        {
+            var code = name + ': <br/>';
+
+            code += '<ul id="' + name + '"></ul>';
+
+            modifiers[name] = {
+                lastId: 0
+                };
+
+            $('#modifiers').append(code);
+
+            addModifierStep(name, 0, 1, 0.1, 1);
+            addModifierStep(name, 0, 1, 0.1, 1);
+            addModifierStep(name, 0, 1, 0.1, 1);
+        }
+
+        function addModifierStep(name, min, max, step, v)
+        {
+            var id = modifiers[name].lastId + 1;
+
+            var code = '<li class="ui-state-default">';
+
+            code +='x: <span id="' + name + id + 'Value">' + id + '</span><div id="' + name + id + '"></div><p/>';
+
+            code += "</li>";
+
+            $('#'+name).append(code);
+
+            $( "#"+name + id ).slider({
+                min:min,
+                max:max,
+                step: step,
+                value: v,
+                slide: function(event, ui) {
+                    $('#' + name + id + 'Value').html(ui.value);
+                    //gengine_execute("updateValue('" + name + "', " + ui.value + ")");
+                }
+            });
+
+            $("#" + name).sortable();
+            $("#" + name).disableSelection();
+
+            modifiers[name].lastId = id;
+        }
+
         $(function() {
             $( "#accordion" ).accordion(
                 {
@@ -128,6 +175,8 @@
             createRange("rotationRange", -pi2, pi2, 0.05, 0, 0);
             createRange("spinRange", -10, 10, 0.05, 0, 0);
             createVector2Range("extentRange",0, 256, 1, 10, 100);
+
+            createModifier("colors");
         });
     </script>
 </head>
@@ -144,18 +193,7 @@
 
       </div>
       <h3>Modifiers</h3>
-      <div>
-        <p>
-        Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
-        Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
-        ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
-        lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
-        </p>
-        <ul>
-          <li>List item one</li>
-          <li>List item two</li>
-          <li>List item three</li>
-        </ul>
+      <div id="modifiers">
       </div>
       <h3>Lua table</h3>
       <div>
