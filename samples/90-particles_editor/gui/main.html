@@ -23,6 +23,9 @@
             font-size:10px;
         }
 
+        ul { list-style-type: none; margin: 0; padding: 0; }
+        li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; }
+        li span { position: absolute; margin-left: -1.3em; }
     </style>
     <script>
         var ranges = {};
@@ -36,6 +39,10 @@
             var d = ranges[name][1][1];
 
             gengine_execute("updateRange('" + name + "', vector2(" + a + ", "+ b + "), vector2("+c+","+d+") )");
+        }
+
+        function updateVec2Modifier(name)
+        {
         }
 
         function createValue(name, min, max, step, v)
@@ -119,6 +126,7 @@
             code += '<ul id="' + name + '"></ul>';
 
             modifiers[name] = {
+                values: [],
                 lastId: 0
                 };
 
@@ -133,22 +141,38 @@
         {
             var id = modifiers[name].lastId + 1;
 
+            modifiers[name].values.push([1, 1]);
+
             var code = '<li class="ui-state-default">';
 
-            code +='x: <span id="' + name + id + 'Value">' + id + '</span><div id="' + name + id + '"></div><p/>';
+            code +='x: <span id="' + name + id + 'xValue">' + id + '</span><div id="' + name + id + 'x"></div><p/>';
+            code +='y: <span id="' + name + id + 'yValue">' + id + '</span><div id="' + name + id + 'y"></div><p/>';
 
             code += "</li>";
 
             $('#'+name).append(code);
 
-            $( "#"+name + id ).slider({
+            $( "#"+name +id+'x' ).slider({
                 min:min,
                 max:max,
                 step: step,
                 value: v,
                 slide: function(event, ui) {
-                    $('#' + name + id + 'Value').html(ui.value);
-                    //gengine_execute("updateValue('" + name + "', " + ui.value + ")");
+                    $('#' + name + id + 'xValue').html(ui.value);
+                    modifiers[name].values[0][0] = ui.value; // todo: find and use order.
+                    updateVec2Modifier(name);
+                }
+            });
+
+            $( "#"+name +id+'y' ).slider({
+                min:min,
+                max:max,
+                step: step,
+                value: v,
+                slide: function(event, ui) {
+                    $('#' + name + id + 'yValue').html(ui.value);
+                    modifiers[name].values[0][1] = ui.value;
+                    updateVec2Modifier(name);
                 }
             });
 
