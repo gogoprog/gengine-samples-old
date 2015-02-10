@@ -132,6 +132,21 @@
 
             $('#modifiers').append(code);
 
+            $("#" + name).sortable({
+                start: function(event, ui) {
+                    ui.item.previousIndex = ui.item.index();
+                },
+                stop: function(event, ui) {
+                    var previousIndex = ui.item.previousIndex;
+                    var index = ui.item.index();
+                    var temp = modifiers[name].values[ui.item.previousIndex];
+                    modifiers[name].values[previousIndex] = modifiers[name].values[index];
+                    modifiers[name].values[index] = modifiers[name].values[previousIndex];
+                }
+                });
+
+            $("#" + name).disableSelection();
+
             addModifierStep(name, 0, 1, 0.1, 1);
             addModifierStep(name, 0, 1, 0.1, 1);
             addModifierStep(name, 0, 1, 0.1, 1);
@@ -152,7 +167,7 @@
 
             $('#'+name).append(code);
 
-            $( "#"+name +id+'x' ).slider({
+            $( "#"+name+id+'x' ).slider({
                 min:min,
                 max:max,
                 step: step,
@@ -164,7 +179,7 @@
                 }
             });
 
-            $( "#"+name +id+'y' ).slider({
+            $( "#"+name+id+'y' ).slider({
                 min:min,
                 max:max,
                 step: step,
@@ -176,8 +191,7 @@
                 }
             });
 
-            $("#" + name).sortable();
-            $("#" + name).disableSelection();
+            $("#" + name).sortable('refresh');
 
             modifiers[name].lastId = id;
         }
