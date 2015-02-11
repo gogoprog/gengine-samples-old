@@ -43,6 +43,24 @@
 
         function updateVec2Modifier(name)
         {
+            var modifier = modifiers[name];
+            var text = "{";
+
+            for(var i=0;i<modifier.values.length; ++i)
+            {
+                var v = modifier.values[i];
+
+                if(i>0)
+                {
+                    text += ", ";
+                }
+
+                text += "vector2(" + v[0] + ", " + v[1] + ")";
+            }
+
+            text += "}";
+
+            gengine_execute("updateValue('" + name + "', " + text + ")");
         }
 
         function createValue(name, min, max, step, v)
@@ -127,7 +145,9 @@
 
             modifiers[name] = {
                 values: [],
-                lastId: 0
+                lastId: 0,
+                idToIndex: {},
+                indexToId: {}
                 };
 
             $('#modifiers').append(code);
@@ -139,24 +159,46 @@
                 stop: function(event, ui) {
                     var previousIndex = ui.item.previousIndex;
                     var index = ui.item.index();
-                    var temp = modifiers[name].values[ui.item.previousIndex];
-                    modifiers[name].values[previousIndex] = modifiers[name].values[index];
-                    modifiers[name].values[index] = modifiers[name].values[previousIndex];
+                    if(previousIndex != index)
+                    {
+                        var modifier = modifiers[name];
+                        var temp = modifier.values[ui.item.previousIndex];
+
+                        modifier.values[previousIndex] = modifier.values[index];
+                        modifier.values[index] = temp;
+
+                        var previousId = modifier.indexToId[previousIndex];
+                        var newId = modifier.indexToId[index];
+
+                        modifier.indexToId[previousIndex] = newId;
+                        modifier.indexToId[index] = previousId;
+
+                        modifier.idToIndex[previousId] = index;
+                        modifier.idToIndex[newId] = previousIndex;
+
+                        updateVec2Modifier(name);
+                    }
                 }
                 });
 
             $("#" + name).disableSelection();
 
-            addModifierStep(name, 0, 1, 0.1, 1);
-            addModifierStep(name, 0, 1, 0.1, 1);
-            addModifierStep(name, 0, 1, 0.1, 1);
+            addModifierStep(name, 0, 4, 0.1, 1);
+            addModifierStep(name, 0, 4, 0.1, 1);
+            addModifierStep(name, 0, 4, 0.1, 1);
         }
 
         function addModifierStep(name, min, max, step, v)
         {
-            var id = modifiers[name].lastId + 1;
+            var modifier = modifiers[name];
 
-            modifiers[name].values.push([1, 1]);
+            var id = modifier.lastId + 1;
+
+            var index = modifier.values.length;
+
+            modifier.values.push([v, v]);
+            modifier.idToIndex[id] = index;
+            modifier.indexToId[index] = id;
 
             var code = '<li class="ui-state-default">';
 
@@ -174,7 +216,7 @@
                 value: v,
                 slide: function(event, ui) {
                     $('#' + name + id + 'xValue').html(ui.value);
-                    modifiers[name].values[0][0] = ui.value; // todo: find and use order.
+                    modifier.values[modifier.idToIndex[id]][0] = ui.value;
                     updateVec2Modifier(name);
                 }
             });
@@ -186,7 +228,7 @@
                 value: v,
                 slide: function(event, ui) {
                     $('#' + name + id + 'yValue').html(ui.value);
-                    modifiers[name].values[0][1] = ui.value;
+                    modifier.values[modifier.idToIndex[id]][1] = ui.value;
                     updateVec2Modifier(name);
                 }
             });
@@ -214,7 +256,7 @@
             createRange("spinRange", -10, 10, 0.05, 0, 0);
             createVector2Range("extentRange",0, 256, 1, 10, 100);
 
-            createModifier("colors");
+            createModifier("scales");
         });
     </script>
 </head>
