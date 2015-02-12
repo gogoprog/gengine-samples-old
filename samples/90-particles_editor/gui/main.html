@@ -31,17 +31,27 @@
         var ranges = {};
         var modifiers = {};
 
-        function updateVec2Range(name)
+        function updateRange(name)
         {
-            var a = ranges[name][0][0];
-            var b = ranges[name][1][0];
-            var c = ranges[name][0][1];
-            var d = ranges[name][1][1];
+            if(ranges[name][0].constructor !== Array)
+            {
+                var a = ranges[name][0];
+                var b = ranges[name][1];
 
-            gengine_execute("updateRange('" + name + "', vector2(" + a + ", "+ b + "), vector2("+c+","+d+") )");
+                gengine_execute("updateRange('" + name + "',"+ a + "," + b + ")");
+            }
+            else
+            {
+                var a = ranges[name][0][0];
+                var b = ranges[name][1][0];
+                var c = ranges[name][0][1];
+                var d = ranges[name][1][1];
+
+                gengine_execute("updateRange('" + name + "', vector2(" + a + ", "+ b + "), vector2("+c+","+d+") )");
+            }
         }
 
-        function updateVec2Modifier(name)
+        function updateModifier(name)
         {
             var modifier = modifiers[name];
             var text = "{";
@@ -55,7 +65,18 @@
                     text += ", ";
                 }
 
-                text += "vector2(" + v[0] + ", " + v[1] + ")";
+                if(v.constructor !== Array)
+                {
+                    text += v;
+                }
+                else if (v.length == 2)
+                {
+                    text += "vector2(" + v[0] + ", " + v[1] + ")";
+                }
+                else if (v.length == 4)
+                {
+                    text += "vector4(" + v[0] + ", " + v[1] + ", " + v[2] + ", " + v[3] + ")";
+                }
             }
 
             text += "}";
@@ -87,6 +108,8 @@
 
             $('#ranges').append(code);
 
+            ranges[name] = [[v1, v2]];
+
             $( "#"+name ).slider({
                 min:min,
                 max:max,
@@ -95,7 +118,8 @@
                 values: [v1, v2],
                 slide: function(event, ui) {
                     $('#' + name + 'Values').html(ui.values[0] + " - " + ui.values[1]);
-                    gengine_execute("updateRange('" + name + "', " + ui.values[0] + "," + ui.values[1] + ")");
+                    ranges[name] = [ui.values[0], ui.values[1]];
+                    updateRange(name);
                 }
             });
         }
@@ -106,7 +130,7 @@
             code += 'x : <span id="' + name + 'Values1">1</span> <div id="' + name + '1"></div>';
             code += 'y : <span id="' + name + 'Values2">1</span><div id="' + name + '2"></div><p/>';
 
-            ranges[name] = [[0,0],[32,32]];
+            ranges[name] = [[v1,v2],[v1,v2]];
 
             $('#ranges').append(code);
 
@@ -119,7 +143,7 @@
                 slide: function(event, ui) {
                     $('#' + name + 'Values1').html(ui.values[0] + " - " + ui.values[1]);
                     ranges[name][0] = [ui.values[0], ui.values[1]];
-                    updateVec2Range(name);
+                    updateRange(name);
                 }
             });
 
@@ -132,7 +156,7 @@
                 slide: function(event, ui) {
                     $('#' + name + 'Values2').html(ui.values[0] + " - " + ui.values[1]);
                     ranges[name][1] = [ui.values[0], ui.values[1]];
-                    updateVec2Range(name);
+                    updateRange(name);
                 }
             });
         }
@@ -176,7 +200,7 @@
                         modifier.idToIndex[previousId] = index;
                         modifier.idToIndex[newId] = previousIndex;
 
-                        updateVec2Modifier(name);
+                        updateModifier(name);
                     }
                 }
                 });
@@ -217,7 +241,7 @@
                 slide: function(event, ui) {
                     $('#' + name + id + 'xValue').html(ui.value);
                     modifier.values[modifier.idToIndex[id]][0] = ui.value;
-                    updateVec2Modifier(name);
+                    updateModifier(name);
                 }
             });
 
@@ -229,7 +253,7 @@
                 slide: function(event, ui) {
                     $('#' + name + id + 'yValue').html(ui.value);
                     modifier.values[modifier.idToIndex[id]][1] = ui.value;
-                    updateVec2Modifier(name);
+                    updateModifier(name);
                 }
             });
 
