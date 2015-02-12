@@ -188,7 +188,7 @@
             });
         }
 
-        function createVec2Modifier(name)
+        function createModifier(name, type)
         {
             var code = name + ': <br/>';
 
@@ -198,7 +198,8 @@
                 values: [],
                 lastId: 0,
                 idToIndex: {},
-                indexToId: {}
+                indexToId: {},
+                type:type
                 };
 
             $('#modifiers').append(code);
@@ -241,48 +242,63 @@
 
         function addModifierStep(name, min, max, step, v)
         {
+            var components = {
+                vector2: ['x','y'],
+                vector4: ['r','g','b','a']
+            }
+
             var modifier = modifiers[name];
 
             var id = modifier.lastId + 1;
 
             var index = modifier.values.length;
 
-            modifier.values.push([v, v]);
+            if(modifier.type == "vector2")
+            {
+                modifier.values.push([v, v]);
+            }
+            else if(modifier.type == "vector4")
+            {
+                modifier.values.push([v, v, v, v]);
+            }
+
             modifier.idToIndex[id] = index;
             modifier.indexToId[index] = id;
 
             var code = '<li class="ui-state-default">';
 
-            code +='x: <span id="' + name + id + 'xValue">' + v + '</span><div id="' + name + id + 'x"></div><p/>';
-            code +='y: <span id="' + name + id + 'yValue">' + v + '</span><div id="' + name + id + 'y"></div><p/>';
+            for(var j=0; j< components[modifier.type].length; ++j)
+            {
+                var c = components[modifier.type][j];
+
+                code += c + ': <span id="' + name + id + c + 'Value">' + v + '</span><div id="' + name + id + c + '"></div><p/>';
+            }
 
             code += "</li>";
 
             $('#'+name).append(code);
 
-            $( "#"+name+id+'x' ).slider({
-                min:min,
-                max:max,
-                step: step,
-                value: v,
-                slide: function(event, ui) {
-                    $('#' + name + id + 'xValue').html(ui.value);
-                    modifier.values[modifier.idToIndex[id]][0] = ui.value;
-                    updateModifier(name);
-                }
-            });
+            var i;
+            for(i=0; i< components[modifier.type].length; ++i)
+            {
+                var c = components[modifier.type][i];
+                var element = $( "#"+name+id+c );
 
-            $( "#"+name+id+'y' ).slider({
-                min:min,
-                max:max,
-                step: step,
-                value: v,
-                slide: function(event, ui) {
-                    $('#' + name + id + 'yValue').html(ui.value);
-                    modifier.values[modifier.idToIndex[id]][1] = ui.value;
-                    updateModifier(name);
-                }
-            });
+                element.data("i", i);
+                element.data("c", c);
+
+                element.slider({
+                    min:min,
+                    max:max,
+                    step: step,
+                    value: v,
+                    slide: function(event, ui) {
+                        $('#' + name + id + $(this).data("c") + 'Value').html(ui.value);
+                        modifier.values[modifier.idToIndex[id]][$(this).data("i")] = ui.value;
+                        updateModifier(name);
+                    }
+                });
+            }
 
             $("#" + name).sortable('refresh');
 
@@ -308,7 +324,7 @@
             createRange("spinRange", -10, 10, 0.05, 0, 0);
             createVector2Range("extentRange",0, 256, 1, 16, 32);
 
-            createVec2Modifier("scales");
+            createModifier("scales", "vector2");
 
             updateAll();
         });
