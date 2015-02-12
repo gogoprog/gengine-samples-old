@@ -30,6 +30,12 @@
     <script>
         var ranges = {};
         var modifiers = {};
+        var values = {};
+
+        function updateValue(name)
+        {
+            gengine_execute("updateValue('" + name + "', " + values[name] + ")");
+        }
 
         function updateRange(name)
         {
@@ -84,11 +90,31 @@
             gengine_execute("updateValue('" + name + "', " + text + ")");
         }
 
+        function updateAll()
+        {
+            for(var name in values)
+            {
+                updateValue(name);
+            }
+
+            for(var name in ranges)
+            {
+                updateRange(name);
+            }
+
+            for(var name in modifiers)
+            {
+                updateModifier(name);
+            }
+        }
+
         function createValue(name, min, max, step, v)
         {
-            var code = name + ': <span id="' + name + 'Value">1</span><div id="' + name + '"></div><p/>';
+            var code = name + ': <span id="' + name + 'Value">' + v + '</span><div id="' + name + '"></div><p/>';
 
             $('#emitter').append(code);
+
+            values[name] = v;
 
             $( "#"+name ).slider({
                 min:min,
@@ -97,18 +123,19 @@
                 value: v,
                 slide: function(event, ui) {
                     $('#' + name + 'Value').html(ui.value);
-                    gengine_execute("updateValue('" + name + "', " + ui.value + ")");
+                    values[name] = ui.value;
+                    updateValue(name);
                 }
             });
         }
 
         function createRange(name, min, max, step, v1, v2)
         {
-            var code = name + ': <span id="' + name + 'Values">1</span><div id="' + name + '"></div><p/>';
+            var code = name + ': <span id="' + name + 'Values">' + v1 + ' - ' + v2 + '</span><div id="' + name + '"></div><p/>';
 
             $('#ranges').append(code);
 
-            ranges[name] = [[v1, v2]];
+            ranges[name] = [v1, v2];
 
             $( "#"+name ).slider({
                 min:min,
@@ -127,8 +154,8 @@
         function createVector2Range(name, min, max, step, v1, v2)
         {
             var code = name + ':<br/>';
-            code += 'x : <span id="' + name + 'Values1">1</span> <div id="' + name + '1"></div>';
-            code += 'y : <span id="' + name + 'Values2">1</span><div id="' + name + '2"></div><p/>';
+            code += 'x : <span id="' + name + 'Values1">' + v1 + ' - ' + v2 + '</span> <div id="' + name + '1"></div>';
+            code += 'y : <span id="' + name + 'Values2">' + v1 + ' - ' + v2 + '</span><div id="' + name + '2"></div><p/>';
 
             ranges[name] = [[v1,v2],[v1,v2]];
 
@@ -161,7 +188,7 @@
             });
         }
 
-        function createModifier(name)
+        function createVec2Modifier(name)
         {
             var code = name + ': <br/>';
 
@@ -226,8 +253,8 @@
 
             var code = '<li class="ui-state-default">';
 
-            code +='x: <span id="' + name + id + 'xValue">' + id + '</span><div id="' + name + id + 'x"></div><p/>';
-            code +='y: <span id="' + name + id + 'yValue">' + id + '</span><div id="' + name + id + 'y"></div><p/>';
+            code +='x: <span id="' + name + id + 'xValue">' + v + '</span><div id="' + name + id + 'x"></div><p/>';
+            code +='y: <span id="' + name + id + 'yValue">' + v + '</span><div id="' + name + id + 'y"></div><p/>';
 
             code += "</li>";
 
@@ -270,17 +297,20 @@
                 );
 
             var pi2 = 3.1415 * 2;
+            var hpi = 3.1415 / 2;
 
             createValue("emitterRate", 1, 2000, 1, 100);
 
-            createRange("directionRange", -pi2, pi2, 0.05, 0, 0.1);
+            createRange("directionRange", -pi2, pi2, 0.05, hpi, hpi);
             createRange("speedRange", 0, 2000, 1, 10, 100);
             createRange("lifeTimeRange", 0.1, 10, 0.1, 1, 2);
             createRange("rotationRange", -pi2, pi2, 0.05, 0, 0);
             createRange("spinRange", -10, 10, 0.05, 0, 0);
-            createVector2Range("extentRange",0, 256, 1, 10, 100);
+            createVector2Range("extentRange",0, 256, 1, 16, 32);
 
-            createModifier("scales");
+            createVec2Modifier("scales");
+
+            updateAll();
         });
     </script>
 </head>
