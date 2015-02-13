@@ -21,6 +21,7 @@ function start()
         {
             texture = gengine.graphics.texture.get("particle"),
             size = 10000,
+            keepLocal = false,
             emitterRate = 1000,
             emitterLifeTime = 1000,
             extentRange = {vector2(32,32), vector2(34,34)},
