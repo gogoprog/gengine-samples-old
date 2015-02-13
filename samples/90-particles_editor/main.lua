@@ -4,6 +4,7 @@ function init()
 end
 
 local e, ps
+local cameraEntity
 local parameters = {}
 
 function start()
@@ -37,12 +38,23 @@ function start()
     e.position.x = 200
     e:insert()
 
+    cameraEntity = gengine.entity.create()
+    cameraEntity:addComponent(ComponentCamera(), { extent = vector2(1027, 768) }, "camera")
+    cameraEntity:insert()
+
     ps = e.ps
 end
 
 function update(dt)
     if gengine.input.keyboard:isJustUp(41) then
         gengine.application.quit()
+    end
+
+    if gengine.input.mouse:isDown(3) then
+        local x,y = gengine.input.mouse:getPosition()
+        local wx, wy = cameraEntity.camera:getWorldPosition(x,y)
+
+        e.position:set(wx, wy)
     end
 end
 
