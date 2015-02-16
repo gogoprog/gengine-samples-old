@@ -23,9 +23,10 @@
             font-size:10px;
         }
 
-        ul { list-style-type: none; margin: 0; padding: 0; }
-        li { margin: 0 3px 3px 3px; background:none !important; }
+        ul { list-style-type: none; margin: 0; padding: 0; width:100%; }
+        li { margin: 0; background:none !important; padding:0; }
 
+        .sliders {float:right;width:80%;}
     </style>
     <script>
         var ranges = {};
@@ -188,10 +189,11 @@
             });
         }
 
-        function createModifier(name, type)
+        function createModifier(name, type, min, max, step, value)
         {
-            var code = name + ': <br/>';
-
+            var code = name + ':';
+            code += '<button id="' + name + 'PlusButton">+</button>';
+            code += '<br/>';
             code += '<ul id="' + name + '"></ul>';
 
             modifiers[name] = {
@@ -235,9 +237,14 @@
 
             $("#" + name).disableSelection();
 
-            addModifierStep(name, 0, 4, 0.1, 1);
-            addModifierStep(name, 0, 4, 0.1, 1);
-            addModifierStep(name, 0, 4, 0.1, 1);
+            $("#" + name + "PlusButton")
+                .button()
+                .click(function(event) {
+                    addModifierStep(name, min, max, step, value);
+                    updateModifier(name);
+                });
+
+            addModifierStep(name, min, max, step, value);
         }
 
         function addModifierStep(name, min, max, step, v)
@@ -271,7 +278,7 @@
             {
                 var c = components[modifier.type][j];
 
-                code += c + ': <span id="' + name + id + c + 'Value">' + v + '</span><div id="' + name + id + c + '"></div><p/>';
+                code += c + ': <span id="' + name + id + c + 'Value">' + v + '</span><div class="sliders" id="' + name + id + c + '"></div><p/>';
             }
 
             code += "</li>";
@@ -324,7 +331,8 @@
             createRange("spinRange", -10, 10, 0.05, 0, 0);
             createVector2Range("extentRange",0, 256, 1, 16, 32);
 
-            createModifier("scales", "vector2");
+            createModifier("scales", "vector2", 0, 4, 0.1, 1);
+            createModifier("colors", "vector4", 0, 1, 0.1, 1);
 
             updateAll();
         });
