@@ -15,7 +15,7 @@ function start()
         {
             texture = gengine.graphics.texture.get("particle"),
             size = 10000,
-            rate = 1000,
+            emitterRate = 1000,
             emitterLifeTime = 1000,
             extentRange = {vector2(32,32), vector2(34,34)},
             lifeTimeRange = {0.5, 1},
@@ -23,6 +23,7 @@ function start()
             speedRange = {100, 500},
             rotationRange = {0, 0},
             spinRange = {-10, 10},
+            linearAccelerationRange = {vector2(0,-400), vector2(0,-500)},
             scales = {vector2(1, 1)},
             colors = {vector4(0.8,0.8,0.9,1), vector4(0.3,0.3,0.9,1), vector4(0,0,0,0)}
         }

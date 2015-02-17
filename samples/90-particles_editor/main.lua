@@ -31,7 +31,8 @@ function start()
             rotationRange = {0, 0},
             spinRange = {-10, 10},
             scales = {vector2(1, 1)},
-            colors = {vector4(0.8,0.8,0.9,1), vector4(0.3,0.3,0.9,1), vector4(0,0,0,0)}
+            colors = {vector4(0.8,0.8,0.9,1), vector4(0.3,0.3,0.9,1), vector4(0,0,0,0)},
+            linearAccelerationRange = {vector2(0,0), vector2(0,0)}
         },
         "ps"
         )
@@ -40,7 +41,7 @@ function start()
     e:insert()
 
     cameraEntity = gengine.entity.create()
-    cameraEntity:addComponent(ComponentCamera(), { extent = vector2(1027, 768) }, "camera")
+    cameraEntity:addComponent(ComponentCamera(), { extent = vector2(1024, 768) }, "camera")
     cameraEntity:insert()
 
     ps = e.ps
