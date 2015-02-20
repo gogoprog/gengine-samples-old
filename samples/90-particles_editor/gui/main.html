@@ -3,7 +3,6 @@
 
 <head>
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.2/themes/dot-luv/jquery-ui.css">
     <style>
         body {
@@ -321,29 +320,37 @@
         }
 
         $(function() {
-            $( "#accordion" ).accordion(
-                {
-                    heightStyle: "fill"
-                }
-                );
+            var script = document.createElement("script");
+            script.src = "https://code.jquery.com/ui/1.11.2/jquery-ui.min.js";
+            script.onload = script.onreadystatechange = function(){
+                $( "#accordion" ).accordion(
+                    {
+                        heightStyle: "fill"
+                    }
+                    );
 
-            var pi2 = 3.1415 * 2;
-            var hpi = 3.1415 / 2;
+                var pi2 = 3.1415 * 2;
+                var hpi = 3.1415 / 2;
 
-            createValue("emitterRate", 1, 2000, 1, 100);
+                createValue("emitterRate", 1, 2000, 1, 100);
 
-            createRange("directionRange", -pi2, pi2, 0.05, hpi, hpi);
-            createRange("speedRange", 0, 2000, 1, 10, 100);
-            createRange("lifeTimeRange", 0.1, 10, 0.1, 1, 2);
-            createRange("rotationRange", -pi2, pi2, 0.05, 0, 0);
-            createRange("spinRange", -10, 10, 0.05, 0, 0);
-            createVector2Range("extentRange",0, 256, 1, 16, 32);
-            createVector2Range("linearAccelerationRange", -1000, 1000, 1, 0, 0);
+                createRange("directionRange", -pi2, pi2, 0.05, hpi, hpi);
+                createRange("speedRange", 0, 2000, 1, 10, 100);
+                createRange("lifeTimeRange", 0.1, 10, 0.1, 1, 2);
+                createRange("rotationRange", -pi2, pi2, 0.05, 0, 0);
+                createRange("spinRange", -10, 10, 0.05, 0, 0);
+                createVector2Range("extentRange",0, 256, 1, 16, 32);
+                createVector2Range("linearAccelerationRange", -1000, 1000, 1, 0, 0);
 
-            createModifier("scales", "vector2", 0, 4, 0.1, 1);
-            createModifier("colors", "vector4", 0, 1, 0.1, 1);
+                createModifier("scales", "vector2", 0, 4, 0.1, 1);
+                createModifier("colors", "vector4", 0, 1, 0.1, 1);
 
-            updateAll();
+                updateAll();
+
+                };
+            document.body.appendChild( script );
+
+
         });
     </script>
 </head>
