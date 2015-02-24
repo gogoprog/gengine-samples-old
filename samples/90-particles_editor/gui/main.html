@@ -34,6 +34,11 @@
             margin:0;
             font-size:9px;
         }
+
+        #textureSelect {
+            width:128px;
+            font-size:9px;
+        }
     </style>
     <script>
         var ranges = {};
@@ -394,6 +399,13 @@
             modifiers[name].lastId = id;
         }
 
+        function addTexture(name)
+        {
+            var element = $('#textureSelect');
+            element.append($("<option></option>").attr("value",name).text(name));
+            element.selectmenu();
+        }
+
         $(function() {
             var script = document.createElement("script");
             script.src = "https://code.jquery.com/ui/1.11.2/jquery-ui.min.js";
@@ -403,6 +415,8 @@
                         heightStyle: "fill"
                     }
                     );
+
+
 
                 var pi2 = 3.1415 * 2;
                 var hpi = 3.1415 / 2;
@@ -422,10 +436,10 @@
 
                 updateAll();
 
-                };
+                gengine_execute("onPageReady()");
+            };
+
             document.body.appendChild( script );
-
-
         });
     </script>
 </head>
@@ -435,7 +449,7 @@
     <div id="accordion">
       <h3>Emitter</h3>
       <div id="emitter">
-
+        Texture:<select id="textureSelect"></select><p/>
       </div>
       <h3>Ranges</h3>
       <div id="ranges">

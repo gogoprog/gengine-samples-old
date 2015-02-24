@@ -73,3 +73,11 @@ function updateRange(name, a, b)
     ps[name] = {a, b}
     parameters[name] = {a, b}
 end
+
+function onPageReady()
+    local keys = gengine.graphics.texture.getKeys()
+
+    for k,v in ipairs(keys) do
+        gengine.gui.executeScript("addTexture('" .. v .. "')")
+    end
+end
