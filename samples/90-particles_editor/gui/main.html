@@ -43,6 +43,8 @@
         function updateValue(name)
         {
             gengine_execute("updateValue('" + name + "', " + values[name] + ")");
+
+            generateOutput();
         }
 
         function updateRange(name)
@@ -63,9 +65,11 @@
 
                 gengine_execute("updateRange('" + name + "', vector2(" + a + ", "+ b + "), vector2("+c+","+d+") )");
             }
+
+            generateOutput();
         }
 
-        function updateModifier(name)
+        function generateModifier(name)
         {
             var modifier = modifiers[name];
             var text = "{";
@@ -95,7 +99,16 @@
 
             text += "}";
 
+            return text;
+        }
+
+        function updateModifier(name)
+        {
+            var text = generateModifier(name);
+
             gengine_execute("updateValue('" + name + "', " + text + ")");
+
+            generateOutput();
         }
 
         function updateAll()
@@ -114,6 +127,68 @@
             {
                 updateModifier(name);
             }
+        }
+
+        function generateOutput()
+        {
+            var text = "{\n";
+            var first = true;
+
+            for(var name in values)
+            {
+                if(!first)
+                {
+                    text += ",\n";
+                }
+
+                first = false;
+
+                text += "    " + name + " = " + values[name];
+            }
+
+            for(var name in ranges)
+            {
+                if(!first)
+                {
+                    text += ",\n";
+                }
+
+                first = false;
+
+                if(ranges[name][0].constructor !== Array)
+                {
+                    var a = ranges[name][0];
+                    var b = ranges[name][1];
+
+                    text += "    " + name + " = { " + a + ", " + b + " }";
+                }
+                else
+                {
+                    var a = ranges[name][0][0];
+                    var b = ranges[name][1][0];
+                    var c = ranges[name][0][1];
+                    var d = ranges[name][1][1];
+
+                    text += "    " + name + " = { vector2(" + a + ", " + b + "), vector2(" + c + ", " + d + ") }";
+                }
+            }
+
+            for(var name in modifiers)
+            {
+                if(!first)
+                {
+                    text += ",\n";
+                }
+
+                first = false;
+
+                text += "    " + name + " = ";
+                text += generateModifier(name);
+            }
+
+            text += "\n}\n";
+
+            $('#output').html(text);
         }
 
         function createValue(name, min, max, step, v)
@@ -371,21 +446,8 @@
       </div>
       <h3>Lua table</h3>
       <div>
-          <textarea rows="24" cols="40">
-{
-    texture = gengine.graphics.texture.get("particle"),
-    size = 10000,
-    rate = 1000,
-    emitterLifeTime = 1000,
-    extentRange = {vector2(32,32), vector2(34,34)},
-    lifeTimeRange = {0.5, 1},
-    directionRange = {0, 2*3.14},
-    speedRange = {100, 500},
-    rotationRange = {0, 0},
-    spinRange = {-10, 10},
-    scales = {vector2(1, 1)},
-    colors = {vector4(0.8,0.8,0.9,1), vector4(0.3,0.3,0.9,1), vector4(0,0,0,0)}
-}
+        <textarea wrap="off" rows="24" cols="80" style="width:100%;" id="output" class="ui-widget ui-state-default ui-corner-all">
+        To be generated...
         </textarea>
       </div>
     </div>
