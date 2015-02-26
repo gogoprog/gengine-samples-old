@@ -44,6 +44,7 @@
         var ranges = {};
         var modifiers = {};
         var values = {};
+        var textureName;
 
         function updateValue(name)
         {
@@ -137,28 +138,19 @@
         function generateOutput()
         {
             var text = "{\n";
-            var first = true;
+
+            text += "    texture = gengine.graphics.texture.get('" + textureName + "')";
 
             for(var name in values)
             {
-                if(!first)
-                {
-                    text += ",\n";
-                }
-
-                first = false;
+                text += ",\n";
 
                 text += "    " + name + " = " + values[name];
             }
 
             for(var name in ranges)
             {
-                if(!first)
-                {
-                    text += ",\n";
-                }
-
-                first = false;
+                text += ",\n";
 
                 if(ranges[name][0].constructor !== Array)
                 {
@@ -180,12 +172,7 @@
 
             for(var name in modifiers)
             {
-                if(!first)
-                {
-                    text += ",\n";
-                }
-
-                first = false;
+                text += ",\n";
 
                 text += "    " + name + " = ";
                 text += generateModifier(name);
@@ -399,11 +386,23 @@
             modifiers[name].lastId = id;
         }
 
+        function updateTexture(name)
+        {
+            textureName = name;
+            gengine_execute("updateValue('texture', gengine.graphics.texture.get('" + name + "'))");
+
+            generateOutput();
+        }
+
         function addTexture(name)
         {
             var element = $('#textureSelect');
             element.append($("<option></option>").attr("value",name).text(name));
-            element.selectmenu();
+            element.selectmenu({
+                change: function( event, ui ) {
+                    updateTexture(ui.item.value);
+                    }
+                });
         }
 
         $(function() {
@@ -415,8 +414,6 @@
                         heightStyle: "fill"
                     }
                     );
-
-
 
                 var pi2 = 3.1415 * 2;
                 var hpi = 3.1415 / 2;
