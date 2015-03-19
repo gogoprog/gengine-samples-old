@@ -437,7 +437,11 @@
                 gengine_execute("onPageReady()");
             };
 
-            document.body.appendChild( script );
+            setTimeout( function() {
+                document.body.appendChild( script );
+                },
+                2000
+                );
         });
     </script>
 </head>
