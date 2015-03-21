@@ -53,10 +53,10 @@ function update(dt)
     end
 
     if gengine.input.mouse:isDown(3) then
-        local x,y = gengine.input.mouse:getPosition()
-        local wx, wy = cameraEntity.camera:getWorldPosition(x,y)
+        local mousePosition = gengine.input.mouse:getPosition()
+        local worldPosition = cameraEntity.camera:getWorldPosition(mousePosition)
 
-        e.position:set(wx, wy)
+        e.position:set(worldPosition)
     end
 end
 

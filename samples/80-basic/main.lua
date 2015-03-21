@@ -65,8 +65,8 @@ function update(dt)
     gengine.graphics.setClearColor(1,1,math.sin(total),1)
 
     if gengine.input.mouse:isJustDown(1) then
-        local x,y = gengine.input.mouse:getPosition()
-        local wx, wy = cameraEntity.camera:getWorldPosition(x,y)
+        local mousePosition = gengine.input.mouse:getPosition()
+        local worldPosition = cameraEntity.camera:getWorldPosition(mousePosition)
 
         local et
         et = gengine.entity.create()
@@ -79,8 +79,7 @@ function update(dt)
             })
 
         et:insert()
-        et.position.x = wx
-        et.position.y = wy
+        et.position:set(worldPosition)
 
         layer = layer + 1
 

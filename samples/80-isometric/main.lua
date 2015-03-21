@@ -12,7 +12,7 @@ function IsometricMap:init()
     gengine.graphics.atlas.create(
         "tiles",
         texture,
-        { 
+        {
             vector4(0*64, 3*64, 64, 64),
             vector4(1*64, 3*64, 64, 64),
             vector4(2*64, 3*64, 64, 64),
@@ -197,7 +197,7 @@ function start()
     cameraEntity = gengine.entity.create()
     cameraEntity:addComponent(
         ComponentCamera(),
-        { 
+        {
             extent = vector2(1024, 640)
         },
         "camera"
@@ -212,18 +212,18 @@ function update(dt)
         gengine.application.quit()
     end
 
-    local mx, my = gengine.input.mouse:getPosition()
+    local mousePosition = gengine.input.mouse:getPosition()
 
     if gengine.input.mouse:isDown(3) then
-        local dx, dy = lastMouseX - mx, lastMouseY - my
+        local dx, dy = lastMouseX - mousePosition.x, lastMouseY - mousePosition.y
 
         cameraEntity.position.x = cameraEntity.position.x + dx
         cameraEntity.position.y = cameraEntity.position.y - dy
     end
 
     if gengine.input.mouse:isJustDown(1) then
-        local wx, wy = cameraEntity.camera:getWorldPosition(mx, my)
-        local worldPosition = IsometricMap:getCarFromIso(wx, wy)
+        local worldPosition = cameraEntity.camera:getWorldPosition(mousePosition)
+        local worldPosition = IsometricMap:getCarFromIso(worldPosition.x, worldPosition.y)
         IsometricMap:grow(math.floor(worldPosition.x / IsometricMap.cellSize), math.floor(worldPosition.y / IsometricMap.cellSize))
 
         IsometricMap:generateGrounds()
@@ -234,8 +234,8 @@ function update(dt)
         IsometricMap:generateGrounds()
     end
 
-    lastMouseX = mx
-    lastMouseY = my
+    lastMouseX = mousePosition.x
+    lastMouseY = mousePosition.y
 end
 
 function stop()

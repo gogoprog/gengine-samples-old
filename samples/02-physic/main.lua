@@ -47,13 +47,13 @@ end
 
 function update(dt)
     if gengine.input.mouse:isDown(1) then
-        local x,y = gengine.input.mouse:getPosition()
-        local wx, wy = cameraEntity.camera:getWorldPosition(x,y)
+        local mousePosition = gengine.input.mouse:getPosition()
+        local worldPosition = cameraEntity.camera:getWorldPosition(mousePosition)
 
         if math.random() > 0.5 then
-            createBloc(wx, wy)
+            createBloc(worldPosition.x, worldPosition.y)
         else
-            createBall(wx, wy)
+            createBall(worldPosition.x, worldPosition.y)
         end
     end
 
