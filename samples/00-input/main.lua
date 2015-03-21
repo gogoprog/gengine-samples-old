@@ -51,10 +51,10 @@ function update(dt)
         end
     end
 
-    local x, y = gengine.input.mouse:getPosition()
+    local m = gengine.input.mouse:getPosition()
 
-    if lastMousePosition.x ~= x or lastMousePosition.y ~= y then
-        lastMousePosition:set(x, y)
+    if lastMousePosition.x ~= m.x or lastMousePosition.y ~= m.y then
+        lastMousePosition:set(m)
         print("Mouse position is now " .. tostring(lastMousePosition))
     end
 
