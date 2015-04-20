@@ -22,7 +22,7 @@ end
 -- App
 
 function init()
-    gengine.application.setName("[gengine-tests] 10-custom_component")
+    gengine.application.setName("[gengine-samples] 10-custom_component")
     gengine.application.setExtent(320,600)
 end
 

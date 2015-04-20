@@ -1,5 +1,5 @@
 function init()
-    gengine.application.setName("[gengine-tests] 01-sprite_batch")
+    gengine.application.setName("[gengine-samples] 01-sprite_batch")
     gengine.application.setExtent(640,480)
 end
 

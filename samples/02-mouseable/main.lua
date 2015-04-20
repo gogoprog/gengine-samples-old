@@ -1,5 +1,5 @@
 function init()
-    gengine.application.setName("[gengine-tests] 02-mouseable")
+    gengine.application.setName("[gengine-samples] 02-mouseable")
     gengine.application.setExtent(640,480)
 end
 

@@ -1,5 +1,5 @@
 function init()
-    gengine.application.setName("[gengine-tests] 00-audio")
+    gengine.application.setName("[gengine-samples] 00-audio")
     gengine.application.setExtent(320,200)
 end
 

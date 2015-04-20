@@ -28,7 +28,7 @@ function ComponentCustom:onMouseJustDown()
 end
 
 function init()
-    gengine.application.setName("gengine-tests:basic")
+    gengine.application.setName("gengine-samples] 80-basic")
     gengine.application.setExtent(640,480)
 end
 
