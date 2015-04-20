@@ -7,6 +7,6 @@ do
     test -d "$dir" || continue
     cd $dir
     echo "[gengine:tests] Running <$dir> ..."
-    gengine-run -d
+    gengine-run $1
     cd ..
 done
