@@ -47,3 +47,13 @@ $(function() {
 
     showPage('menu', 0);
 });
+
+function play()
+{
+
+}
+
+function quit()
+{
+    gengine_execute("gengine.application.quit()");
+}
