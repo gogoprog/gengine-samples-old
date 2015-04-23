@@ -21,9 +21,9 @@
             <br/>
             <span class="button" onclick="play();">Play!</span><br/>
             <br/>
-            <span class="button" onclick="showPage('options');">Options</span><br/>
+            <span class="button" onclick="showPage('options', 500);">Options</span><br/>
             <br/>
-            <span class="button" onclick="showPage('credits');">Credits</span><br/>
+            <span class="button" onclick="showPage('credits', 500);">Credits</span><br/>
             <br/>
             <span class="button" onclick="quit();">Quit</span><br/>
         </div>
@@ -40,7 +40,7 @@
             <input type="checkbox"/><span>Gore mode</span><br/>
             <br/>
             <br/>
-            <span class="button" onclick="showPage('menu');">Back</span><br/>
+            <span class="button" onclick="showPage('menu', 500);">Back</span><br/>
         </div>
 
         <div id="credits">
@@ -56,13 +56,11 @@
             <span>Random</span><br/>
             <br/>
             <br/>
-            <span class="button" onclick="showPage('menu');">Back</span><br/>
+            <span class="button" onclick="showPage('menu', 500);">Back</span><br/>
         </div>
 
         <div id="hud">
-            <span>Life : </span><div id="lifeBar"></div><br/>
-            <span>Power : </span><div id="generatorBar"></div><br/>
-            <span>Kills : </span><span id="kills"></span><br/>
+            <span>Objects : </span><div id="objects">0</div><br/>
         </div>
 
     </div>

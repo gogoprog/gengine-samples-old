@@ -9,7 +9,7 @@ end
 
 
 function start()
-    gengine.graphics.setClearColor(0.0,0.0,0.1,1)
+    gengine.graphics.setClearColor(0.5, 0.5, 0.5, 1)
 
     gengine.gui.loadFile("gui/main.html")
 
@@ -21,5 +21,4 @@ function update(dt)
 end
 
 function stop()
-
 end

@@ -4,10 +4,9 @@ var fader;
 var nextPageName;
 var faderOpacity = 0;
 
-function showPage(name, duration, lua)
+function showPage(name, duration)
 {
     nextPageName = name;
-    gengine_execute("Game.interState = function() " + ((typeof lua == "undefined") ? "" : lua) + "end");
     fader.show();
     fader.fadeTo(duration, 1, function() {
         for(var k in pages)
@@ -22,25 +21,24 @@ function showPage(name, duration, lua)
             }
         }
 
-        gengine_execute("Game:interState()");
+        gengine_execute("Application:guiFadeFunction()");
 
         fader.fadeTo(duration, 0, function() {
             fader.hide();
         });
+
+        gengine_execute("Application.guiFadeFunction = function() end");
     });
 }
 
-
 $(function() {
     var children = $("#main").children().each(function(i) { 
-        pages[$(this).attr('id')] = {};
+        var name = $(this).attr('id');
+        pages[name] = {
+            element: $(this)
+        };
+        pages[name].element.hide();
     });
-
-    for(var k in pages)
-    {
-        pages[k].element = $('#' + k);
-        pages[k].element.hide();
-    }
 
     fader = $('#fader');
     fader.hide();
@@ -50,10 +48,15 @@ $(function() {
 
 function play()
 {
-
+    gengine_execute("Application:play()");
 }
 
 function quit()
 {
     gengine_execute("gengine.application.quit()");
+}
+
+function updateObjects(count)
+{
+    $("#objects").html(count);
 }
