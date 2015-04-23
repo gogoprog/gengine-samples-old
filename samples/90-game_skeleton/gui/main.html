@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" type="text/css" href="/gui/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="/gui/main.css"/>
+    <script src="/gui/jquery-1.11.2.min.js"></script>
+    <script src="/gui/jquery-ui.min.js"></script>
+    <script src="/gui/main.js"></script>
+
+</head>
+
+<body>
+
+    <div id="main">
+        <div id="menu">
+            <span class="title">gengine-game-skeleton</span><br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <span class="button" onclick="play();">Play!</span><br/>
+            <br/>
+            <span class="button" onclick="showPage('options', 500);">Options</span><br/>
+            <br/>
+            <span class="button" onclick="showPage('credits', 500);">Credits</span><br/>
+            <br/>
+            <span class="button" onclick="quit();">Quit</span><br/>
+        </div>
+
+        <div id="options">
+            <span class="title">gengine-game-skeleton</span><br/>
+            <span class="subtitle">options</span><br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <input type="checkbox"/><span>Sounds</span><br/>
+            <input type="checkbox"/><span>Music</span><br/>
+            <input type="checkbox"/><span>Gore mode</span><br/>
+            <br/>
+            <br/>
+            <span class="button" onclick="showPage('menu', 500);">Back</span><br/>
+        </div>
+
+        <div id="credits">
+            <span class="title">gengine-game-skeleton</span><br/>
+            <span class="subtitle">credits</span><br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <span>Foo</span><br/>
+            <span>Bar</span><br/>
+            <span>Guy</span><br/>
+            <span>Random</span><br/>
+            <br/>
+            <br/>
+            <span class="button" onclick="showPage('menu', 500);">Back</span><br/>
+        </div>
+
+        <div id="hud">
+            <span>Objects : </span><div id="objects">0</div><br/>
+        </div>
+
+    </div>
+
+    <div id="fader">
+    </div>
+
+</body>
+</html>
