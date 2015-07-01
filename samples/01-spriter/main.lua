@@ -1,9 +1,9 @@
 function init()
     gengine.application.setName("[gengine-samples] 01-spriter")
-    gengine.application.setExtent(320,200)
+    gengine.application.setExtent(800,600)
 end
 
-local characterEntity
+local e
 local leftAnimation, rightAnimation, loopingAnimation
 
 function start()
@@ -11,6 +11,19 @@ function start()
 
     gengine.graphics.texture.createFromDirectory("data/")
     gengine.graphics.spriter.loadFile("data/example.scon")
+
+    e = gengine.entity.create()
+
+    e:addComponent(
+        ComponentSpriter(),
+        {
+            animation = gengine.graphics.spriter.get("Player-idle"),
+            layer = 0
+        }
+        )
+
+    e:insert()
+
 end
 
 function update(dt)
