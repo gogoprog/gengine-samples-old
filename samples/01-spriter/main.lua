@@ -17,16 +17,28 @@ function start()
     e:addComponent(
         ComponentSpriter(),
         {
-            animation = gengine.graphics.spriter.get("Player-idle"),
             layer = 0
-        }
+        },
+        "spriterComponent"
         )
 
     e:insert()
 
+    local spriterComponent = e.spriterComponent
+    spriterComponent:pushAnimation(gengine.graphics.spriter.get("Player-walk"))
 end
 
 function update(dt)
+
+    if gengine.input.keyboard:isJustDown(44) then
+        local spriterComponent = e.spriterComponent
+        spriterComponent:pushAnimation(gengine.graphics.spriter.get("Player-crouch_down"))
+        spriterComponent:pushAnimation(gengine.graphics.spriter.get("Player-stand_up"))
+        spriterComponent:pushAnimation(gengine.graphics.spriter.get("Player-crouch_idle"))
+        spriterComponent:pushAnimation(gengine.graphics.spriter.get("Player-jump_start"))
+        spriterComponent:pushAnimation(gengine.graphics.spriter.get("Player-fall_start"))
+    end
+
     if gengine.input.keyboard:isJustUp(41) then
         gengine.application.quit()
     end
