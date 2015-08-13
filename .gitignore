@@ -7,5 +7,4 @@
 *.mem
 samples/**/out
 *.log
-
-
+/.atom*
