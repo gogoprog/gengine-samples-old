@@ -1,5 +1,5 @@
 function init()
-    gengine.application.setName("[gengine-samples] 50-gengine.gui")
+    gengine.application.setName("[gengine-samples] 50-gui")
     gengine.application.setExtent(800,600)
 end
 
