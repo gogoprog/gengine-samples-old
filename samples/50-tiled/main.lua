@@ -6,7 +6,7 @@ end
 function start()
     gengine.graphics.setClearColor(0.5,0.5,0.5,1)
 
-
+    gengine.tiled.createEntities()
 end
 
 function update(dt)
