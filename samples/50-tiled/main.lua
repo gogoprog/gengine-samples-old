@@ -6,7 +6,11 @@ end
 function start()
     gengine.graphics.setClearColor(0.5,0.5,0.5,1)
 
-    gengine.tiled.createEntities()
+    local entities = gengine.tiled.createEntities("data/map.lua")
+
+    for k, e in ipairs(entities) do
+        e:insert()
+    end
 end
 
 function update(dt)

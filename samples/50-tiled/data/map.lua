@@ -17,7 +17,7 @@ return {
       tileheight = 32,
       spacing = 0,
       margin = 0,
-      image = "../../../../mechabot/src/data/crates.png",
+      image = "crates.png",
       imagewidth = 160,
       imageheight = 64,
       tileoffset = {
