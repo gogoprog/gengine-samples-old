@@ -21,7 +21,7 @@ end
 function start()
     gengine.graphics.setClearColor(0.5,0.5,0.5,1)
 
-    local entities = gengine.tiled.createEntities("data/map.lua")
+    local entities = gengine.tiled.createEntities("data/map.lua", vector2(-192, -192))
 
     for k, e in ipairs(entities) do
         e:insert()
