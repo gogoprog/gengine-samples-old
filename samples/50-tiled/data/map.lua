@@ -17,7 +17,7 @@ return {
       tileheight = 32,
       spacing = 0,
       margin = 0,
-      image = "../../../../mechabot/src/data/crates.png",
+      image = "crates.png",
       imagewidth = 160,
       imageheight = 64,
       tileoffset = {
@@ -30,7 +30,32 @@ return {
         {
           id = 6,
           properties = {
-            ["Type"] = "XBox"
+            ["type"] = "XBox"
+          }
+        }
+      }
+    },
+    {
+      name = "crates_red",
+      firstgid = 11,
+      tilewidth = 32,
+      tileheight = 32,
+      spacing = 0,
+      margin = 0,
+      image = "crates2.png",
+      imagewidth = 160,
+      imageheight = 64,
+      tileoffset = {
+        x = 0,
+        y = 0
+      },
+      properties = {},
+      terrains = {},
+      tiles = {
+        {
+          id = 6,
+          properties = {
+            ["type"] = "XBoxRed"
           }
         }
       }
@@ -47,8 +72,8 @@ return {
       visible = true,
       opacity = 1,
       properties = {
-        ["Component"] = "Sprite,Box",
-        ["Dummy"] = "Hello"
+        ["component"] = "Sprite,Box",
+        ["dummy"] = "Hello"
       },
       encoding = "lua",
       data = {
@@ -62,7 +87,7 @@ return {
         10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6,
         6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 6,
-        6, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 6,
+        6, 0, 0, 17, 0, 0, 0, 0, 0, 8, 8, 6,
         6, 0, 0, 7, 0, 0, 0, 0, 8, 8, 8, 6
       }
     }

@@ -1,3 +1,18 @@
+ComponentBox = {}
+
+function ComponentBox:init()
+end
+
+function ComponentBox:insert()
+    print("Box with type " .. (self.type or "(none)"))
+end
+
+function ComponentBox:update(dt)
+end
+
+function ComponentBox:remove()
+end
+
 function init()
     gengine.application.setName("[gengine-samples] 50-tiled")
     gengine.application.setExtent(800,600)
