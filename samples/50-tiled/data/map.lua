@@ -65,6 +65,28 @@ return {
           }
         }
       }
+    },
+    {
+      name = "collection",
+      firstgid = 21,
+      tilewidth = 128,
+      tileheight = 128,
+      spacing = 0,
+      margin = 0,
+      tileoffset = {
+        x = 0,
+        y = 0
+      },
+      properties = {},
+      terrains = {},
+      tiles = {
+        {
+          id = 0,
+          image = "bigcrate.png",
+          width = 128,
+          height = 128
+        }
+      }
     }
   },
   layers = {
@@ -93,7 +115,7 @@ return {
         10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6,
         1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6,
-        1, 0, 0, 17, 0, 0, 0, 0, 0, 1, 1, 6,
+        1, 0, 0, 17, 0, 21, 0, 0, 0, 1, 1, 6,
         6, 0, 0, 7, 0, 0, 0, 0, 8, 8, 8, 6
       }
     },
