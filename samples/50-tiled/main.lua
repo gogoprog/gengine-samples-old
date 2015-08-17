@@ -20,6 +20,8 @@ end
 
 function start()
     gengine.graphics.setClearColor(0.5,0.5,0.5,1)
+    gengine.physics.createWorlds(1)
+    gengine.physics:getWorld(1):setGravity(vector2(0,-100))
 
     local entities = gengine.tiled.createEntities("data/map.lua", vector2(-192, -192))
 
