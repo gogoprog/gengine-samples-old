@@ -13,6 +13,10 @@ end
 function ComponentBox:remove()
 end
 
+function createObject(o)
+    print("Object at " .. o.x .. ", " .. o.y)
+end
+
 function init()
     gengine.application.setName("[gengine-samples] 50-tiled")
     gengine.application.setExtent(800,600)
