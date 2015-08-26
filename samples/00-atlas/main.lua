@@ -33,7 +33,6 @@ function start()
     local e
 
     e = gengine.entity.create()
-
     e:addComponent(
         ComponentSprite(),
         {
@@ -43,12 +42,10 @@ function start()
             layer = 0
         }
         )
-
     e.position.x = - 80
     e:insert()
 
     e = gengine.entity.create()
-
     e:addComponent(
         ComponentSprite(),
         {
@@ -58,8 +55,46 @@ function start()
             layer = 0
         }
         )
-
     e.position.x = 80
+    e:insert()
+
+    e = gengine.entity.create()
+    e:addComponent(
+        ComponentSprite(),
+        {
+            atlas = gengine.graphics.atlas.get("atlas3"),
+            atlasItem = 1,
+            extent = vector2(64, 64),
+            layer = 1
+        }
+        )
+    e.position.x = 0
+    e:insert()
+
+    e = gengine.entity.create()
+    e:addComponent(
+        ComponentSprite(),
+        {
+            atlas = gengine.graphics.atlas.get("atlas3"),
+            atlasItem = 0,
+            extent = vector2(64, 64),
+            layer = 1
+        }
+        )
+    e.position.x = -64
+    e:insert()
+
+    e = gengine.entity.create()
+    e:addComponent(
+        ComponentSprite(),
+        {
+            atlas = gengine.graphics.atlas.get("atlas3"),
+            atlasItem = 2,
+            extent = vector2(64, 64),
+            layer = 1
+        }
+        )
+    e.position.x = 64
     e:insert()
 end
 
