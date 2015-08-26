@@ -3,7 +3,6 @@ function init()
     gengine.application.setExtent(320,200)
 end
 
-local entity, entity2
 
 function start()
     gengine.graphics.setClearColor(0,0.1,0.1,1)
@@ -21,11 +20,20 @@ function start()
         }
         )
 
+    gengine.graphics.atlas.create( -- Create another atlas.
+        "atlas3",
+        gengine.graphics.texture.create("atlas_border.png"),
+        {
+            width=64,
+            height=64,
+            padding=1
+        }
+        )
 
-    entity = gengine.entity.create()
-    entity2 = gengine.entity.create()
+    local e
 
-    entity:addComponent(
+    e = gengine.entity.create()
+    e:addComponent(
         ComponentSprite(),
         {
             atlas = gengine.graphics.atlas.get("atlas1"), -- Will use the given atlas.
@@ -34,11 +42,11 @@ function start()
             layer = 0
         }
         )
+    e.position.x = - 80
+    e:insert()
 
-    entity.position.x = - 80
-    entity:insert()
-
-    entity2:addComponent(
+    e = gengine.entity.create()
+    e:addComponent(
         ComponentSprite(),
         {
             atlas = gengine.graphics.atlas.get("atlas2"), -- Will use the given atlas.
@@ -47,9 +55,47 @@ function start()
             layer = 0
         }
         )
+    e.position.x = 80
+    e:insert()
 
-    entity2.position.x = 80
-    entity2:insert()
+    e = gengine.entity.create()
+    e:addComponent(
+        ComponentSprite(),
+        {
+            atlas = gengine.graphics.atlas.get("atlas3"),
+            atlasItem = 1,
+            extent = vector2(64, 64),
+            layer = 1
+        }
+        )
+    e.position.x = 0
+    e:insert()
+
+    e = gengine.entity.create()
+    e:addComponent(
+        ComponentSprite(),
+        {
+            atlas = gengine.graphics.atlas.get("atlas3"),
+            atlasItem = 0,
+            extent = vector2(64, 64),
+            layer = 1
+        }
+        )
+    e.position.x = -64
+    e:insert()
+
+    e = gengine.entity.create()
+    e:addComponent(
+        ComponentSprite(),
+        {
+            atlas = gengine.graphics.atlas.get("atlas3"),
+            atlasItem = 2,
+            extent = vector2(64, 64),
+            layer = 1
+        }
+        )
+    e.position.x = 64
+    e:insert()
 end
 
 function update(dt)
