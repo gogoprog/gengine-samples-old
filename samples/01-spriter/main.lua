@@ -10,7 +10,7 @@ function start()
     gengine.graphics.setClearColor(0,0.1,0.1,1)
 
     gengine.graphics.texture.createFromDirectory("data/")
-    gengine.graphics.spriter.loadFile("data/example.scon")
+    gengine.graphics.spriter.create("data/example.scon")
 
     e = gengine.entity.create()
 
