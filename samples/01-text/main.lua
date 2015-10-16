@@ -5,9 +5,9 @@ end
 
 
 function start()
-    gengine.graphics.setClearColor(0.5,0.5,0.5,1)
+    gengine.graphics.setClearColor(0.0,0.0,0.0,1)
 
-    local font =  gengine.graphics.font.create("American Captain.ttf", 32)
+    local font =  gengine.graphics.font.create("arial.ttf", 32)
 
     local e = gengine.entity.create()
 
@@ -15,7 +15,8 @@ function start()
         ComponentText(),
         {
             text = "Hello World!",
-            font = font
+            font = font,
+            color = vector4(1,1,1,1)
         }
         )
 
