@@ -7,8 +7,8 @@ end
 function start()
     gengine.graphics.setClearColor(0.0,0.0,0.0,1)
 
-    local font =  gengine.graphics.font.create("arial.ttf", 32)
-    local font2 =  gengine.graphics.font.create("American Captain.ttf", 64)
+    local font =  gengine.graphics.font.create("data/arial.ttf", 32)
+    local font2 =  gengine.graphics.font.create("data/American Captain.ttf", 64)
     local e
 
     e = gengine.entity.create()
