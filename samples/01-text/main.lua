@@ -8,8 +8,10 @@ function start()
     gengine.graphics.setClearColor(0.0,0.0,0.0,1)
 
     local font =  gengine.graphics.font.create("arial.ttf", 32)
+    local font2 =  gengine.graphics.font.create("American Captain.ttf", 64)
+    local e
 
-    local e = gengine.entity.create()
+    e = gengine.entity.create()
 
     e:addComponent(
         ComponentText(),
@@ -23,6 +25,23 @@ function start()
     e:insert()
 
     e.position.y = 200
+
+    e = gengine.entity.create()
+
+    e:addComponent(
+        ComponentText(),
+        {
+            text = "gengine",
+            font = font2,
+            color = vector4(1,0,0,1)
+        }
+        )
+
+    e:insert()
+
+    e.position.y = 0
+    e.scale.x = 3
+    e.scale.y = 2
 end
 
 function update(dt)
