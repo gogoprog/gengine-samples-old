@@ -3,11 +3,24 @@ function init()
     gengine.application.setExtent(800,600)
 end
 
+local e
 
 function start()
     gengine.graphics.setClearColor(0,0.1,0.1,1)
     gengine.graphics.texture.createFromDirectory("data/")
     gengine.graphics.spine.create("data/raptor.json")
+
+    e = gengine.entity.create()
+
+    e:addComponent(
+        ComponentSpine(),
+        {
+            animation = gengine.graphics.spine.get("raptor-walk"),
+            layer = 0
+        }
+        )
+
+    e:insert()
 end
 
 function update(dt)
