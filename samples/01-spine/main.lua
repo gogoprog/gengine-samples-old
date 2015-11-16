@@ -20,6 +20,7 @@ function start()
         }
         )
 
+    e.position:set(0, -500)
     e:insert()
 end
 
