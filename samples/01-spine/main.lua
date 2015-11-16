@@ -49,9 +49,10 @@ function update(dt)
         boy.spine:setAnimation(gengine.graphics.spine.get("spineboy-shoot"), 0, false, 0)
         boy.spine:addAnimation(gengine.graphics.spine.get("spineboy-run"), 0, true, 0)
     end
-    if gengine.input.mouse:isJustDown(3) then
+    if gengine.input.keyboard:isJustDown(44) then
         boy.spine:setAnimation(gengine.graphics.spine.get("spineboy-jump"), 0, false, 0)
         boy.spine:addAnimation(gengine.graphics.spine.get("spineboy-walk"), 0, true, 0)
+        boy.spine:setAnimation(gengine.graphics.spine.get("raptor-walk"), 0, true)
     end
     if gengine.input.keyboard:isJustUp(41) then
         gengine.application.quit()
