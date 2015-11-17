@@ -38,7 +38,7 @@ function start()
         )
 
     raptor.scale:set(-0.3, 0.3)
-    raptor.position:set(100, -300)
+    raptor.position:set(200, -300)
     raptor:insert()
 
     raptor.spine:setAnimation(gengine.graphics.spine.get("raptor-walk"), 0, true)
@@ -54,7 +54,20 @@ function update(dt)
         boy.spine:addAnimation(gengine.graphics.spine.get("spineboy-walk"), 0, true, 0)
     end
     if gengine.input.keyboard:isJustDown(44) then
-        boy.spine:setAnimation(gengine.graphics.spine.get("raptor-walk"), 0, true)
+        local names = {"raptor-empty", "raptor-gungrab", "raptor-walk"}
+        raptor.spine:setAnimation(gengine.graphics.spine.get(names[math.random(1,#names)]), 0, true)
+
+        names = {
+          "spineboy-death",
+          "spineboy-hit",
+          "spineboy-idle",
+          "spineboy-jump",
+          "spineboy-run",
+          "spineboy-shoot",
+          "spineboy-walk"
+        }
+
+        boy.spine:setAnimation(gengine.graphics.spine.get(names[math.random(1,#names)]), 0, true)
     end
     if gengine.input.keyboard:isJustUp(41) then
         gengine.application.quit()
