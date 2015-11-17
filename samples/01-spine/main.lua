@@ -21,7 +21,7 @@ function start()
         "spine"
         )
 
-    boy.scale:set(0.4, 0.4)
+    boy.scale:set(0.3, 0.3)
     boy.position:set(-300, -300)
     boy:insert()
 
@@ -37,7 +37,7 @@ function start()
         "spine"
         )
 
-    raptor.scale:set(0.4, 0.4)
+    raptor.scale:set(-0.3, 0.3)
     raptor.position:set(100, -300)
     raptor:insert()
 
@@ -49,9 +49,11 @@ function update(dt)
         boy.spine:setAnimation(gengine.graphics.spine.get("spineboy-shoot"), 0, false, 0)
         boy.spine:addAnimation(gengine.graphics.spine.get("spineboy-run"), 0, true, 0)
     end
-    if gengine.input.keyboard:isJustDown(44) then
+    if gengine.input.mouse:isJustDown(3) then
         boy.spine:setAnimation(gengine.graphics.spine.get("spineboy-jump"), 0, false, 0)
         boy.spine:addAnimation(gengine.graphics.spine.get("spineboy-walk"), 0, true, 0)
+    end
+    if gengine.input.keyboard:isJustDown(44) then
         boy.spine:setAnimation(gengine.graphics.spine.get("raptor-walk"), 0, true)
     end
     if gengine.input.keyboard:isJustUp(41) then
