@@ -4,7 +4,6 @@ function init()
 end
 
 local e
-local leftAnimation, rightAnimation, loopingAnimation
 
 function start()
     gengine.graphics.setClearColor(0,0.1,0.1,1)
