@@ -9,3 +9,4 @@ samples/**/out
 *.log
 /.atom*
 .gdbinit
+log.txt
