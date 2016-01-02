@@ -1,4 +1,5 @@
 require 'game'
+require 'gui'
 
 Application = Application or {
 
@@ -40,18 +41,4 @@ function Application.onStateExit:inGame()
 end
 
 function Application:guiFadeFunction()
-end
-
-function Application:showPage(name, duration)
-    gengine.gui.executeScript("showPage('" .. name .. "'," .. duration .. ");")
-end
-
-function Application:play()
-    Application.guiFadeFunction = function(self) self:changeState('inGame') end
-    self:showPage('hud', 500)
-end
-
-function Application:goToMenu()
-    Application.guiFadeFunction = function(self) self:changeState('menu') end
-    self:showPage('menu', 500)
 end

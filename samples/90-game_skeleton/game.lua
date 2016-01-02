@@ -56,8 +56,8 @@ function Game.onStateUpdate:running(dt)
         gengine.gui.executeScript("updateObjects(" .. #self.objects .. ")")
 
         if #self.objects == 0 then
-            Application:goToMenu()
             self:changeState("none")
+            gengine.gui.showPage("menu", 500)
         end
     end
 end
