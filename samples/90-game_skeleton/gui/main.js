@@ -1,16 +1,16 @@
 
-function showPage(name, duration)
+function showPage(name, effect, duration)
 {
-    gengine_execute("gengine.gui.showPage('" + name + "', " + duration + ")");
+    gengine_execute("gengine.gui.showPage('" + name + "', '" + effect + "', " + duration + ")");
 }
 
 $(function() {
-    showPage("menu", 2);
+    showPage("menu", "fade", 2);
 });
 
 function play()
 {
-    showPage("hud", 500);
+    showPage("hud", "fade", 500);
 }
 
 function quit()

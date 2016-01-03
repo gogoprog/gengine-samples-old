@@ -57,7 +57,7 @@ function Game.onStateUpdate:running(dt)
 
         if #self.objects == 0 then
             self:changeState("none")
-            gengine.gui.showPage("menu", 500)
+            gengine.gui.showPage("menu", "fade", 500)
         end
     end
 end
