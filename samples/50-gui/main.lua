@@ -16,14 +16,14 @@ function start()
         ComponentSprite(),
         {
             texture = gengine.graphics.texture.get("logo"),
-            extent = vector2(2560, 1280),
+            extent = vector2(512, 256),
             layer = 0
         }
         )
 
     logoEntity:insert()
 
-    gengine.gui.loadFile("gui/menu.html")
+    gengine.gui.loadFile("gui/gui.html")
 end
 
 local total = 0
@@ -33,7 +33,7 @@ function update(dt)
     total = total + dt * sens
     logoEntity.rotation = total
 
-    if gengine.input.mouse:isJustDown(1) then
+    if gengine.gui.state == "options" then
         gengine.gui.executeScript("updateTotal('" .. total .. "');")
     end
 
@@ -58,4 +58,12 @@ end
 
 function exit()
     gengine.application.quit()
+end
+
+function gengine.gui.onStateEnter:main()
+    print("Main menu")
+end
+
+function gengine.gui.onStateEnter:options()
+    print("Options")
 end
