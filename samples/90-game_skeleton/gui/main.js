@@ -1,21 +1,16 @@
 
-function showPage(name, effect, duration)
-{
-    gengine_execute("gengine.gui.showPage('" + name + "', '" + effect + "', " + duration + ")");
-}
-
 $(function() {
-    showPage("menu", "fade", 2);
+    gengine.gui.showPage("menu", "fade", 2);
 });
 
 function play()
 {
-    showPage("hud", "fade", 500);
+    gengine.gui.showPage("hud", "fade", 500);
 }
 
 function quit()
 {
-    gengine_execute("gengine.application.quit()");
+    gengine.execute("gengine.application.quit()");
 }
 
 function updateObjects(count)
