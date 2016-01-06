@@ -43,15 +43,10 @@
       document.getElementById("total").innerHTML = n;
     }
 
-    function showPage(name, effect, duration)
-    {
-        gengine_execute("gengine.gui.showPage('" + name + "', '" + effect + "', " + duration + ")");
-    }
-
     $(function(){
         $("button").button();
 
-        gengine_execute("gengine.gui.showPage('main', 'fade', 1)")
+        gengine.gui.showPage('main', 'fade', 1)
     });
 </script>
 </head>
@@ -61,11 +56,11 @@
     <div id="main" class="gengine-page">
         <h1>[gengine] gui sample</h1>
 
-        <button href="#" onclick="showPage('inGame', 'slide', 500)">Play!</button>
+        <button href="#" onclick="gengine.gui.showPage('inGame', 'slide', 500)">Play!</button>
         <p/>
-        <button href="#" onclick="showPage('options', 'slide', 500)">Options</button>
+        <button href="#" onclick="gengine.gui.showPage('options', 'slide', 500)">Options</button>
         <p/>
-        <button href="#" onclick="gengine_execute('exit()');">Exit</button>
+        <button href="#" onclick="gengine.execute('exit()');">Exit</button>
     </div>
 
     <div id="options" class="gengine-page">
@@ -73,11 +68,11 @@
 
         <span id="total">0</span>
         <p/>
-        <button href="#" onclick="showPage('main', 'fold', 500)">Back</button>
+        <button href="#" onclick="gengine.gui.showPage('main', 'fold', 500)">Back</button>
     </div>
 
     <div id="inGame" class="gengine-page">
-        <button href="#" onclick="showPage('main', 'fold', 500)">Back</button>
+        <button href="#" onclick="gengine.gui.showPage('main', 'fold', 500)">Back</button>
     </div>
 
 </body>
