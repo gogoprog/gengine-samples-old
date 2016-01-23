@@ -6,7 +6,9 @@ end
 function start()
     gengine.graphics.setClearColor(0.5,0.1,0.1,1)
 
-    gengine.audio.playMusic("test03.mp3", 0.5, true) -- Play a background music.
+    gengine.audio.playMusic("test03.mp3", true) -- Play a background music.
+    gengine.audio.setMusicVolume(0.5)
+    gengine.audio.setSoundVolume(0.5)
 
     gengine.audio.sound.create("sound.ogg") -- Load a sound file.
 end
