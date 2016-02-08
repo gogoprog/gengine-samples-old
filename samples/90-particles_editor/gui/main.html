@@ -48,7 +48,7 @@
 
         function updateValue(name)
         {
-            gengine_execute("updateValue('" + name + "', " + values[name] + ")");
+            gengine.execute("updateValue('" + name + "', " + values[name] + ")");
 
             generateOutput();
         }
@@ -60,7 +60,7 @@
                 var a = ranges[name][0];
                 var b = ranges[name][1];
 
-                gengine_execute("updateRange('" + name + "',"+ a + "," + b + ")");
+                gengine.execute("updateRange('" + name + "',"+ a + "," + b + ")");
             }
             else
             {
@@ -69,7 +69,7 @@
                 var c = ranges[name][0][1];
                 var d = ranges[name][1][1];
 
-                gengine_execute("updateRange('" + name + "', vector2(" + a + ", "+ b + "), vector2("+c+","+d+") )");
+                gengine.execute("updateRange('" + name + "', vector2(" + a + ", "+ b + "), vector2("+c+","+d+") )");
             }
 
             generateOutput();
@@ -112,7 +112,7 @@
         {
             var text = generateModifier(name);
 
-            gengine_execute("updateValue('" + name + "', " + text + ")");
+            gengine.execute("updateValue('" + name + "', " + text + ")");
 
             generateOutput();
         }
@@ -389,7 +389,7 @@
         function updateTexture(name)
         {
             textureName = name;
-            gengine_execute("updateValue('texture', gengine.graphics.texture.get('" + name + "'))");
+            gengine.execute("updateValue('texture', gengine.graphics.texture.get('" + name + "'))");
 
             generateOutput();
         }
@@ -434,7 +434,7 @@
 
                 updateAll();
 
-                gengine_execute("onPageReady()");
+                gengine.execute("onPageReady()");
             };
 
             setTimeout( function() {

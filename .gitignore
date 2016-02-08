@@ -1,12 +1,6 @@
-*.data
-*.html.map
-*.js
-*.html
-!**/gui/*.html
-!**/gui/*.js
 *.mem
-samples/**/out
 *.log
 /.atom*
 .gdbinit
 log.txt
+packed-html5
