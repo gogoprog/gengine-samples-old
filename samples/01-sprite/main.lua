@@ -13,14 +13,15 @@ function start()
 
     logoEntity = gengine.entity.create()
 
-    --[[logoEntity:addComponent(
+    logoEntity:addComponent(
         ComponentSprite(),
         {
             --texture = gengine.graphics.texture.get("logo"),
+            texture = "logo.png",
             extent = vector2(256, 128),
             layer = 0
         }
-        )]]
+        )
 
     logoEntity:insert()
 end
