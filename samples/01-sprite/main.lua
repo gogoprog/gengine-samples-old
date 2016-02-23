@@ -23,7 +23,6 @@ function start()
         }
         )
 
-    logoEntity.scale = vector2(100, 100)
     logoEntity:insert()
 end
 
