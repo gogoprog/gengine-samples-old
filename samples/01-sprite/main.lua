@@ -7,17 +7,16 @@ end
 local logoEntity
 
 function start()
-    --gengine.graphics.setClearColor(0,0.1,0.1,1)
+    gengine.graphics.setClearColor(Color(0,0,0.1));
 
-    --gengine.graphics.texture.create("logo.png")
+    gengine.graphics.sprite.create("logo.png")
 
     logoEntity = gengine.entity.create()
 
     logoEntity:addComponent(
         ComponentSprite(),
         {
-            --texture = gengine.graphics.texture.get("logo"),
-            texture = "logo.png",
+            sprite = gengine.graphics.sprite.get("logo"),
             extent = vector2(256, 128),
             layer = 0
         }
@@ -31,9 +30,9 @@ local total = 0
 function update(dt)
     total = total + dt
     logoEntity.position.x = math.sin(total * 2) * 50
-    --[[if gengine.input.keyboard:isJustUp(41) then
+    if gengine.input.keyboard:isJustUp(41) then
         gengine.application.quit()
-    end]]
+    end
 end
 
 function stop()
