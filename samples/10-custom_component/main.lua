@@ -47,8 +47,8 @@ function start()
             ComponentCustom(),
             {
                 distance = math.random(10,100),
-                angle = math.random(0.1,0.3),
-                speed = math.random(5,10),
+                angle = math.random(0,30),
+                speed = math.random(5,10)
             }
             )
 
