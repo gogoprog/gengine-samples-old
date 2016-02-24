@@ -28,9 +28,9 @@ end
 
 
 function start()
-    gengine.graphics.setClearColor(0,0.1,0.1,1)
+    gengine.graphics.setClearColor(Color(0,0,0.1))
 
-    gengine.graphics.texture.create("logo.png")
+    gengine.graphics.sprite.create("logo.png")
 
     for i=0,8 do
         local logoEntity = gengine.entity.create()
@@ -38,8 +38,7 @@ function start()
         logoEntity:addComponent(
             ComponentSprite(),
             {
-                texture = gengine.graphics.texture.get("logo"),
-                extent = vector2(256, 128),
+                sprite = gengine.graphics.sprite.get("logo"),
                 layer = 0
             }
             )
@@ -60,7 +59,7 @@ function start()
 end
 
 function update(dt)
-    if gengine.input.keyboard:isJustUp(41) then
+    if gengine.input.isKeyJustDown(41) then
         gengine.application.quit()
     end
 end
