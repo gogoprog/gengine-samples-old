@@ -17,7 +17,6 @@ function start()
         ComponentSprite(),
         {
             sprite = gengine.graphics.sprite.get("logo"),
-            extent = vector2(256, 128),
             layer = 0
         }
         )
