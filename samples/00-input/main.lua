@@ -9,11 +9,11 @@ local lastHatValues = {{},{},{},{}}
 local lastAxisValues = {{},{},{},{}}
 
 function start()
-    lastMousePosition = vector2()
+    lastMousePosition = Vector2()
 end
 
 function update(dt)
-    for j=0,3 do
+    --[[for j=0,3 do
         if gengine.input:getJoypad(j):isConnected() then
             for b=0, gengine.input:getJoypad(j):getButtonCount() do
                 if gengine.input:getJoypad(j):isJustDown(b) then
@@ -37,28 +37,28 @@ function update(dt)
                 end
             end
         end
-    end
+    end]]
 
-    for b=1,3 do
-        if gengine.input.mouse:isJustDown(b) then
+    for b=0,5 do
+        if gengine.input.isMouseButtonJustDown(b) then
             print("Mouse button " .. b .. " is just pressed!")
         end
     end
 
     for k=1,100 do
-        if gengine.input.keyboard:isJustDown(k) then
+        if gengine.input.isKeyJustDown(k) then
             print("Keyboard key " .. k .. " is just pressed!")
         end
     end
 
-    local m = gengine.input.mouse:getPosition()
+    local m = gengine.input.getMousePosition()
 
     if lastMousePosition.x ~= m.x or lastMousePosition.y ~= m.y then
-        lastMousePosition:set(m)
-        print("Mouse position is now " .. tostring(lastMousePosition))
+        lastMousePosition = m
+        print("Mouse position is now " .. m.x .. ', ' .. m.y)
     end
 
-    if gengine.input.keyboard:isJustUp(41) then
+    if gengine.input.isKeyJustDown(41) then
         gengine.application.quit()
     end
 end
