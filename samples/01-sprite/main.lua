@@ -9,16 +9,15 @@ local logoEntity
 function start()
     gengine.graphics.setClearColor(Color(0,0,0.1));
 
-    gengine.graphics.sprite.create("logo.png")
-
     logoEntity = gengine.entity.create()
 
     logoEntity:addComponent(
-        ComponentSprite(),
+        ComponentStaticSprite2D(),
         {
-            sprite = gengine.graphics.sprite.get("logo"),
+            sprite = cache:GetResource("Sprite2D", "logo.png"),
             layer = 0
-        }
+        },
+        "sprite"
         )
 
     logoEntity:insert()
@@ -29,6 +28,7 @@ local total = 0
 function update(dt)
     total = total + dt
     logoEntity.position.x = math.sin(total * 2) * 50
+    logoEntity.sprite.alpha = (math.sin(total * 5) + 1) * 0.5
     if gengine.input.isKeyDown(41) then
         gengine.application.quit()
     end
