@@ -5,19 +5,17 @@ function init()
 end
 
 local cameraEntity
-local extent = Vector2(320, 200)
+local orthoSize = 200
 
 function start()
     gengine.graphics.setClearColor(Color(0,0,0.1));
 
-    gengine.graphics.sprite.create("logo.png")
-
     local e = gengine.entity.create()
 
     e:addComponent(
-        ComponentSprite(),
+        ComponentStaticSprite2D(),
         {
-            sprite = gengine.graphics.sprite.get("logo"),
+            sprite = cache:GetResource("Sprite2D", "logo.png"),
             layer = 0
         }
         )
@@ -29,7 +27,8 @@ function start()
     cameraEntity:addComponent(
         ComponentCamera(),
         {
-            extent = extent
+            orthographic = true,
+            orthoSize = orthoSize
         },
         "camera"
         )
@@ -40,13 +39,13 @@ end
 function update(dt)
 
     if gengine.input.isKeyDown(81) then
-        extent = extent * 0.99
-        cameraEntity.camera.extent = extent
+        orthoSize = orthoSize * 0.99
+        cameraEntity.camera.orthoSize = orthoSize
     end
 
     if gengine.input.isKeyDown(82) then
-        extent = extent * 1.01
-        cameraEntity.camera.extent = extent
+        orthoSize = orthoSize * 1.01
+        cameraEntity.camera.orthoSize = orthoSize
     end
 
     if gengine.input.isKeyDown(80) then
