@@ -30,15 +30,13 @@ end
 function start()
     gengine.graphics.setClearColor(Color(0,0,0.1))
 
-    gengine.graphics.sprite.create("logo.png")
-
     for i=0,8 do
         local logoEntity = gengine.entity.create()
 
         logoEntity:addComponent(
-            ComponentSprite(),
+            ComponentStaticSprite2D(),
             {
-                sprite = gengine.graphics.sprite.get("logo"),
+                sprite = cache:GetResource('Sprite2D', 'logo.png'),
                 layer = 0
             }
             )
