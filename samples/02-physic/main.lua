@@ -62,14 +62,13 @@ end
 
 function update(dt)
     if gengine.input.isMouseButtonDown(1) then
-        local mousePosition = gengine.input.getMousePosition()
-        local worldPosition = cameraEntity.camera:ScreenToWorldPoint(Vector3(mousePosition.x,mousePosition.y,0)) / 100
-        print(worldPosition.x .. ', ' .. worldPosition.y)
+        local mousePosition = gengine.input.getMousePosition() / Vector2(640, 480)
+        local worldPosition = cameraEntity.camera:ScreenToWorldPoint(Vector3(mousePosition.x,mousePosition.y,0))
 
         if math.random() > 0.5 then
             createBloc(worldPosition.x, worldPosition.y)
         else
-            --createBall(worldPosition.x, worldPosition.y)
+            createBall(worldPosition.x, worldPosition.y)
         end
     end
 
@@ -132,25 +131,32 @@ function createBall(x, y)
     local e = gengine.entity.create()
 
     e:addComponent(
-        ComponentSprite(),
+        ComponentStaticSprite2D(),
         {
-            texture = gengine.graphics.texture.get("ball"),
-            extent = vector2(32, 32),
+            sprite = cache:GetResource('Sprite2D', 'ball.png'),
             layer = 0
         }
         )
 
     e:addComponent(
-        ComponentPhysic(),
+        ComponentRigidBody2D(),
         {
-            radius = 10,
-            type = "dynamic",
-            density = 1,
-            friction = 1.3
+            bodyType = BT_DYNAMIC
         }
         )
 
-    e.position:set(x, y)
+    e:addComponent(
+        ComponentCollisionCircle2D(),
+        {
+            radius = 96,
+            density = 1.0,
+            friction = 0.5,
+            restitution = 0.1
+        }
+        )
+
+    e.position = Vector3(x, y)
+    e.scale = Vector3(1,1,1) / 8
     e:insert()
 
     return e
