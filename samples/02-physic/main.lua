@@ -3,72 +3,85 @@ function init()
     gengine.application.setExtent(640, 480)
 end
 
-local cameraEntity
+local worldEntity
 
 function start()
-    gengine.graphics.setClearColor(0,0.1,0.1,1)
+    gengine.graphics.setClearColor(Color(0,0.1,0.1,1))
 
-    gengine.graphics.texture.create("tile.png")
-    gengine.graphics.texture.create("ball.png")
+    worldEntity = gengine.entity.create()
+    worldEntity:addComponent(
+        ComponentCamera(),
+        {
+            orthoSize = 480,
+            orthographic = true
+        },
+        "camera"
+        )
 
-    gengine.physics.createWorlds(1)
-    gengine.physics:getWorld(1):setGravity(vector2(0,-100))
+    worldEntity:addComponent(
+        ComponentPhysicsWorld2D(),
+        {
+            gravity = Vector2(500, 0)
+        },
+        "physic"
+        )
 
-    cameraEntity = gengine.entity.create()
-    cameraEntity:addComponent(ComponentCamera(), { extent = vector2(640, 480) }, "camera")
-    cameraEntity:insert()
+    worldEntity:insert()
 
     local e = gengine.entity.create()
 
     e:addComponent(
-        ComponentSprite(),
+        ComponentStaticSprite2D(),
         {
-            texture = gengine.graphics.texture.get("tile"),
-            color = vector4(0.5, 0.2, 0.2, 1),
-            extent = vector2(640, 640),
-            uvScale = vector2(20, 20),
+            sprite = cache:GetResource("Sprite2D", "tile.png"),
+            color = Color(0.5, 0.2, 0.2, 1),
             layer = -1
         }
         )
 
+    e:addComponent(ComponentRigidBody2D())
+
     e:addComponent(
-        ComponentPhysic(),
+        ComponentCollisionBox2D(),
         {
-            extent = vector2(640, 640),
-            type = "static"
+            size = Vector2(64, 64),
+            friction = 0.5
         }
         )
 
-    e.position:set(0,-500)
+    e.position.y = -200
+    e.scale.x = 100
+    e.scale.y = 1
     e:insert()
 
-    createBloc(0, 200)
+    blo = createBloc(0, 200)
 end
 
 function update(dt)
-    if gengine.input.mouse:isDown(1) then
-        local mousePosition = gengine.input.mouse:getPosition()
-        local worldPosition = cameraEntity.camera:getWorldPosition(mousePosition)
+    print(blo.position.y)
+    if gengine.input.isMouseButtonDown(1) then
+        local mousePosition = gengine.input.getMousePosition()
+        --[[local worldPosition = worldEntity.camera:getWorldPosition(mousePosition)
 
         if math.random() > 0.5 then
             createBloc(worldPosition.x, worldPosition.y)
         else
             createBall(worldPosition.x, worldPosition.y)
-        end
+        end]]
     end
 
-    if gengine.input.mouse:isDown(3) then
-        gengine.physics.worlds[1]:rayCast(
+    if gengine.input.isMouseButtonDown(3) then
+        --[[gengine.physics.worlds[1]:rayCast(
             vector2(-1000, 0),
             vector2(1000, 0),
             function(e)
                 e:remove()
                 gengine.entity.destroy(e)
             end
-            )
+            )]]
     end
 
-    if gengine.input.keyboard:isJustUp(41) then
+    if gengine.input.isKeyJustDown(41) then
         gengine.application.quit()
     end
 end
@@ -81,25 +94,32 @@ function createBloc(x, y)
     local e = gengine.entity.create()
 
     e:addComponent(
-        ComponentSprite(),
+        ComponentStaticSprite2D(),
         {
-            texture = gengine.graphics.texture.get("tile"),
-            extent = vector2(16, 16),
+            sprite = cache:GetResource('Sprite2D', 'tile.png'),
             layer = 0
         }
         )
 
     e:addComponent(
-        ComponentPhysic(),
+        ComponentRigidBody2D(),
         {
-            extent = vector2(16, 16),
-            type = "dynamic",
-            density = 1,
-            friction = 1.3
+            bodyType = BT_DYNAMIC
         }
         )
 
-    e.position:set(x, y)
+    e:addComponent(
+        ComponentCollisionBox2D(),
+        {
+            size = Vector2(64, 64),
+            density = 1.0,
+            friction = 0.5,
+            restitution = 0.1
+        }
+        )
+
+    e.position = Vector3(x, y)
+    e.scale = Vector3(0.25, 0.25)
     e:insert()
 
     return e
