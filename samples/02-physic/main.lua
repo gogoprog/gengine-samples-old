@@ -3,13 +3,22 @@ function init()
     gengine.application.setExtent(640, 480)
 end
 
-local worldEntity
+local cameraEntity
 
 function start()
     gengine.graphics.setClearColor(Color(0,0.1,0.1,1))
 
-    worldEntity = gengine.entity.create()
-    worldEntity:addComponent(
+    local scene = gengine.entity.getScene(0)
+
+    scene:addComponent(
+        ComponentPhysicsWorld2D(),
+        {
+            gravity = Vector2(0, -1000)
+        }
+        )
+
+    cameraEntity = gengine.entity.create()
+    cameraEntity:addComponent(
         ComponentCamera(),
         {
             orthoSize = 480,
@@ -18,15 +27,9 @@ function start()
         "camera"
         )
 
-    worldEntity:addComponent(
-        ComponentPhysicsWorld2D(),
-        {
-            gravity = Vector2(500, 0)
-        },
-        "physic"
-        )
+    cameraEntity:insert()
 
-    worldEntity:insert()
+    print(cameraEntity.camera:WorldToScreenPoint(Vector3(0,0,0)))
 
     local e = gengine.entity.create()
 
@@ -54,20 +57,20 @@ function start()
     e.scale.y = 1
     e:insert()
 
-    blo = createBloc(0, 200)
+    createBloc(0, 200)
 end
 
 function update(dt)
-    print(blo.position.y)
     if gengine.input.isMouseButtonDown(1) then
         local mousePosition = gengine.input.getMousePosition()
-        --[[local worldPosition = worldEntity.camera:getWorldPosition(mousePosition)
+        local worldPosition = cameraEntity.camera:ScreenToWorldPoint(Vector3(mousePosition.x,mousePosition.y,0)) / 100
+        print(worldPosition.x .. ', ' .. worldPosition.y)
 
         if math.random() > 0.5 then
             createBloc(worldPosition.x, worldPosition.y)
         else
-            createBall(worldPosition.x, worldPosition.y)
-        end]]
+            --createBall(worldPosition.x, worldPosition.y)
+        end
     end
 
     if gengine.input.isMouseButtonDown(3) then
