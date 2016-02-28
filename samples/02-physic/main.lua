@@ -4,17 +4,19 @@ function init()
 end
 
 local cameraEntity
+local scene
 
 function start()
     gengine.graphics.setClearColor(Color(0,0.1,0.1,1))
 
-    local scene = gengine.entity.getScene(0)
+    scene = gengine.entity.getScene(0)
 
     scene:addComponent(
         ComponentPhysicsWorld2D(),
         {
             gravity = Vector2(0, -1000)
-        }
+        },
+        "physic"
         )
 
     cameraEntity = gengine.entity.create()
@@ -73,14 +75,16 @@ function update(dt)
     end
 
     if gengine.input.isMouseButtonDown(3) then
-        --[[gengine.physics.worlds[1]:rayCast(
-            vector2(-1000, 0),
-            vector2(1000, 0),
-            function(e)
-                e:remove()
-                gengine.entity.destroy(e)
-            end
-            )]]
+        local result = scene.physic:Raycast(
+            Vector2(-1000, 0),
+            Vector2(1000, 0)
+            )
+
+        for k, v in ipairs(result) do
+            local e = gengine.entity.getFromNode(v.body.node)
+            e:remove()
+            gengine.entity.destroy(e)
+        end
     end
 
     if gengine.input.isKeyJustDown(41) then
