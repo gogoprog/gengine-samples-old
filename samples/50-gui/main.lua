@@ -6,17 +6,14 @@ end
 local logoEntity
 
 function start()
-    gengine.graphics.setClearColor(0,0.1,0.1,1)
-
-    gengine.graphics.texture.create("logo.png")
+    gengine.graphics.setClearColor(Color(0,0.1,0.1,1))
 
     logoEntity = gengine.entity.create()
 
     logoEntity:addComponent(
-        ComponentSprite(),
+        ComponentStaticSprite2D(),
         {
-            texture = gengine.graphics.texture.get("logo"),
-            extent = vector2(512, 256),
+            sprite = cache:GetResource('Sprite2D', 'logo.png'),
             layer = 0
         }
         )
@@ -30,14 +27,14 @@ local total = 0
 local sens = 1
 
 function update(dt)
-    total = total + dt * sens
+    total = total + dt * sens * 100
     logoEntity.rotation = total
 
     if gengine.gui.state == "options" then
         gengine.gui.executeScript("updateTotal('" .. total .. "');")
     end
 
-    if gengine.input.keyboard:isJustUp(41) then
+    if gengine.input.isKeyJustDown(41) then
         gengine.application.quit()
     end
 end
