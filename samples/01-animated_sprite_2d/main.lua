@@ -14,7 +14,8 @@ function start()
     e:addComponent(
         ComponentAnimatedSprite2D(),
         {
-            animationSet = cache:GetResource("AnimationSet2D", "player.scml"),
+            --animationSet = cache:GetResource("AnimationSet2D", "spriter/player.scml"),
+            animationSet = cache:GetResource("AnimationSet2D", "spine/spineboy.json"),
             animation = "walk",
             layer = 0
         },
