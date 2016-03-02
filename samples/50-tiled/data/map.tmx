@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="32" tileheight="32" nextobjectid="9">
- <tileset firstgid="1" name="crates" tilewidth="32" tileheight="32" tilecount="10">
+ <tileset firstgid="1" name="crates" tilewidth="32" tileheight="32" tilecount="10" columns="5">
   <image source="crates.png" width="160" height="64"/>
   <tile id="4">
    <properties>
@@ -11,19 +11,6 @@
    <properties>
     <property name="type" value="XBox"/>
    </properties>
-  </tile>
- </tileset>
- <tileset firstgid="11" name="crates_red" tilewidth="32" tileheight="32" tilecount="10">
-  <image source="crates2.png" width="160" height="64"/>
-  <tile id="6">
-   <properties>
-    <property name="type" value="XBoxRed"/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="21" name="collection" tilewidth="128" tileheight="128" tilecount="1">
-  <tile id="0">
-   <image width="128" height="128" source="bigcrate.png"/>
   </tile>
  </tileset>
  <layer name="Tile Layer 1" width="12" height="12">
@@ -155,9 +142,9 @@
    <tile gid="1"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="17"/>
    <tile gid="0"/>
-   <tile gid="21"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -321,18 +308,17 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
   </data>
  </layer>
  <layer name="Tile Layer 3" width="12" height="12">
   <properties>
-   <property name="component" value="Sprite,Physic"/>
-   <property name="type" value="dynamic"/>
+   <property name="physic" value="dynamic"/>
   </properties>
   <data>
    <tile gid="0"/>
