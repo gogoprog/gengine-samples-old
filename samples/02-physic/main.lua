@@ -1,6 +1,6 @@
 function init()
     gengine.application.setName("[gengine-samples] 02-physic")
-    gengine.application.setExtent(640, 480)
+    gengine.application.setExtent(1280, 800)
 end
 
 local cameraEntity
@@ -23,15 +23,13 @@ function start()
     cameraEntity:addComponent(
         ComponentCamera(),
         {
-            orthoSize = 480,
+            orthoSize = 800,
             orthographic = true
         },
         "camera"
         )
 
     cameraEntity:insert()
-
-    print(cameraEntity.camera:WorldToScreenPoint(Vector3(0,0,0)))
 
     local e = gengine.entity.create()
 
@@ -54,7 +52,7 @@ function start()
         }
         )
 
-    e.position.y = -200
+    e.position.y = -400
     e.scale.x = 100
     e.scale.y = 1
     e:insert()
@@ -64,7 +62,7 @@ end
 
 function update(dt)
     if gengine.input.isMouseButtonDown(1) then
-        local mousePosition = gengine.input.getMousePosition() / Vector2(640, 480)
+        local mousePosition = gengine.input.getMousePosition() / Vector2(1280, 800)
         local worldPosition = cameraEntity.camera:ScreenToWorldPoint(Vector3(mousePosition.x,mousePosition.y,0))
 
         if math.random() > 0.5 then
@@ -119,7 +117,7 @@ function createBloc(x, y)
         {
             size = Vector2(64, 64),
             density = 1.0,
-            friction = 0.5,
+            friction = 0.0,
             restitution = 0.1
         }
         )
@@ -152,10 +150,10 @@ function createBall(x, y)
     e:addComponent(
         ComponentCollisionCircle2D(),
         {
-            radius = 96,
+            radius = 90,
             density = 1.0,
-            friction = 0.5,
-            restitution = 0.1
+            friction = 1.0,
+            restitution = 0.0
         }
         )
 
