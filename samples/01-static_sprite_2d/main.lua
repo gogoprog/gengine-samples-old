@@ -1,5 +1,5 @@
 function init()
-    gengine.application.setName("[gengine-samples] 01-sprite")
+    gengine.application.setName("[gengine-samples] 01-static_sprite_2d")
     gengine.application.setExtent(320,200)
     gengine.application.setFullscreen(false)
 end
