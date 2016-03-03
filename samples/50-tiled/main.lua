@@ -25,6 +25,16 @@ end
 function start()
     gengine.graphics.setClearColor(Color(0.5,0.5,0.5,1))
 
+    local scene = gengine.entity.getScene(0)
+
+    scene:addComponent(
+        ComponentPhysicsWorld2D(),
+        {
+            gravity = Vector2(0, -1000)
+        },
+        "physic"
+        )
+
     local e
 
     e = gengine.entity.create()
@@ -32,7 +42,6 @@ function start()
     e:addComponent(
         ComponentTileMap2D(),
         {
-            --tmxFile = cache:GetResource("TmxFile2D", "isometric_grass_and_water.tmx")
             tmxFile = cache:GetResource("TmxFile2D", "map.tmx")
         },
         "tileMap"
@@ -50,7 +59,26 @@ function start()
 
                 if tile then
                     if tile:HasProperty("physic") or layer:HasProperty("physic") then
-                        print(":TODO:")
+                        local node = layer:GetTileNode(x, y)
+                        local e = gengine.entity.create(node)
+                        e:insert()
+
+                        e:addComponent(
+                            ComponentRigidBody2D(),
+                            {
+                                bodyType = BT_DYNAMIC
+                            }
+                            )
+
+                        e:addComponent(
+                            ComponentCollisionBox2D(),
+                            {
+                                size = Vector2(64, 64),
+                                density = 1.0,
+                                friction = 0.0,
+                                restitution = 0.1
+                            }
+                            )
                     end
                 end
             end
