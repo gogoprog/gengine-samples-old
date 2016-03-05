@@ -35,54 +35,12 @@ function start()
         "physic"
         )
 
-    local e
+    local entities = gengine.tiled.createEntities("map.tmx")
+    entities[1].position.x = -192
+    entities[1].position.y = -192
 
-    e = gengine.entity.create()
-
-    e:addComponent(
-        ComponentTileMap2D(),
-        {
-            tmxFile = cache:GetResource("TmxFile2D", "map.tmx")
-        },
-        "tileMap"
-        )
-
-    e.position.x = -192
-    e.position.y = -192
-    e:insert()
-
-    for l=0, e.tileMap.numLayers-1 do
-        local layer = e.tileMap:GetLayer(l)
-        for x=0,layer.width - 1 do
-            for y=0,layer.height - 1 do
-                local tile = layer:GetTile(x, y)
-
-                if tile then
-                    if tile:HasProperty("physic") or layer:HasProperty("physic") then
-                        local node = layer:GetTileNode(x, y)
-                        local e = gengine.entity.create(node)
-                        e:insert()
-
-                        e:addComponent(
-                            ComponentRigidBody2D(),
-                            {
-                                bodyType = BT_DYNAMIC
-                            }
-                            )
-
-                        e:addComponent(
-                            ComponentCollisionBox2D(),
-                            {
-                                size = Vector2(64, 64),
-                                density = 1.0,
-                                friction = 0.0,
-                                restitution = 0.1
-                            }
-                            )
-                    end
-                end
-            end
-        end
+    for _, e in ipairs(entities) do
+        e:insert()
     end
 end
 
