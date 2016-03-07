@@ -14,7 +14,7 @@ function ComponentBox:remove()
 end
 
 function createObject(o)
-    print("Object at " .. o.x .. ", " .. o.y)
+    print("Object at " .. o.position.x .. ", " .. o.position.y)
 end
 
 function init()
