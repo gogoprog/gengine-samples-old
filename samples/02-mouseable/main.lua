@@ -6,17 +6,14 @@ end
 local logoEntity
 
 function start()
-    gengine.graphics.setClearColor(0,0.1,0.1,1)
-
-    gengine.graphics.texture.create("logo.png")
+    gengine.graphics.setClearColor(Color(0,0.1,0.1,1))
 
     logoEntity = gengine.entity.create()
 
     logoEntity:addComponent(
-        ComponentSprite(),
+        ComponentStaticSprite2D(),
         {
-            texture = gengine.graphics.texture.get("logo"),
-            extent = vector2(256, 128),
+            sprite = cache:GetResource('Sprite2D', 'logo.png'),
             layer = 0
         },
         "sprite"
@@ -25,23 +22,17 @@ function start()
     logoEntity:addComponent(
         ComponentMouseable(),
         {
-            extent = vector2(256, 128),
+            extent = Vector2(256, 64)
         },
         "mouseable"
         )
 
     logoEntity.onMouseEnter = function(e)
-        local extent = vector2(300, 140)
-        e.sprite.extent = extent
-        e.mouseable.extent = extent
-        e.sprite.color = {x=1,y=0,z=0,w=1}
+        e.sprite.color = Color(1,0,0,1)
     end
 
     logoEntity.onMouseExit = function(e)
-        local extent = vector2(256, 128)
-        e.sprite.extent = extent
-        e.mouseable.extent = extent
-        e.sprite.color = vector4(1,1,1,1)
+        e.sprite.color = Color(1,1,1,1)
     end
 
     logoEntity.onMouseJustDown = function(e)
@@ -53,7 +44,7 @@ function start()
 end
 
 function update(dt)
-    if gengine.input.keyboard:isJustUp(41) then
+    if gengine.input.isKeyJustDown(41) then
         gengine.application.quit()
     end
 end
